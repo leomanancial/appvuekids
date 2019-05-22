@@ -1,0 +1,25 @@
+$blue: #0069D9 !important;
+$wine-light: #F8E0EC !important;
+$blue-light: #138496 !important;
+$blue-light-plus: #17A2B8 !important;
+$gray-light: #EEEEEE !important;
+$gray: #151515 !important;
+$white: #ffffff !important;
+$rose:#8A0868 !important;
+$green: #4caf50;
+
+$featured : #01A9DB;
+
+
+:root {
+  --blue: #{$blue};
+  --wine-light: #{$wine-light};
+  --blue-light: #{$blue-light};
+  --blue-light-plus: #{$blue-light-plus};
+  --gray-light: #{$gray-light};
+  --gray: #{$gray};
+  --white: #{$white};
+  --rose: #{$rose};
+  --featured: #{$featured};
+  --green: #{$green};
+}

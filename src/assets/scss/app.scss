@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+@import '../../../node_modules/bootstrap/dist/css/bootstrap.css';
+@import '../../../node_modules/@fortawesome/fontawesome-free/css/all.css';
+@import 'variables';
+
+*{
+	font-family: 'Muli', sans-serif;
+}
+
+.btn{
+  border-radius: 0 !important;
+}
+ .btn-primary {
+   background: $blue-light-plus;
+   &:hover{
+     background: $blue-light;
+   }
+   font-size: 12pt;
+ }
