@@ -36,7 +36,7 @@ const router = new Router({
       path: '/novo-aluno',
       name: 'novo-aluno',
       meta: {
-        title: 'Novo aluno'
+        icon: 'fa fa-user-plus', title: 'Novo aluno'
       },
       component: () => import(/* webpackChunkName: "novo-aluno" */ './pages/novo-aluno/Novo-aluno')
     }

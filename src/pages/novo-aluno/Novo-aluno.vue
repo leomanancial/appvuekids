@@ -12,7 +12,7 @@
         >
       </div>
       <button type="button" class="btn btn-primary mb-2">
-        <i class="fas fa-search"></i> Buscar
+        <i class="fas fa-user-plus"></i> Salvar
       </button>
     </div>
   </form>
