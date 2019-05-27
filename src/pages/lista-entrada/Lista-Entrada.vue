@@ -1,6 +1,6 @@
 <template>
   <form>
-    <h1>Lista de Entrada</h1>
+    <h1>Busca Aluno</h1>
     <hr>
     <div class="form-inline">
       <div class="form-group mx-sm-3 mb-2">
@@ -11,18 +11,28 @@
           placeholder="Nome da criança ou código"
         >
       </div>
-      <button type="button" class="btn btn-primary mb-2">
+      <button type="button" class="btn btn-primary mb-2" @click="busca()">
         <i class="fas fa-search"></i> Buscar
       </button>
     </div>
     <hr>
+    <template>
+      <div>
+        <BuscaAluno></BuscaAluno>
+      </div>
+    </template>
   </form>
 </template>
 
 <script>
+import BuscaAluno from "./../../components/layout/BuscaAluno";
 
+export default {
+  components: {
+    BuscaAluno
+  },
 
-export default {};
+};
 </script>
 
 <style>

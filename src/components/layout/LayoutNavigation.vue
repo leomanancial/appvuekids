@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav flex-column justify-content-space-between">
+  <nav class="nav d-flex justify-content-around">
     <div>
       <router-link
         exact
@@ -13,9 +13,9 @@
         {{ router.meta.title}}
       </router-link>
     </div>
-
-    <layout-logout/>
-
+    <div>
+      <layout-logout/>
+    </div>
   </nav>
 </template>
 
@@ -29,7 +29,7 @@ export default {
 
   computed: {
     routerLinks() {
-      return this.$router.options.routes.filter(r => r.name != "login");
+      return this.$router.options.routes.filter(r => r.name !== "login");
     }
   }
 };
