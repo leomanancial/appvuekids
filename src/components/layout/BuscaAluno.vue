@@ -6,7 +6,7 @@
 export default {
   name: "Lista",
   data: () => ({
-  alunoss: []
+    alunoss: []
   }),
   created() {
     this.getData();
@@ -16,21 +16,19 @@ export default {
     getData() {
       this.$firebase
         .firestore()
-        .doc("alunos/ListaGeral")
+        .doc("ListaGeral/Alunos")
         .get()
         .then(function(doc) {
           if (doc.exists) {
-            console.log("Nome :"+doc.data().nome + "  Idade: "+doc.data().idade);
-
+            console.log(doc.data());
           } else {
             // doc.data() will be undefined in this case
-            console.log("No such document!");
+            console.log("Vazio");
           }
         })
         .catch(function(error) {
           console.log("Error getting document:", error);
         });
-
     }
   }
 };
