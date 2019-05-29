@@ -4,11 +4,11 @@
 @import 'variables';
 
 *{
-	font-family: 'Muli', sans-serif;
+	font-family: 'Muli' !important, sans-serif ;
 }
 
 .btn{
-  border-radius: 0 !important;
+  //border-radius: 0 !important;
 }
  .btn-primary {
    background: $blue-light-plus;

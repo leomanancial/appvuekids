@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav d-flex justify-content-around">
+  <nav class="nav">
     <div>
       <router-link
         exact
@@ -12,8 +12,6 @@
         <i class="fa" :class=" `fa-${router.meta.icon}`"></i>
         {{ router.meta.title}}
       </router-link>
-    </div>
-    <div>
       <layout-logout/>
     </div>
   </nav>
