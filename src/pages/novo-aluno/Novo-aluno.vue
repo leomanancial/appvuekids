@@ -45,7 +45,7 @@
         </div>
       </div>
     </div>
-    <hr>
+
     <div class="form-inline mx-sm-3">
       <button type="button" class="btn btn-success mb-4">
         <i class="fas fa-user-plus"></i> Salvar
