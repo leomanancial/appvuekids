@@ -19,7 +19,7 @@ const router = new Router({
       path: '/nova-lista',
       name: 'nova-lista',
       meta: {
-        icon: 'list-ul', title: 'Nova lista'
+        icon: 'fas fa-plus', title: 'Nova lista'
       },
       component: () => import(/* webpackChunkName: "lista-entrada" */ './pages/lista-entrada/Nova-lista')
 
