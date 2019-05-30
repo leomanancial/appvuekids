@@ -53,6 +53,7 @@ export default {
   .navigation-sidebar {
     background-color: var(--blue-light-plus);
     height: 100vh;
+    max-width: 13%;
     .app-title {
       font-size: 20pt;
       margin-top: 10px;
