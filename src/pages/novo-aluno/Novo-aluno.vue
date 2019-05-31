@@ -100,6 +100,7 @@ export default {
   }),
 
   created() {
+    this.$root.$emit("Spinner::show");
     var size = 2; //qtde de digitos
     var randomized = Math.ceil(Math.random() * Math.pow(10, size));
     var digito = Math.ceil(Math.log(randomized));
@@ -110,7 +111,7 @@ export default {
 
     const ref = this.$firebase.database().ref("ListaAlunos");
     //const id = ref.push().key;
-    const id = rId;
+    const id = 30;
 
     /*  const id = rId;
     const ref = this.$firebase.firestore();
@@ -119,13 +120,23 @@ export default {
     const registro = {
       id,
       dt_registro: new Date().getDate(),
-      aluno: "Mauro",
+      aluno: "Flavia",
       dt_nasc: "12/12/2312",
-      responsavel: "Me",
-      sala: "Amarela"
+      responsavel: "Maria",
+      sala: "Preto"
     };
 
-    ref.child(id).set(registro);
+    ref.child(id).set(registro, err => {
+      //Mostra Spinner
+      this.$root.$emit("Spinner::hide");
+
+      if (err) {
+        console.error(err);
+      } else {
+        alert("Dados salvos");
+      }
+    });
+
     /*
     ref
       .collection("Lista")
