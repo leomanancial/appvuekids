@@ -1,9 +1,7 @@
 <template>
-  <form>
-    <div>
-      <h1>Novo Aluno</h1>
-      <hr>
-    </div>
+  <form class="container-fluid" id="MyForm">
+    <h1>Novo Aluno</h1>
+    <hr>
     <div class="container-fluid">
       <div class="form-group row">
         <div class="col-2">
@@ -23,6 +21,7 @@
         </div>
         <div class="col-6">
           <input
+            required
             class="form-control"
             type="text"
             placeholder="Nome da criança"
@@ -34,6 +33,7 @@
         <div class="col-4">
           <input
             class="form-control"
+            required
             type="date"
             placeholder="Data Nascimento"
             id="nascimento-input"
@@ -45,6 +45,7 @@
         <div class="col-5">
           <input
             class="form-control"
+            required
             type="text"
             placeholder="Pais ou Responsável"
             id="resp-input"
@@ -55,6 +56,7 @@
         <div class="col-4">
           <input
             class="form-control"
+            required
             type="tel"
             placeholder="Telefone"
             id="telefone-input"
@@ -63,7 +65,7 @@
         </div>
 
         <div class="col-3">
-          <select class="custom-select" id="inlineFormCustomSelect" v-model="form.sala">
+          <select class="custom-select" required v-model="form.sala">
             <option selected>Sala</option>
             <option value="Amarela">Amarela</option>
             <option value="Verde">Verde</option>
@@ -74,34 +76,25 @@
     </div>
 
     <div class="form-inline mx-sm-3">
-      <button class="btn btn-success mb-4" @click.prevent="submit">
+      <button class="btn btn-success mb-4" @click="submit">
         <i class="fas fa-user-plus"></i> Salvar
       </button>
+      <button type="button" class="btn btn-warning mb-4" @click="apaga">
+        <i class="fas fa-user-edit"></i> Limpar
+      </button>
     </div>
-<div
-        class="modal fade bd-example-modal-sm"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="mySmallModalLabel"
-        aria-hidden="true"
-        v-bind="modal"
-      >
-        <div class="modal-dialog modal-sm">
-          <div class="modal-content">Dados Salvos</div>
-        </div>
-      </div>
   </form>
 </template>
 
 
 <script>
-import Image from "../../static/avatar.png";
+import Foto from "../../static/avatar.png";
 
 export default {
   name: "NovoAluno",
   data: () => {
     return {
-      myPic: Image,
+      myPic: Foto,
       form: {
         id: "",
         nome: "",
@@ -116,14 +109,32 @@ export default {
   created() {},
 
   methods: {
-    modal() {
-      $("#myModal").modal("show");
+    apaga() {
+      document.getElementById("MyForm").reset();
     },
+
     submit() {
       this.$root.$emit("Spinner::show");
+      var size = 2;
+      var randomized = Math.ceil(Math.random() * Math.pow(10, size)); //Cria um número aleatório do tamanho definido em size.
+      var digito = Math.ceil(Math.log(randomized)); //Cria o dígito verificador inicial
+      while (digito > 10) {
+        //Pega o digito inicial e vai refinando até ele ficar menor que dez
+        digito = Math.ceil(Math.log(digito));
+      }
+      const Rid = randomized + digito; //Cria a ID
       const ref = this.$firebase.database().ref("ListaAlunos");
+      var str = this.form.nome;
+      var strDT = this.form.nascimento;
+      const NewID = str.substring(0, 4) + strDT.substring(0, 6);
+
+      console.log(str.substring(0, 4) + strDT.substring(0, 5));
+
+      this.form.id = NewID;
       if (!this.form.id) {
         this.form.id = ref.push().key;
+      } else {
+        this.form.id;
       }
 
       ref.child(this.form.id).update(this.form, err => {
@@ -132,7 +143,12 @@ export default {
         if (err) {
           console.error(err);
         } else {
-          alert("Dados salvos");
+          alert(
+            "Aluno " +
+              this.form.nome +
+              " registrado com o código: " +
+              this.form.id
+          );
         }
       });
     }

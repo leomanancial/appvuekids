@@ -27,8 +27,7 @@ export default {
   components: {
     BaseSpinner,
     LayoutNavigation,
-    BuscaAluno,
-    Image
+    BuscaAluno
   },
   data: () => ({ isLogged: false }),
   mounted() {
@@ -54,9 +53,9 @@ export default {
   .navigation-sidebar {
     background-color: var(--blue-light-plus);
     height: 100vh;
-    max-width: 13%;
+    max-width: 15%;
     .app-title {
-      font-size: 20pt;
+      font-size: 35pt;
       margin-top: 10px;
       text-align: center;
       color: var(--white);
