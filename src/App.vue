@@ -27,7 +27,8 @@ export default {
   components: {
     BaseSpinner,
     LayoutNavigation,
-    BuscaAluno
+    BuscaAluno,
+    Image
   },
   data: () => ({ isLogged: false }),
   mounted() {

@@ -1,23 +1,24 @@
 <template>
   <form>
-    <h1>Novo Aluno</h1>
-    <hr>
-
+    <div>
+      <h1>Novo Aluno</h1>
+      <hr>
+    </div>
     <div class="container-fluid">
-      <picture class="form-group mx-sm-3 mb-3">
-        <div>
-          <img alt="Dashboard" src="/src/pages/novo-aluno/avatar.png" title="Dashboard">
+      <div class="form-group row">
+        <div class="col-2">
+          <img v-bind:src="myPic" style="border:none">
         </div>
-      </picture>
+      </div>
       <div class="form-group row">
         <div class="col-2">
           <input
+            disabled
             class="form-control"
             type="text"
-            placeholder
+            placeholder="código"
             id="codigo-input"
-            disabled
-            v-model="form.codigo"
+            v-model="form.id"
           >
         </div>
         <div class="col-6">
@@ -62,100 +63,86 @@
         </div>
 
         <div class="col-3">
-          <select class="custom-select" id="inlineFormCustomSelect">
+          <select class="custom-select" id="inlineFormCustomSelect" v-model="form.sala">
             <option selected>Sala</option>
-            <option value="1">Amarela</option>
-            <option value="2">Verde</option>
-            <option value="3">Azul</option>
+            <option value="Amarela">Amarela</option>
+            <option value="Verde">Verde</option>
+            <option value="Azul">Azul</option>
           </select>
         </div>
       </div>
     </div>
 
     <div class="form-inline mx-sm-3">
-      <button type="submit" class="btn btn-success mb-4">
+      <button class="btn btn-success mb-4" @click.prevent="submit">
         <i class="fas fa-user-plus"></i> Salvar
       </button>
-      <div>
-        <button type="button" class="btn btn-warning mb-4">
-          <i class="fas fa-user-edit"></i> Atualizar
-        </button>
-      </div>
     </div>
+<div
+        class="modal fade bd-example-modal-sm"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="mySmallModalLabel"
+        aria-hidden="true"
+        v-bind="modal"
+      >
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">Dados Salvos</div>
+        </div>
+      </div>
   </form>
 </template>
 
+
 <script>
+import Image from "../../static/avatar.png";
+
 export default {
   name: "NovoAluno",
-  data: () => ({
-    form: {
-      codigo: "",
-      nome: "",
-      nascimento: "",
-      resp: "",
-      tel: "",
-      sala: ""
-    }
-  }),
-
-  created() {
-    this.$root.$emit("Spinner::show");
-    var size = 2; //qtde de digitos
-    var randomized = Math.ceil(Math.random() * Math.pow(10, size));
-    var digito = Math.ceil(Math.log(randomized));
-    while (digito > 10) {
-      digito = Math.ceil(Math.log(digito));
-    }
-    var rId = randomized + digito;
-
-    const ref = this.$firebase.database().ref("ListaAlunos");
-    //const id = ref.push().key;
-    const id = 30;
-
-    /*  const id = rId;
-    const ref = this.$firebase.firestore();
-  */
-
-    const registro = {
-      id,
-      dt_registro: new Date().getDate(),
-      aluno: "Flavia",
-      dt_nasc: "12/12/2312",
-      responsavel: "Maria",
-      sala: "Preto"
-    };
-
-    ref.child(id).set(registro, err => {
-      //Mostra Spinner
-      this.$root.$emit("Spinner::hide");
-
-      if (err) {
-        console.error(err);
-      } else {
-        alert("Dados salvos");
+  data: () => {
+    return {
+      myPic: Image,
+      form: {
+        id: "",
+        nome: "",
+        nascimento: "",
+        resp: "",
+        tel: "",
+        sala: ""
       }
-    });
-
-    /*
-    ref
-      .collection("Lista")
-      .doc("test")
-      .set(registro)
-      .then(function() {
-        console.log("Document successfully written!");
-      }); */
+    };
   },
 
+  created() {},
+
   methods: {
-    submit() {}
+    modal() {
+      $("#myModal").modal("show");
+    },
+    submit() {
+      this.$root.$emit("Spinner::show");
+      const ref = this.$firebase.database().ref("ListaAlunos");
+      if (!this.form.id) {
+        this.form.id = ref.push().key;
+      }
+
+      ref.child(this.form.id).update(this.form, err => {
+        this.$root.$emit("Spinner::hide");
+        //Mostra Spinner
+        if (err) {
+          console.error(err);
+        } else {
+          alert("Dados salvos");
+        }
+      });
+    }
   }
 };
 </script>
 
 <style>
 img {
-  padding: 50px;
+  padding: 20px;
   border-style: groove;
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav flex-column">
+  <nav class="nav flex-column justify-content-between">
     <div>
       <router-link
         exact
