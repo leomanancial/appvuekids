@@ -1,9 +1,9 @@
 <template>
-<form>
-  <h1>Busca Aluno</h1>
-  <hr />
+  <form>
+    <h1>Busca Aluno</h1>
+    <hr>
 
-  <div class="form-inline">
+    <div class="form-inline">
       <div class="form-group mx-sm-3 mb-2">
         <input
           type="text"
@@ -17,7 +17,7 @@
         <i class="fas fa-search"></i> Buscar
       </button>
     </div>
-    </form>
+  </form>
 </template>
 
 <script>
@@ -32,21 +32,10 @@ export default {
 
   methods: {
     getData() {
-      this.$firebase
-        .firestore()
-        .doc("ListaGeral/Alunos")
-        .get()
-        .then(function(doc) {
-          if (doc.exists) {
-            console.log(doc.data());
-          } else {
-            // doc.data() will be undefined in this case
-            console.log("Vazio");
-          }
-        })
-        .catch(function(error) {
-          console.log("Error getting document:", error);
-        });
+      const ref = this.$firebase.database().ref("ListaAlunos");
+      ref.on("value", function(snapshot) {
+        console.log(snapshot.val());
+      });
     }
   }
 };

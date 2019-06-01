@@ -11,8 +11,8 @@
       <div class="form-group row">
         <div class="col-2">
           <input
-            disabled
             class="form-control"
+            disabled
             type="text"
             placeholder="código"
             id="codigo-input"
@@ -34,6 +34,7 @@
           <input
             class="form-control"
             required
+            pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
             type="date"
             placeholder="Data Nascimento"
             id="nascimento-input"
@@ -65,7 +66,7 @@
         </div>
 
         <div class="col-3">
-          <select class="custom-select" required v-model="form.sala">
+          <select class="custom-select" v-model="form.sala" required>
             <option selected>Sala</option>
             <option value="Amarela">Amarela</option>
             <option value="Verde">Verde</option>
@@ -76,19 +77,43 @@
     </div>
 
     <div class="form-inline mx-sm-3">
-      <button class="btn btn-success mb-4" @click="submit">
+      <button class="btn btn-success mb-4" @click.prevent="submit">
         <i class="fas fa-user-plus"></i> Salvar
       </button>
-      <button type="button" class="btn btn-warning mb-4" @click="apaga">
+
+      <button type="button" class="btn btn-warning mb-4" @click.prevent="clean">
         <i class="fas fa-user-edit"></i> Limpar
       </button>
     </div>
+
+    <div class="modal fade show" style="padding-right: 15px; display: block;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLiveLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Woohoo, you're reading this text in a modal!</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="modal-backdrop fade show"></div>
   </form>
 </template>
 
 
 <script>
 import Foto from "../../static/avatar.png";
+import ModalAluno from "./../../components/modal/ModalAluno";
+import { setInterval } from "timers";
 
 export default {
   name: "NovoAluno",
@@ -106,30 +131,18 @@ export default {
     };
   },
 
-  created() {},
-
   methods: {
-    apaga() {
+    clean() {
       document.getElementById("MyForm").reset();
     },
-
     submit() {
       this.$root.$emit("Spinner::show");
-      var size = 2;
-      var randomized = Math.ceil(Math.random() * Math.pow(10, size)); //Cria um número aleatório do tamanho definido em size.
-      var digito = Math.ceil(Math.log(randomized)); //Cria o dígito verificador inicial
-      while (digito > 10) {
-        //Pega o digito inicial e vai refinando até ele ficar menor que dez
-        digito = Math.ceil(Math.log(digito));
-      }
-      const Rid = randomized + digito; //Cria a ID
       const ref = this.$firebase.database().ref("ListaAlunos");
+      //Gerador ID
       var str = this.form.nome;
       var strDT = this.form.nascimento;
       const NewID = str.substring(0, 4) + strDT.substring(0, 6);
-
-      console.log(str.substring(0, 4) + strDT.substring(0, 5));
-
+      /////////
       this.form.id = NewID;
       if (!this.form.id) {
         this.form.id = ref.push().key;
@@ -138,17 +151,21 @@ export default {
       }
 
       ref.child(this.form.id).update(this.form, err => {
-        this.$root.$emit("Spinner::hide");
         //Mostra Spinner
         if (err) {
           console.error(err);
         } else {
+          this.$root.$emit("Spinner::hide");
           alert(
             "Aluno " +
               this.form.nome +
               " registrado com o código: " +
               this.form.id
           );
+          //Limmpa o formulario
+          setTimeout(function() {
+            document.getElementById("MyForm").reset();
+          }, 5000);
         }
       });
     }
