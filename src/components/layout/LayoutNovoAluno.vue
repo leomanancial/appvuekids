@@ -30,14 +30,7 @@
 
           <div class="modal-body">
             <div class="row">
-              <div class="form-group col-8">
-                <div v-if="form.foto">
-                  {{form.foto.name}}
-                  <button @click="form.foto = ''" class="btn badge badge-light">
-                    <i class="fa fa-trash text-danger"></i>
-                  </button>
-                </div>
-
+              <div class="form-group col-3">
                 <input
                   ref="input"
                   type="file"
@@ -51,6 +44,14 @@
                   class="btn btn-outline-secondary"
                 >Enviar Foto</button>
               </div>
+              <div class="form-group col-9">
+                <div v-if="form.foto">
+                  {{form.foto.name}}
+                  <button @click="form.foto = ''" class="btn badge badge-light">
+                    <i class="fa fa-trash text-danger"></i>
+                  </button>
+                </div>
+              </div>
 
               <div class="form-group col-8">
                 <input
@@ -62,7 +63,7 @@
                 >
                 <small id="emailHelp" class="form-text text-muted">Nome da criança completo</small>
               </div>
-              <div class="form-group col-8">
+              <div class="form-group col-4">
                 <input class="form-control" type="date" v-model="form.nascimento" required>
                 <small id="emailHelp" class="form-text text-muted">Data de nascimento</small>
               </div>
@@ -79,7 +80,7 @@
                   class="form-text text-muted"
                 >Nome dos pais ou responsável pela criança</small>
               </div>
-              <div class="form-group col-8">
+              <div class="form-group col-4">
                 <input
                   class="form-control"
                   type="tel"
@@ -153,7 +154,7 @@ export default {
       //Gerador ID
       var str = this.form.nome;
       var strDT = this.form.nascimento;
-      const NewID = str.substring(0, 4) + strDT.substring(0, 6);
+      const NewID = str.substring(4) + strDT.substring(5);
       /////////
       this.form.id = NewID;
       if (!this.form.id) {
@@ -198,6 +199,22 @@ export default {
 img {
   padding: 20px;
   border-style: groove;
+}
+
+.modal-header {
+  background: aliceblue !important;
+}
+
+.modal-title {
+  padding-top: 50px;
+
+}
+.modal-content {
+  width: 130% !important;
+}
+
+#icon-trash {
+  font-size: 12px !important;
 }
 </style>
 
