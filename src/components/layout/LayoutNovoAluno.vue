@@ -154,7 +154,7 @@ export default {
       //Gerador ID
       var str = this.form.nome;
       var strDT = this.form.nascimento;
-      const NewID = str.substring(4) + strDT.substring(5);
+      const NewID = str.substring(0,4) + strDT.substring(5);
       /////////
       this.form.id = NewID;
       if (!this.form.id) {
