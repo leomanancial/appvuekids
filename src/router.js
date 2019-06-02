@@ -31,15 +31,8 @@ const router = new Router({
         title: 'Login'
       },
       component: () => import(/* webpackChunkName: "logins" */ './pages/login/Login')
-    },
-    {
-      path: '/novo-aluno',
-      name: 'novo-aluno',
-      meta: {
-        icon: 'fa fa-user-plus', title: 'Novo aluno'
-      },
-      component: () => import(/* webpackChunkName: "novo-aluno" */ './pages/novo-aluno/Novo-aluno')
     }
+
   ]
 })
 router.beforeEach((to, from, next) => {

@@ -21,7 +21,7 @@
 import BaseSpinner from "./components/global/BaseSpinner";
 import LayoutNavigation from "./components/layout/LayoutNavigation";
 import BuscaAluno from "./components/layout/BuscaAluno";
-import ModalAluno from "./components/modal/ModalAluno";
+import LayoutNovoAluno from "./components/layout/LayoutNovoAluno";
 
 export default {
   name: "App",
@@ -29,7 +29,7 @@ export default {
     BaseSpinner,
     LayoutNavigation,
     BuscaAluno,
-    ModalAluno
+    LayoutNovoAluno
   },
   data: () => ({ isLogged: false }),
   mounted() {

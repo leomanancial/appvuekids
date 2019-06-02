@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav flex-column justify-content-between">
+  <nav class="nav nav-colums ">
     <div>
       <router-link
         exact
@@ -12,6 +12,8 @@
         <i class="fa" :class=" `fa-${router.meta.icon}`"></i>
         {{ router.meta.title}}
       </router-link>
+      <hr>
+      <novo-aluno/>
     </div>
       <layout-logout/>
   </nav>
@@ -19,10 +21,12 @@
 
 <script>
 import LayoutLogout from "./LayoutLogout";
+import NovoAluno from "./LayoutNovoAluno";
 
 export default {
   components: {
-    LayoutLogout
+    LayoutLogout,
+    NovoAluno
   },
 
   computed: {
@@ -38,6 +42,7 @@ export default {
   margin-left: -15px;
   width: calc(100% + 30px);
   height: calc(100vh-49px);
+  display: block;
   .nav-link {
     color: var(--white);
     transition: 0.45s;
