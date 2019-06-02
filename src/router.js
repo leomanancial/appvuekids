@@ -31,7 +31,16 @@ const router = new Router({
         title: 'Login'
       },
       component: () => import(/* webpackChunkName: "logins" */ './pages/login/Login')
-    }
+    },
+    {
+      path: '/lista-alunos',
+      name: 'lista-alunos',
+      meta: {
+        icon: 'fas fa-list', title: 'Lista Alunos'
+      },
+      component: () => import(/* webpackChunkName: "logins" */ './pages/lista-entrada/Lista-alunos.vue')
+    },
+
 
   ]
 })
