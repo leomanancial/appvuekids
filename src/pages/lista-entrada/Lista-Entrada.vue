@@ -58,6 +58,12 @@ import BuscaAluno from "./../../components/layout/BuscaAluno";
 export default {
   components: {
     BuscaAluno
+  },
+
+  data: () =>{
+    return{
+
+    }
   }
 };
 </script>
