@@ -38,7 +38,7 @@ const router = new Router({
       meta: {
         icon: 'fas fa-list', title: 'Lista Alunos'
       },
-      component: () => import(/* webpackChunkName: "logins" */ './pages/lista-entrada/Lista-alunos.vue')
+      component: () => import(/* webpackChunkName: "logins" */ './pages/lista-entrada/Lista-alunos')
     },
 
 

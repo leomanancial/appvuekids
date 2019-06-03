@@ -5,18 +5,18 @@
 @import 'variables';
 
 *{
-	font-family: 'Muli' !important, sans-serif ;
+	font-family: 'Muli' , sans-serif !important ;
 }
 
 .btn{
   //border-radius: 0 !important;
 }
  .btn-primary {
-   background: $blue-light-plus;
+   background: $blue-light-plus !important;
    &:hover{
-     background: $blue-light;
+     background: $blue-light !important;
    }
-   font-size: 12pt;
+   font-size: 12pt !important;
  }
 
 h1{

@@ -23,6 +23,7 @@ import LayoutNavigation from "./components/layout/LayoutNavigation";
 import BuscaAluno from "./components/layout/BuscaAluno";
 import LayoutNovoAluno from "./components/layout/LayoutNovoAluno";
 
+
 export default {
   name: "App",
   components: {
