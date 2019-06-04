@@ -22,7 +22,7 @@
           <td>{{item.resp}}</td>
           <td>{{item.id}}</td>
           <td>
-            <button class="btn btn-warning" @click="writeNewAluno">Editar</button>
+            <button class="btn btn-warning" @click="mostraID(item.id)">Editar</button>
           </td>
           <td scope="row">
             <button class="btn btn-danger">Excluir</button>
@@ -30,6 +30,9 @@
         </tr>
       </tbody>
     </table>
+    <div>
+      <input type="text" name="nome" v-model="form.nome">
+    </div>
   </div>
 </template>
 <script>
@@ -40,7 +43,10 @@ export default {
   },
 
   data: () => ({
-    alunoss: []
+    alunoss: [],
+    form: {
+      nome: ""
+    }
   }),
 
   methods: {
@@ -51,7 +57,8 @@ export default {
         this.alunoss = Object.keys(values).map(i => values[i]);
       });
     },
-    writeNewAluno() {
+
+    mostraID(iD) {
       const ref = this.$firebase.database().ref("ListaAlunos");
       ref.on("value", snapshot => {
         const values = snapshot.val();
@@ -59,7 +66,22 @@ export default {
       });
 
       this.alunoss.forEach(element => {
-        console.log(element);
+        if (iD == element.id) {
+          ref.child(iD).update(this.form, err => {
+            //Mostra Spinner
+            if (err) {
+              console.error(err);
+            } else {
+              this.$root.$emit("Spinner::hide");
+              alert(
+                "Aluno " +
+                  this.form.nome +
+                  " registrado com o código: " +
+                  this.form.id
+              );
+            }
+          });
+        }
       });
     }
   }
