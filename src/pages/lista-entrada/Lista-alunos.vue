@@ -1,7 +1,7 @@
 ]<template>
   <div class="container-fluid">
     <h1>Lista de Alunos</h1>
-    <div v-for="item in alunoss">{{item.nome}}</div>
+    <!--div-- v-for="item in alunoss">{{item.nome}} Exemplo</!--div-->
     <table class="table table-hover">
       <thead>
         <tr>
@@ -14,15 +14,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr v-for="item in alunoss">
           <td scope="row" class="foto">
-            <img v-bind:src="this.alunoss[0].foto" style="border:none">
+            <img v-bind:src="item.foto" style="border:none">
           </td>
-          <td scope="row">{{this.alunoss[0].nome}}</td>
-          <td scope="row">{{this.alunoss[0].resp}}</td>
-          <td scope="row">{{this.alunoss[0].id}}</td>
-          <td scope="row">
-            <button class="btn btn-warning">Editar</button>
+          <td>{{item.nome}}</td>
+          <td>{{item.resp}}</td>
+          <td>{{item.id}}</td>
+          <td>
+            <button class="btn btn-warning" @click="writeNewAluno">Editar</button>
           </td>
           <td scope="row">
             <button class="btn btn-danger">Excluir</button>
@@ -32,15 +32,9 @@
     </table>
   </div>
 </template>
-
 <script>
 export default {
   name: "ListaAlunos",
-
-/*   props: {
-    data: { type: Object, required: true }
-  },
- */
   created: function() {
     this.getData();
   },
@@ -56,10 +50,17 @@ export default {
         const values = snapshot.val();
         this.alunoss = Object.keys(values).map(i => values[i]);
       });
-      /*   ref.on("value", function(snapshot) {
-        //console.log(snapshot.val());
-        this.alunoss = snapshot.val();
-      }); */
+    },
+    writeNewAluno() {
+      const ref = this.$firebase.database().ref("ListaAlunos");
+      ref.on("value", snapshot => {
+        const values = snapshot.val();
+        this.alunoss = Object.keys(values).map(i => values[i]);
+      });
+
+      this.alunoss.forEach(element => {
+        console.log(element);
+      });
     }
   }
 };
