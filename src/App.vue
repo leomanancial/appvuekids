@@ -21,7 +21,7 @@
 import BaseSpinner from "./components/global/BaseSpinner";
 import LayoutNavigation from "./components/layout/LayoutNavigation";
 import BuscaAluno from "./components/layout/BuscaAluno";
-import LayoutNovoAluno from "./components/layout/LayoutNovoAluno";
+import NovoAluno from "./components/layout/NovoAluno";
 import ListaAlunos from "./pages/lista-entrada/Lista-alunos";
 
 
@@ -31,7 +31,7 @@ export default {
     BaseSpinner,
     LayoutNavigation,
     BuscaAluno,
-    LayoutNovoAluno,
+    NovoAluno,
     ListaAlunos
   },
   data: () => ({ isLogged: false }),

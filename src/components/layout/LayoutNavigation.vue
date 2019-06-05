@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav nav-colums ">
+  <nav class="nav flex-colums justify-content-between">
     <div>
       <router-link
         exact
@@ -12,16 +12,17 @@
         <i class="fa" :class=" `fa-${router.meta.icon}`"></i>
         {{ router.meta.title}}
       </router-link>
-      <hr>
-      <novo-aluno/>
     </div>
-      <layout-logout/>
+      <novo-aluno/>
+      <div>
+        <layout-logout/>
+      </div>
   </nav>
 </template>
 
 <script>
 import LayoutLogout from "./LayoutLogout";
-import NovoAluno from "./LayoutNovoAluno";
+import NovoAluno from "./NovoAluno";
 
 export default {
   components: {
