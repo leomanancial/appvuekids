@@ -47,7 +47,7 @@
             </div>
             <div class="modal-body">
               <div class="row">
-               <!--  <div class="form-group col-3">
+                <!--  <div class="form-group col-3">
                   <input
                     ref="input"
                     type="file"
@@ -60,7 +60,7 @@
                     type="button"
                     class="btn btn-outline-secondary"
                   >Enviar Foto</button>
-                </div> -->
+                </div>-->
                 <div class="form-group col-9">
                   <div v-if="form.foto">
                     {{form.foto.name}}
@@ -70,26 +70,28 @@
                   </div>
                 </div>
 
+                <div class="form-group col-4">
+                  <input class="form-control" type="text" v-model="item.id" disabled>
+                  <small id="emailHelp" class="form-text text-muted">Matricula</small>
+                </div>
                 <div class="form-group col-8">
                   <input
                     class="form-control"
                     type="text"
-                    placeholder="Nome"
-                    v-model="form.nome"
+                    v-model="item.nome"
                     required
                   >
                   <small id="emailHelp" class="form-text text-muted">Nome da criança completo</small>
                 </div>
                 <div class="form-group col-4">
-                  <input class="form-control" type="date" v-model="form.nascimento" required>
+                  <input class="form-control" type="date" v-model="item.nascimento" required>
                   <small id="emailHelp" class="form-text text-muted">Data de nascimento</small>
                 </div>
                 <div class="form-group col-8">
                   <input
                     class="form-control"
                     type="text"
-                    placeholder="Responsável"
-                    v-model="form.resp"
+                    v-model="item.resp"
                     required
                   >
                   <small
@@ -102,13 +104,13 @@
                     class="form-control"
                     type="tel"
                     placeholder="Tel de contato"
-                    v-model="form.tel"
+                    v-model="item.tel"
                     required
                   >
                   <small id="emailHelp" class="form-text text-muted">Telefone para contato</small>
                 </div>
                 <div class="form-group col-8">
-                  <select class="custom-select" v-model="form.sala" required>
+                  <select class="custom-select" v-model="item.sala" required>
                     <option selected>Sala</option>
                     <option value="Amarela">Amarela</option>
                     <option value="Verde">Verde</option>
