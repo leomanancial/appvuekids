@@ -187,6 +187,7 @@ export default {
               " registrado com o código: " +
               this.form.id
           );
+          this.form = null;
           this.closeModal();
         }
       });

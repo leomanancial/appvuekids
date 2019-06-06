@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid" id="lista-aluno-tab">
     <h1>Lista de Alunos</h1>
-    <div class="p-3 mb-2 row" id="lista-alunos-header">
+    <div class="row" id="lista-alunos-header">
       <div class="col-1">Foto</div>
       <div class="col-2">Matricula</div>
       <div class="col-3">Nome</div>
@@ -18,10 +18,7 @@
       <td class="col-3">{{item.resp}}</td>
       <td class="col-2">{{item.nascimento}}</td>
       <td>
-        <button
-          class="btn btn-warning btn-sm"
-          @click.prevent="mostraModal(item.foto, item.nome, item.id, item.resp, item.nascimento, item.sala, item.tel )"
-        >Editar</button>
+        <button class="btn btn-warning btn-sm" @click.prevent="mostraModal(item)">Editar</button>
       </td>
     </div>
 
@@ -158,17 +155,9 @@ export default {
   }),
 
   methods: {
-    mostraModal(gFoto, gNome, gId, gResp, gNasci, gSala, gTel) {
+    mostraModal(item) {
       this.showModal = true;
-      this.form.foto = gFoto;
-      this.form.id = gId;
-      this.form.nome = gNome;
-      this.form.resp = gResp;
-      this.form.nascimento = gNasci;
-      this.form.sala = gSala;
-      this.form.tel = gTel;
-
-      console.log(this.form.tel);
+      this.form = item;
     },
 
     closeModal() {
@@ -191,6 +180,7 @@ img {
 }
 
 #lista-alunos {
+  align-items: center;
   font-size: 12pt;
   color: var(--gray);
   transition: 0.45s;
@@ -199,13 +189,18 @@ img {
     background-color: transparent;
   }
   &:hover {
+    padding: 10px;
+    border-radius: 5px;
     color: var(--white);
     background-color: var(--blue-soft);
   }
 }
 
 #lista-alunos-header {
-  font-size: 15pt;
+  font-weight: bolder;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 12pt;
   background-color: var(--gray-soft);
   color: var(--gray);
 }

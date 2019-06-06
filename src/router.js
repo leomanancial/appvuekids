@@ -6,22 +6,23 @@ Vue.use(Router)
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: [
-    {
+  routes: [{
       path: '/home',
       name: 'home',
       meta: {
-        icon: 'home', title: 'Home'
+        icon: 'home',
+        title: 'Home'
       },
-      component: () => import(/* webpackChunkName: "home" */ './pages/home/Home')
+      component: () => import( /* webpackChunkName: "home" */ './pages/home/Home')
     },
     {
       path: '/nova-lista',
       name: 'nova-lista',
       meta: {
-        icon: 'fas fa-plus', title: 'Nova lista'
+        icon: 'fas fa-plus',
+        title: 'Nova lista'
       },
-      component: () => import(/* webpackChunkName: "lista-entrada" */ './pages/lista-entrada/Nova-lista')
+      component: () => import( /* webpackChunkName: "lista-entrada" */ './pages/lista-entrada/Nova-lista')
 
     },
     {
@@ -30,17 +31,17 @@ const router = new Router({
       meta: {
         title: 'Login'
       },
-      component: () => import(/* webpackChunkName: "logins" */ './pages/login/Login')
+      component: () => import( /* webpackChunkName: "logins" */ './pages/login/Login')
     },
     {
       path: '/lista-alunos',
       name: 'lista-alunos',
       meta: {
-        icon: 'fas fa-list', title: 'Lista Alunos'
+        icon: 'fas fa-list',
+        title: 'Lista Alunos'
       },
-      component: () => import(/* webpackChunkName: "logins" */ './pages/lista-entrada/Lista-alunos')
+      component: () => import( /* webpackChunkName: "logins" */ './pages/lista-entrada/Lista-alunos')
     },
-
 
   ]
 })
@@ -49,9 +50,11 @@ router.beforeEach((to, from, next) => {
   document.title = `${to.meta.title} - Kids App`
 
   if (!window.uid && to.name != 'login') {
-    next({ name: 'login' })
+    next({
+      name: 'login'
+    })
   } else {
-  next()
+    next()
   }
 })
 
