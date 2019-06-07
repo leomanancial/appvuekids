@@ -9,20 +9,19 @@
       <div class="col-2">Nascimento</div>
       <div class="col-1">Ação</div>
     </div>
-    <div class="tabela-lista-alunos">
-      <div class="lista-alunos-item row" v-for="item in alunoss" id="lista-alunos">
-        <td class="col-1 foto">
-          <img v-bind:src="item.foto" class="rounded-circle" >
-        </td>
-        <td class="col-2">{{item.id}}</td>
 
-        <td class="col-3">{{item.nome}}</td>
-        <td class="col-3">{{item.resp}}</td>
-        <td class="col-2">{{item.nascimento}}</td>
-        <td>
-          <button class="btn btn-warning btn-sm" @click.prevent="mostraModal(item)">Editar</button>
-        </td>
-      </div>
+    <div class="lista-alunos-item row" v-for="item in alunoss" id="lista-alunos">
+      <td class="col-1 foto">
+        <img v-bind:src="item.foto" class="rounded-circle">
+      </td>
+      <td class="col-2">{{item.id}}</td>
+
+      <td class="col-3">{{item.nome}}</td>
+      <td class="col-3">{{item.resp}}</td>
+      <td class="col-2">{{item.nascimento}}</td>
+      <td>
+        <button class="btn btn-warning btn-sm" @click.prevent="mostraModal(item)">Editar</button>
+      </td>
     </div>
 
     <!-- Button trigger modal -->
@@ -184,22 +183,24 @@ img {
   padding: 0;
 }
 
-#foto-header{
+#foto-header {
   max-width: 45% !important;
   padding: 0;
 }
 
 #lista-alunos {
+  max-width: 100%;
   align-items: center;
   font-size: 12pt;
   color: var(--gray);
   transition: 0.45s;
+  background-color: #e0f8e6;
   &.active {
     color: var(--gray);
     background-color: transparent;
   }
   &:hover {
-    padding: 10px;
+    padding: 12px;
     border-radius: 5px;
     color: var(--white);
     background-color: var(--blue-soft);
@@ -207,16 +208,18 @@ img {
 }
 
 #lista-alunos-header {
+  max-width: 100%;
   font-weight: bolder;
   padding: 10px;
   border-radius: 5px;
   font-size: 12pt;
-  background-color: var(--gray-soft);
+  background-color: #FAAC58;
   color: var(--gray);
 }
 
 .lista-alunos-item {
-  padding: 10px;
+  padding: 12px;
+
 }
 
 #id {
