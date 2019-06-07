@@ -3,6 +3,7 @@
     <button class="btn btn-md bt-outline-primary w-75" @click="showModal=true">
       <i class="fas fa-user-plus"></i>
       Novo Aluno
+
     </button>
 
     <div
@@ -119,6 +120,8 @@
 
 <script>
 import LogoKids from "../../static/avatar.png";
+import Datepicker from 'vuejs-datepicker';
+
 export default {
   data: () => ({
     showModal: false,

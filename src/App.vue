@@ -25,6 +25,7 @@ import NovoAluno from "./components/layout/NovoAluno";
 import ListaAlunos from "./pages/lista-entrada/Lista-alunos";
 
 
+
 export default {
   name: "App",
   components: {
@@ -32,7 +33,7 @@ export default {
     LayoutNavigation,
     BuscaAluno,
     NovoAluno,
-    ListaAlunos
+    ListaAlunos,
   },
   data: () => ({ isLogged: false }),
   mounted() {

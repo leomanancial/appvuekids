@@ -9,17 +9,20 @@
       <div class="col-2">Nascimento</div>
       <div class="col-1">Ação</div>
     </div>
-    <div class="lista-alunos-item row" v-for="item in alunoss" id="lista-alunos">
-      <td class="col-1 foto">
-        <img v-bind:src="item.foto" class="rounded-circle">
-      </td>
-      <td class="col-2">{{item.id}}</td>
-      <td class="col-3">{{item.nome}}</td>
-      <td class="col-3">{{item.resp}}</td>
-      <td class="col-2">{{item.nascimento}}</td>
-      <td>
-        <button class="btn btn-warning btn-sm" @click.prevent="mostraModal(item)">Editar</button>
-      </td>
+    <div class="tabela-lista-alunos">
+      <div class="lista-alunos-item row" v-for="item in alunoss" id="lista-alunos">
+        <td class="col-1 foto">
+          <img v-bind:src="item.foto" class="rounded-circle">
+        </td>
+        <td class="col-2">{{item.id}}</td>
+
+        <td class="col-3">{{item.nome}}</td>
+        <td class="col-3">{{item.resp}}</td>
+        <td class="col-2">{{item.nascimento}}</td>
+        <td>
+          <button class="btn btn-warning btn-sm" @click.prevent="mostraModal(item)">Editar</button>
+        </td>
+      </div>
     </div>
 
     <!-- Button trigger modal -->
@@ -34,9 +37,6 @@
           <div class="modal-header">
             <div v-if="form.foto">
               <img v-bind:src="form.foto" class="rounded-circle" id="foto-header">
-              <button @click="form.foto = ''" class="btn badge badge-light">
-                <i class="fa fa-trash text-danger"></i>
-              </button>
             </div>
             <h1 class="modal-title">{{this.form.nome}}</h1>
             <button
@@ -51,21 +51,6 @@
           </div>
           <div class="modal-body">
             <div class="row">
-              <!--   <div class="form-group col-3">
-                <input
-                  ref="input"
-                  type="file"
-                  class="d-none"
-                  accept="image/*"
-                  @change="handleFile($event)"
-                >
-                <button
-                  @click="openFileDialog"
-                  type="button"
-                  class="btn btn-outline-secondary"
-                >Enviar Foto</button>
-              </div>-->
-              <div class="form-group col-9"></div>
               <div class="form-group col-4">
                 <input class="form-control" type="text" v-model="form.id" disabled>
                 <small id="emailHelp" class="form-text text-muted">Matrícula</small>
@@ -121,7 +106,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click.prevent="closeModal()">Fechar</button>
-            <button class="btn btn-success">Salvar</button>
+            <button class="btn btn-success" @click="submit()">Salvar</button>
           </div>
         </div>
       </div>
@@ -145,12 +130,12 @@ export default {
     alunoss: [],
     form: {
       id: "",
-      foto: "",
       nome: "",
       nascimento: "",
       resp: "",
       tel: "",
-      sala: ""
+      sala: "",
+      foto: "",
     }
   }),
 
@@ -158,6 +143,7 @@ export default {
     mostraModal(item) {
       this.showModal = true;
       this.form = item;
+      console.log(this.form.foto);
     },
 
     closeModal() {
@@ -169,6 +155,27 @@ export default {
         const values = snapshot.val();
         this.alunoss = Object.keys(values).map(i => values[i]);
       });
+    },
+
+    submit() {
+      this.$root.$emit("Spinner::show");
+      const ref = this.$firebase.database().ref("ListaAlunos");
+
+      const foto = this.form.foto;
+
+
+      ref.child(this.form.id).update(this.form, err => {
+        this.$root.$emit("Spinner::hide");
+        //Mostra Spinner
+        alert(
+          "Aluno " +
+            this.form.nome +
+            " registrado com o código: " +
+            this.form.id
+        );
+
+      });
+      this.closeModal();
     }
   }
 };

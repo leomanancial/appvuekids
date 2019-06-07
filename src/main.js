@@ -6,6 +6,7 @@ import FirebaseVue from './firebase'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
+
 Vue.use(FirebaseVue)
 Vue.config.productionTip = false
 
