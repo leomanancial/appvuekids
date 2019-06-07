@@ -14,9 +14,9 @@
       <tbody>
         <tr>
           <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
+          <td>Arthur</td>
+          <td>Leonardo</td>
+          <td>153</td>
           <td>
             <button class="btn btn-warning">Editar</button>
           </td>
@@ -26,9 +26,9 @@
         </tr>
         <tr>
           <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
+          <td>Davi</td>
+          <td>Samuel</td>
+          <td>54</td>
           <td>
             <button class="btn btn-warning">Editar</button>
           </td>
@@ -38,8 +38,9 @@
         </tr>
         <tr>
           <th scope="row">3</th>
-          <td colspan="2">Larry the Bird</td>
-          <td>@twitter</td>
+          <td>Maria Eduarda</td>
+          <td>Fabio</td>
+          <td>130</td>
           <td>
             <button class="btn btn-warning">Editar</button>
           </td>

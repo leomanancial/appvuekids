@@ -1,9 +1,8 @@
 <template>
   <div>
-    <button class="btn btn-md bt-outline-primary w-75" @click="showModal=true">
+    <button class="btn btn-md bt-outline-primary w-75" @click="mostraModal">
       <i class="fas fa-user-plus"></i>
       Novo Aluno
-
     </button>
 
     <div
@@ -120,7 +119,7 @@
 
 <script>
 import LogoKids from "../../static/avatar.png";
-import Datepicker from 'vuejs-datepicker';
+import Datepicker from "vuejs-datepicker";
 
 export default {
   data: () => ({
@@ -139,6 +138,11 @@ export default {
     }
   }),
   methods: {
+
+    mostraModal(){
+      this.showModal = true;
+    },
+
     openFileDialog() {
       this.$refs.input.value = null;
       this.$refs.input.click();
@@ -149,6 +153,9 @@ export default {
 
     closeModal() {
       this.showModal = false;
+      if(this.form & !this.form.foto){
+        this.form = null;
+      }
     },
 
     async submit() {
@@ -157,7 +164,7 @@ export default {
       //Gerador ID
       var str = this.form.nome;
       var strDT = this.form.nascimento;
-      const NewID = str.substring(0,4) + strDT.substring(5);
+      const NewID = str.substring(0, 4) + strDT.substring(5);
       /////////
       this.form.id = NewID;
       if (!this.form.id) {
@@ -188,12 +195,12 @@ export default {
             "Aluno " +
               this.form.nome +
               " registrado com o código: " +
-              this.form.id
+              this.form.id,
+              this.form.reset()
           );
-          this.form = null;
-          this.closeModal();
         }
       });
+      this.closeModal();
     }
   }
 };
@@ -211,7 +218,6 @@ img {
 
 .modal-title {
   padding-top: 50px;
-
 }
 .modal-content {
   width: 130% !important;

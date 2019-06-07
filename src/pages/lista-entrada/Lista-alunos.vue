@@ -12,7 +12,7 @@
     <div class="tabela-lista-alunos">
       <div class="lista-alunos-item row" v-for="item in alunoss" id="lista-alunos">
         <td class="col-1 foto">
-          <img v-bind:src="item.foto" class="rounded-circle">
+          <img v-bind:src="item.foto" class="rounded-circle" >
         </td>
         <td class="col-2">{{item.id}}</td>
 
@@ -135,7 +135,7 @@ export default {
       resp: "",
       tel: "",
       sala: "",
-      foto: "",
+      foto: ""
     }
   }),
 
@@ -143,7 +143,6 @@ export default {
     mostraModal(item) {
       this.showModal = true;
       this.form = item;
-      console.log(this.form.foto);
     },
 
     closeModal() {
@@ -163,7 +162,6 @@ export default {
 
       const foto = this.form.foto;
 
-
       ref.child(this.form.id).update(this.form, err => {
         this.$root.$emit("Spinner::hide");
         //Mostra Spinner
@@ -171,9 +169,9 @@ export default {
           "Aluno " +
             this.form.nome +
             " registrado com o código: " +
-            this.form.id
+            this.form.id,
+          (this.form = null)
         );
-
       });
       this.closeModal();
     }
@@ -183,6 +181,11 @@ export default {
 <style scoped lang="scss">
 img {
   max-width: 70% !important;
+  padding: 0;
+}
+
+#foto-header{
+  max-width: 45% !important;
   padding: 0;
 }
 
