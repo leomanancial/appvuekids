@@ -15,12 +15,12 @@
 
 <script>
 import BuscaAluno from "./../../components/layout/BuscaAluno";
-import ListaEntrada from "./../../pages/lista-entrada/Lista-Entrada";
+import ListaPresenca from "./../../pages/lista-entrada/Lista-Presenca";
 
 export default {
   components: {
     BuscaAluno,
-    ListaEntrada
+    ListaPresenca
   }
 };
 </script>

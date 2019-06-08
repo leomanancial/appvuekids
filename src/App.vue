@@ -22,7 +22,7 @@ import BaseSpinner from "./components/global/BaseSpinner";
 import LayoutNavigation from "./components/layout/LayoutNavigation";
 import BuscaAluno from "./components/layout/BuscaAluno";
 import NovoAluno from "./components/layout/NovoAluno";
-import ListaAlunos from "./pages/lista-entrada/Lista-alunos";
+import ListaPresenca from "./pages/lista-entrada/Lista-Presenca";
 
 
 
@@ -33,7 +33,7 @@ export default {
     LayoutNavigation,
     BuscaAluno,
     NovoAluno,
-    ListaAlunos,
+    ListaPresenca
   },
   data: () => ({ isLogged: false }),
   mounted() {
@@ -55,7 +55,7 @@ export default {
 <style lang="scss">
 #app {
   min-height: 100vh;
-  background-color: var(--gray-light);
+  background-color: white;
   .navigation-sidebar {
     background-color: var(--blue-light-plus);
     height: 100vh;

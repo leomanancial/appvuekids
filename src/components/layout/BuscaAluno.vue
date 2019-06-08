@@ -34,7 +34,7 @@ export default {
     getData() {
       const ref = this.$firebase.database().ref("ListaAlunos");
       ref.on("value", function(snapshot) {
-        console.log(snapshot.val());
+        //console.log(snapshot.val());
       });
     }
   }

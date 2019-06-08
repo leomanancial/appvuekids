@@ -1,5 +1,5 @@
 <template>
-  <form @click.prevent="dologin()" class="form-login">
+  <form @submit.prevent="dologin()" class="form-login">
     <div class="card">
       <div class="card-header text-center">
         <h1 class="mb-0">Kids App</h1>
@@ -27,7 +27,6 @@
           Entrar
           <i class="fa fa-sign-in-alt"></i>
         </button>
-        <button @click="googleSingIn">Google</button>
       </div>
     </div>
   </form>
@@ -45,29 +44,6 @@ export default {
   },
 
   methods: {
-    async googleSingIn() {
-      var provider = new firebase.auth.GoogleAuthProvider();
-      firebase
-        .auth()
-        .signInWithPopup(provider)
-        .then(function(result) {
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          var token = result.credential.accessToken;
-          // The signed-in user info.
-          var user = result.user;
-          // ...
-        })
-        .catch(function(error) {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // The email of the user's account used.
-          var email = error.email;
-          // The firebase.auth.AuthCredential type that was used.
-          var credential = error.credential;
-          // ...
-        });
-    },
     // Metodos Async espera algo acontecer no caso o Await
     async dologin() {
       const { email, password } = this;

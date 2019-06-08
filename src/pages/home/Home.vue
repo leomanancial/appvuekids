@@ -13,12 +13,12 @@ export default {
     foto: ""
   }),
 
-  created() {
+/*   created() {
     var user = this.$firebase.auth().currentUser;
     this.email = user.displayName;
     this.foto = user.photoURL;
     //console.log(this.email)
-  }
+  } */
 };
 </script>
 <style scoped lang="scss">

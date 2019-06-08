@@ -119,7 +119,6 @@
 
 <script>
 import LogoKids from "../../static/avatar.png";
-import Datepicker from "vuejs-datepicker";
 
 export default {
   data: () => ({

@@ -16,13 +16,13 @@ const router = new Router({
       component: () => import( /* webpackChunkName: "home" */ './pages/home/Home')
     },
     {
-      path: '/nova-lista',
-      name: 'nova-lista',
+      path: '/lista-presenca',
+      name: 'lista-presenca',
       meta: {
         icon: 'fas fa-plus',
-        title: 'Nova lista'
+        title: 'Lista de Presenca'
       },
-      component: () => import( /* webpackChunkName: "lista-entrada" */ './pages/lista-entrada/Nova-lista')
+      component: () => import( /* webpackChunkName: "lista-entrada" */ './pages/lista-entrada/Lista-Presenca')
 
     },
     {
@@ -34,13 +34,13 @@ const router = new Router({
       component: () => import( /* webpackChunkName: "logins" */ './pages/login/Login')
     },
     {
-      path: '/lista-alunos',
-      name: 'lista-alunos',
+      path: '/alunos-matriculados',
+      name: 'alunos-matriculados',
       meta: {
         icon: 'fas fa-list',
-        title: 'Lista Alunos'
+        title: 'Alunos Matriculados'
       },
-      component: () => import( /* webpackChunkName: "logins" */ './pages/lista-entrada/Lista-alunos')
+      component: () => import( /* webpackChunkName: "logins" */ './pages/lista-entrada/Alunos-Matriculados')
     },
 
   ]
