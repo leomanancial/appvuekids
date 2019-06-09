@@ -13,12 +13,12 @@
         {{ router.meta.title}}
       </router-link>
     </div>
-    <div class="nav-aluno">
-      <novo-aluno/>
+
+    <novo-aluno/>
+
+    <div>
+      <layout-logout/>
     </div>
-      <div>
-        <layout-logout/>
-      </div>
   </nav>
 </template>
 
@@ -41,7 +41,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.nav-aluno,
 .nav {
   margin-left: -15px;
   width: calc(100% + 30px);

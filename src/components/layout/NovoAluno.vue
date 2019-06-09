@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <button class="btn btn-md bt-outline-primary w-75" @click="mostraModal">
+  <div id="MyModal">
+    <button class="btn btn-md bt-outline-primary" @click="mostraModal" id="btn-novo-aluno">
       <i class="fas fa-user-plus"></i>
       Novo Aluno
     </button>
@@ -28,7 +28,7 @@
             </button>
           </div>
 
-          <div class="modal-body">
+          <div class="modal-body" id="MyModal">
             <div class="row">
               <div class="form-group col-3">
                 <input
@@ -137,8 +137,13 @@ export default {
     }
   }),
   methods: {
+    created() {
+      if (!this.form) {
+        this.form = "";
+      }
+    },
 
-    mostraModal(){
+    mostraModal() {
       this.showModal = true;
     },
 
@@ -152,9 +157,11 @@ export default {
 
     closeModal() {
       this.showModal = false;
-      if(this.form & !this.form.foto){
-        this.form = null;
-      }
+    },
+
+    limpaModal() {
+      console.log("Limpa Modal");
+      console.log(this.form);
     },
 
     async submit() {
@@ -194,12 +201,11 @@ export default {
             "Aluno " +
               this.form.nome +
               " registrado com o código: " +
-              this.form.id,
-              this.form.reset()
+              this.form.id
           );
+          this.closeModal();
         }
       });
-      this.closeModal();
     }
   }
 };
@@ -224,6 +230,23 @@ img {
 
 #icon-trash {
   font-size: 12px !important;
+}
+
+#btn-novo-aluno {
+  margin-left: -58px;
+  width: calc(100% + 30px);
+  height: calc(100vh-49px);
+  display: block;
+  color: var(--white);
+}
+#btn-novo-aluno:hover {
+  color: var(--white);
+  background-color: var(--gray);
+  width: calc(100% + 58px);
+  border-radius: 0 !important;
+  height: calc(100vh-49px);
+  margin-right: 10px;
+  padding-right: 20px;
 }
 </style>
 
