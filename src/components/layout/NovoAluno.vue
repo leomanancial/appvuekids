@@ -1,5 +1,5 @@
 <template>
-  <div id="MyModal">
+  <div>
     <button class="btn btn-md bt-outline-primary" @click="mostraModal" id="btn-novo-aluno">
       <i class="fas fa-user-plus"></i>
       Novo Aluno
@@ -137,14 +137,14 @@ export default {
     }
   }),
   methods: {
-    created() {
-      if (!this.form) {
-        this.form = "";
-      }
-    },
-
     mostraModal() {
       this.showModal = true;
+      this.form.nome = null;
+      this.form.resp = null;
+      this.form.nascimento = null;
+      this.form.tel = null;
+      this.form.sala = null;
+      console.log("Limpou");
     },
 
     openFileDialog() {
@@ -158,12 +158,6 @@ export default {
     closeModal() {
       this.showModal = false;
     },
-
-    limpaModal() {
-      console.log("Limpa Modal");
-      console.log(this.form);
-    },
-
     async submit() {
       this.$root.$emit("Spinner::show");
       const ref = this.$firebase.database().ref("ListaAlunos");
