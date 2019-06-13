@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <form @submit.prevent="submit()">
     <button class="btn btn-md bt-outline-primary" @click="mostraModal" id="btn-novo-aluno">
       <i class="fas fa-user-plus"></i>
       Novo Aluno
@@ -104,7 +104,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="closeModal">Fechar</button>
-            <button type="button" class="btn btn-primary" @click.prevent="submit()">Salvar</button>
+            <button class="btn btn-primary" >Salvar</button>
           </div>
         </div>
       </div>
@@ -114,7 +114,7 @@
       :style="{display: showModal ? 'block' : 'none'}"
       :class="{show: showModal}"
     ></div>
-  </div>
+  </form>
 </template>
 
 <script>
@@ -188,16 +188,17 @@ export default {
       ref.child(this.form.id).update(this.form, err => {
         //Mostra Spinner
         if (err) {
-          console.error(err);
+          this.$root.$emit("Alerta::show", {
+            type: "danger",
+            message: "Não foi possível realizar o cadastro, tente novamente"
+          });
         } else {
-          this.$root.$emit("Spinner::hide");
-          alert(
-            "Aluno " +
-              this.form.nome +
-              " registrado com o código: " +
-              this.form.id
-          );
+          this.$root.$emit("Alerta::show", {
+            type: "success",
+            message: "Cadastro realizado com sucesso!"
+          });
           this.closeModal();
+          this.$root.$emit("Spinner::hide");
         }
       });
     }

@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <layout-alerta/>
     <base-spinner/>
     <div class="container-fluid" v-if="isLogged">
       <div class="row">
@@ -23,6 +24,7 @@ import LayoutNavigation from "./components/layout/LayoutNavigation";
 import BuscaAluno from "./components/layout/BuscaAluno";
 import NovoAluno from "./components/layout/NovoAluno";
 import ListaPresenca from "./pages/lista-entrada/Lista-Presenca";
+import LayoutAlerta from "./components/global/LayoutAlerta";
 
 
 
@@ -33,7 +35,8 @@ export default {
     LayoutNavigation,
     BuscaAluno,
     NovoAluno,
-    ListaPresenca
+    ListaPresenca,
+    LayoutAlerta
   },
   data: () => ({ isLogged: false }),
   mounted() {
