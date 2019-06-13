@@ -206,18 +206,24 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 img {
-  padding: 20px;
+  padding: 0px;
+  margin-top: 15px;
+  margin-bottom: -20px;
   border-style: groove;
 }
 
 .modal-header {
   background: aliceblue !important;
+  max-height: 170px;
+  margin-top: -20px;
+  padding-top: 10 !important;
 }
 
 .modal-title {
   padding-top: 50px;
+  margin-left: 50px;
 }
 .modal-content {
   width: 130% !important;

@@ -11,7 +11,7 @@
 .btn{
   //border-radius: 0 !important;
 }
- .btn-primary {
+ .btn-primary .btn-secondary{
    background: $blue-light-plus !important;
    &:hover{
      background: $blue-light !important;

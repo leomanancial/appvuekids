@@ -24,7 +24,6 @@
 export default {
   name: "Lista",
   data: () => ({
-    alunoss: []
   }),
   created() {
     this.getData();
@@ -32,10 +31,10 @@ export default {
 
   methods: {
     getData() {
-      const ref = this.$firebase.database().ref("ListaAlunos");
+      /* const ref = this.$firebase.database().ref("ListaAlunos");
       ref.on("value", function(snapshot) {
         //console.log(snapshot.val());
-      });
+      }); */
     }
   }
 };
