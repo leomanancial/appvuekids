@@ -1,5 +1,21 @@
 <template>
   <div class="container-fluid">
+    <h1>Busca Aluno</h1>
+    <!--busca-aluno/-->
+    <div>
+      <div>
+        <vue-bootstrap-typeahead v-model="query" :data="this.aluno" placeholder="Enter a country"/>
+        <p class="lead">
+          Selected Country:
+          <strong>{{query}}</strong>
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <button class="btn btn-info">Adicionar</button>
+    </div>
+
     <hr>
     <h1>Lista de Presença</h1>
     <table class="table table-hover">
@@ -34,34 +50,34 @@
 <script>
 import BuscaAluno from "./../../components/layout/BuscaAluno";
 import axios from "axios";
+import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
+import Stringify from "vue-stringify";
 
 export default {
   name: "Lista-presenca",
   components: {
-    BuscaAluno
+    BuscaAluno,
+    VueBootstrapTypeahead,
+    Stringify
   },
   data: () => {
     return {
-      info: "",
-      API_URL: "",
-      addresses: [],
-      addressSearch: "",
-      selectedAddress: null
+      query: "",
+      selectedUser: null,
+      alunoss: [],
+      aluno: []
     };
   },
   created() {
-    console.log("oi");
-    axios
-      .get("https://kidsappvue.firebaseio.com/ListaAlunos.json")
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(e => {
-        console.log(e);
-        // Errorscconso
-      });
-  },
-  methods: {}
+    const ref = this.$firebase.database().ref("ListaAlunos");
+    ref.on("value", snapshot => {
+      const values = snapshot.val();
+      this.alunoss = Object.keys(values).map(i => values[i]);
+      for (var a in values) {
+        this.aluno.push(values[a].nome);
+      }
+    });
+  }
 };
 </script>
 

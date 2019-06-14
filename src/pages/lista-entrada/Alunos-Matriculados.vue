@@ -148,7 +148,6 @@ export default {
       console.log(this.form);
     },
 
-
     closeModal() {
       this.showModal = false;
     },
@@ -157,6 +156,7 @@ export default {
       ref.on("value", snapshot => {
         const values = snapshot.val();
         this.alunoss = Object.keys(values).map(i => values[i]);
+        console.log(this.alunoss);
       });
     },
 
@@ -167,13 +167,6 @@ export default {
       const foto = this.form.foto;
 
       ref.child(this.form.id).update(this.form, err => {
-        /* alert(
-          "Dados do Aluno " +
-            this.form.nome +
-            " registrado com o código: " +
-            this.form.id +
-            " foi atualizado com sucesso"
-        ); */
         if (err) {
           this.$root.$emit("Alerta::show", {
             type: "danger",
@@ -245,7 +238,7 @@ img {
   max-width: 70% !important;
 }
 
-.modal-header{
+.modal-header {
   background-color: aliceblue;
 }
 </style>
