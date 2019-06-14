@@ -1,15 +1,5 @@
 <template>
   <div class="container-fluid">
-    <div>
-      <vue-bootstrap-typeahead
-        :data="addresses"
-        v-model="addressSearch"
-        size="lg"
-        :serializer="s => s.text"
-        placeholder="Type an address..."
-        @hit="selectedAddress = $event"
-      />
-    </div>
     <hr>
     <h1>Lista de Presença</h1>
     <table class="table table-hover">
@@ -50,7 +40,6 @@ export default {
   components: {
     BuscaAluno
   },
-
   data: () => {
     return {
       info: "",
@@ -72,19 +61,7 @@ export default {
         // Errorscconso
       });
   },
-  methods: {
-    /* async getAddresses(query) {
-      const res = await fetch(API_URL.replace(":query", query));
-      const suggestions = await res.json();
-      this.addresses = suggestions.suggestions;
-    }
-  },
-
-  watch: {
-    addressSearch: _.debounce(function(addr) {
-      this.getAddresses(addr);
-    }, 500) */
-  }
+  methods: {}
 };
 </script>
 
