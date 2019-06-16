@@ -37,7 +37,7 @@
       <tbody>
         <tr>
           <th scope="row">1</th>
-          <td>Arthur</td>
+          <td>{{this.form.nomeL}}</td>
           <td>Leonardo</td>
           <td>153</td>
           <td>
@@ -71,11 +71,11 @@ export default {
       selectedUser: null,
       alunoss: [],
       aluno: [],
-      listaPresenca: {
-        nome: "",
-        responsavel: '',
-        id: "",
-        cartao:""
+      form: {
+        nomeL: "",
+        responsavelL: "",
+        idL: "",
+        cartaoL: ""
       }
     };
   },
@@ -96,7 +96,11 @@ export default {
       for (var b in this.alunoss) {
         //console.log(this.alunoss[b].nome);
         if (q == this.alunoss[b].nome) {
-          console.log(q);
+          this.form.nomeL = this.alunoss[b].nome;
+          this.form.responsavelL = this.alunoss[b].resp;
+          this.form.idL = this.alunoss[b].id;
+          this.form.cartaoL = 10;
+          console.log(this.form);
         } else {
           console.log("não tem");
         }
