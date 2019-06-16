@@ -72,7 +72,10 @@ export default {
       alunoss: [],
       aluno: [],
       listaPresenca: {
-        nome: '',
+        nome: "",
+        responsavel: '',
+        id: "",
+        cartao:""
       }
     };
   },
@@ -90,7 +93,14 @@ export default {
 
   methods: {
     addAluno(q) {
-      console.log(q);
+      for (var b in this.alunoss) {
+        //console.log(this.alunoss[b].nome);
+        if (q == this.alunoss[b].nome) {
+          console.log(q);
+        } else {
+          console.log("não tem");
+        }
+      }
     }
   }
 };
