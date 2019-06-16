@@ -1,19 +1,24 @@
-<template>
+<template >
   <div class="container-fluid">
     <h1>Busca Aluno</h1>
     <!--busca-aluno/-->
     <div>
       <div>
-        <vue-bootstrap-typeahead v-model="query" :data="this.aluno" placeholder="Enter a country"/>
-        <p class="lead">
-          Selected Country:
-          <strong>{{query}}</strong>
-        </p>
+        <vue-bootstrap-typeahead
+          v-model="query"
+          :data="this.aluno"
+          style="width:500px"
+          placeholder="Nome do Aluno ou Responsável"
+        />
+        <br>
       </div>
+      <p class="lead">
+        Selecionado:
+        <strong>{{query[0]}}</strong>
+      </p>
     </div>
-
     <div>
-      <button class="btn btn-info">Adicionar</button>
+      <button class="btn btn-info btn-sm" @click.prevent="addAluno(query)">Editar</button>
     </div>
 
     <hr>
@@ -65,7 +70,10 @@ export default {
       query: "",
       selectedUser: null,
       alunoss: [],
-      aluno: []
+      aluno: [],
+      listaPresenca: {
+        nome: '',
+      }
     };
   },
   created() {
@@ -73,10 +81,17 @@ export default {
     ref.on("value", snapshot => {
       const values = snapshot.val();
       this.alunoss = Object.keys(values).map(i => values[i]);
+      //Adiciona a lista para o autocomplete
       for (var a in values) {
         this.aluno.push(values[a].nome);
       }
     });
+  },
+
+  methods: {
+    addAluno(q) {
+      console.log(q);
+    }
   }
 };
 </script>
