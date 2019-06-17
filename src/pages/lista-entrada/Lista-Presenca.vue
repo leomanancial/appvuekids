@@ -6,7 +6,6 @@
         prepend="Aluno:"
         v-model="query"
         :data="this.aluno"
-        @hit = "addAluno"
         style="width:500px"
         placeholder="Nome do Aluno"
       >
@@ -43,12 +42,13 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th scope="col">Código</th>
+          <th scope="col">Foto</th>
           <th scope="col">Nome</th>
           <th scope="col">Responsável</th>
+          <th scope="col">Sala</th>
           <th scope="col">Cartão</th>
-          <th scope="col"></th>
-          <th scope="col"></th>
+          <th scope="col">Ação</th>
+          <th scope=""></th>
         </tr>
       </thead>
 
@@ -59,14 +59,12 @@
           </td>
           <td>{{item.nome}}</td>
           <td>{{item.resp}}</td>
+          <td>{{item.sala}}</td>
           <td class="form-group">
-            <input type="text" placeholder="cartão" v-model="form.cartao" required>
+            <input type="text" placeholder="cartão" v-model="form.cartao" disabled>
           </td>
           <td>
-            <button class="btn btn-warning">Editar</button>
-          </td>
-          <td>
-            <button class="btn btn-danger">Excluir</button>
+            <button class="btn btn-danger">Remover</button>
           </td>
         </tr>
       </tbody>
@@ -114,10 +112,6 @@ export default {
     ref.on("value", snapshot => {
       const values = snapshot.val();
       this.alunoss = Object.keys(values).map(i => values[i]);
-      //Adiciona a lista para o autocomplete
- /*      for (var a in values) {
-        this.aluno.push(values[a].nome);
-      } */
 
       for (var s in this.alunoss) {
         console.log(this.alunoss[s]);
@@ -131,32 +125,32 @@ export default {
       for (var b in this.alunoss) {
         if (q == this.alunoss[b].nome) {
           this.listaPresenca.push(this.alunoss[b]);
-          this.form.push(this.alunoss[b],
-          this.form.liderDia = this.liderDia,
-          this.form.nomeL = this.alunoss[b].nome,
-          this.form.responsavelL = this.alunoss[b].resp,
-          this.form.idL = this.alunoss[b].id,
-          this.form.cartaoL = this.cartaoL,
-          this.form.fotoL =  this.alunoss[b].foto,
 
-          );
-          console.log(this.listaPresenca)
+          console.log(this.listaPresenca);
         } else {
           console.log("não tem");
         }
       }
-      /* const ref = this.$firebase.database().ref("ListaPresenca");
-      for (var i in listaPresenca) {
-        ref.child(this.form.idL).set({
-         dataLista: this.data,
-        liderDia: this.lider,
-          foto: this.listaPresenca[i].foto,
-          nome: this.listaPresenca[i].nome,
-          resp: this.listaPresenca[i].resp,
-          id: this.listaPresenca[i].id
-          cartao: this.form.cartaoL
-        });
-      } */
+      const ref = this.$firebase.database().ref("ListaPresenca");
+      ref.child(this.listaPresenca).update(this.listaPresenca, err => {
+        if (err) {
+          this.$root.$emit("Alerta::show", {
+            type: "danger",
+            message: "Não foi possível realizar o cadastro, tente novamente"
+          });
+        } else {
+          this.$root.$emit("Alerta::show", {
+            type: "success",
+            message:
+              "Dados do Aluno " +
+              this.form.nome +
+              " registrado com o código: " +
+              this.form.id +
+              " foi atualizado com sucesso"
+          });
+        }
+        this.$root.$emit("Spinner::hide");
+      });
     }
   }
 };
