@@ -1,21 +1,26 @@
 <template >
   <div class="container-fluid">
     <h1>Lista de Presença</h1>
-    <div>
-      <vue-bootstrap-typeahead
-        prepend="Aluno:"
-        v-model="query"
-        :data="this.aluno"
-        style="width:500px"
-        placeholder="Nome do Aluno"
-      >
-        <button
-          type="button"
-          slot="append"
-          class="btn btn-info btn-sm"
-          @click.prevent="addAluno(query)"
-        >Adicionar</button>
-      </vue-bootstrap-typeahead>
+    <div class="row">
+      <div class="form-group col-6">
+        <vue-bootstrap-typeahead
+          prepend="Aluno:"
+          v-model="query"
+          :data="this.aluno"
+          style="max-width:500px"
+          placeholder="Nome do Aluno"
+        >
+          <button
+            type="button"
+            slot="append"
+            class="btn btn-info btn-sm"
+            @click.prevent="addAluno(query)"
+          >Adicionar</button>
+        </vue-bootstrap-typeahead>
+      </div>
+      <div class="form-group col-4" >
+        <input class="form-control" type="text" placeholder="digite o número do cartão" v-model="form.cartaoL" required>
+      </div>
     </div>
     <hr>
     <div class="row">
@@ -48,7 +53,7 @@
           <th scope="col">Sala</th>
           <th scope="col">Cartão</th>
           <th scope="col">Ação</th>
-          <th scope=""></th>
+          <th scope></th>
         </tr>
       </thead>
 
@@ -61,7 +66,7 @@
           <td>{{item.resp}}</td>
           <td>{{item.sala}}</td>
           <td class="form-group">
-            <input type="text" placeholder="cartão" v-model="form.cartao" disabled>
+            <input class="form-control" type="text" placeholder="cartão" v-model="form.cartaoL" disabled>
           </td>
           <td>
             <button class="btn btn-danger">Remover</button>
