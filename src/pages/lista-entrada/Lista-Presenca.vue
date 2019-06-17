@@ -11,17 +11,26 @@
       >
         <button slot="append" class="btn btn-info btn-sm" @click.prevent="addAluno(query)">Adicionar</button>
       </vue-bootstrap-typeahead>
-      <hr>
-      <div class="row">
-        <div class="form-group">
-          <input class="form-control" type="text" placeholder="Responsável do dia">
-        </div>
-        <div>
-          <input class="form-control" type="text" placeholder="Observações">
-        </div>
-        <div>
-          <input class="form-control" type="date" placeholder="Data">
-        </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="form-group col-4">
+        <select class="custom-select" v-model="form.sala" required>
+          <option value="Fabio e Erica">Fabio e Érica</option>
+          <option value="Fernando e Bete">Fernando e Bete</option>
+          <option value="Janilson e Fabi">Janilson e Fabi</option>
+          <option value="Samuel e Jéssica">Samuel e Jéssica</option>
+          <option value="Vagner e Rita">Vagner e Rita</option>
+        </select>
+        <small id="emailHelp" class="form-text text-muted">Líder do dia</small>
+      </div>
+      <div class="form-group col-6">
+        <input class="form-control" type="textbox" placeholder="Observação">
+        <small id="emailHelp" class="form-text text-muted">Digite alguma observação</small>
+      </div>
+      <div class="form-group col-2">
+        <input class="form-control" type="text" v-model="this.dataLista" disabled>
+        <small id="emailHelp" class="form-text text-muted">Data da Lista</small>
       </div>
     </div>
 
@@ -36,6 +45,7 @@
           <th scope="col"></th>
         </tr>
       </thead>
+
       <tbody>
         <tr v-for="item in this.listaPresenca">
           <td v-if="item.fotoL">
@@ -43,8 +53,8 @@
           </td>
           <td>{{item.nomeL}}</td>
           <td>{{item.responsavelL}}</td>
-          <td>
-            <input type="text" placeholder="cartão" v-model="form.cartao">
+          <td class="form-group">
+            <input type="text" placeholder="cartão" v-model="form.cartao" required>
           </td>
           <td>
             <button class="btn btn-warning">Editar</button>
@@ -90,7 +100,9 @@ export default {
     };
   },
   created() {
-    console.log(this.listaPresenca);
+    const data = new Date();
+    this.dataLista =
+      data.getDate() + "/" + data.getMonth() + "/" + data.getFullYear();
 
     const ref = this.$firebase.database().ref("ListaAlunos");
     ref.on("value", snapshot => {
@@ -105,6 +117,8 @@ export default {
 
   methods: {
     addAluno(q) {
+      console.log("oi");
+
       for (var b in this.alunoss) {
         if (q == this.alunoss[b].nome) {
           this.form.fotoL = this.alunoss[b].foto;
@@ -130,8 +144,7 @@ export default {
           /* cartao: this.form.cartaoL */
         });
       }
-    },
-    addLista() {}
+    }
   }
 };
 </script>
