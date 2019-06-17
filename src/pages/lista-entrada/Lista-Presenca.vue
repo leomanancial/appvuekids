@@ -1,28 +1,30 @@
 <template >
   <div class="container-fluid">
-    <h1>Busca Aluno</h1>
-    <!--busca-aluno/-->
+    <h1>Lista de Presença</h1>
     <div>
-      <div>
-        <vue-bootstrap-typeahead
-          v-model="query"
-          :data="this.aluno"
-          style="width:500px"
-          placeholder="Nome do Aluno ou Responsável"
-        />
-        <br>
+      <vue-bootstrap-typeahead
+        prepend="Aluno:"
+        v-model="query"
+        :data="this.aluno"
+        style="width:500px"
+        placeholder="Nome do Aluno"
+      >
+        <button slot="append" class="btn btn-info btn-sm" @click.prevent="addAluno(query)">Adicionar</button>
+      </vue-bootstrap-typeahead>
+      <hr>
+      <div class="row">
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="Responsável do dia">
+        </div>
+        <div>
+          <input class="form-control" type="text" placeholder="Observações">
+        </div>
+        <div>
+          <input class="form-control" type="date" placeholder="Data">
+        </div>
       </div>
-      <p class="lead">
-        Selecionado:
-        <strong>{{query[0]}}</strong>
-      </p>
-    </div>
-    <div>
-      <button class="btn btn-info btn-sm" @click.prevent="addAluno(query)">Editar</button>
     </div>
 
-    <hr>
-    <h1>Lista de Presença</h1>
     <table class="table table-hover">
       <thead>
         <tr>
@@ -35,11 +37,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>{{this.form.nomeL}}</td>
-          <td>Leonardo</td>
-          <td>153</td>
+        <tr v-for="item in this.listaPresenca">
+          <td v-if="item.fotoL">
+            <img v-bind:src="item.fotoL" class="rounded-circle">
+          </td>
+          <td>{{item.nomeL}}</td>
+          <td>{{item.responsavelL}}</td>
+          <td>
+            <input type="text" placeholder="cartão" v-model="form.cartao">
+          </td>
           <td>
             <button class="btn btn-warning">Editar</button>
           </td>
@@ -72,14 +78,20 @@ export default {
       alunoss: [],
       aluno: [],
       form: {
+        fotoL: "",
         nomeL: "",
         responsavelL: "",
         idL: "",
         cartaoL: ""
-      }
+      },
+      listaPresenca: [],
+      liderDia: "",
+      dataLista: ""
     };
   },
   created() {
+    console.log(this.listaPresenca);
+
     const ref = this.$firebase.database().ref("ListaAlunos");
     ref.on("value", snapshot => {
       const values = snapshot.val();
@@ -94,21 +106,39 @@ export default {
   methods: {
     addAluno(q) {
       for (var b in this.alunoss) {
-        //console.log(this.alunoss[b].nome);
         if (q == this.alunoss[b].nome) {
+          this.form.fotoL = this.alunoss[b].foto;
           this.form.nomeL = this.alunoss[b].nome;
           this.form.responsavelL = this.alunoss[b].resp;
           this.form.idL = this.alunoss[b].id;
-          this.form.cartaoL = 10;
-          console.log(this.form);
+          this.form.cartaoL = "";
         } else {
           console.log("não tem");
         }
       }
-    }
+      this.listaPresenca.push(this.form);
+
+      const ref = this.$firebase.database().ref("ListaPresenca");
+      for (var i in listaPresenca) {
+        ref.child(this.form.idL).set({
+          /*  dataLista: this.data,
+        liderDia: this.lider, */
+          foto: this.listaPresenca[i].foto,
+          nome: this.listaPresenca[i].nome,
+          resp: this.listaPresenca[i].resp,
+          id: this.listaPresenca[i].id
+          /* cartao: this.form.cartaoL */
+        });
+      }
+    },
+    addLista() {}
   }
 };
 </script>
 
-<style>
+<style scoped lang="scss">
+img {
+  max-width: 20% !important;
+  padding: 0 !important;
+}
 </style>
