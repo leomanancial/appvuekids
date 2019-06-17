@@ -6,16 +6,22 @@
         prepend="Aluno:"
         v-model="query"
         :data="this.aluno"
+        @hit = "addAluno"
         style="width:500px"
         placeholder="Nome do Aluno"
       >
-        <button slot="append" class="btn btn-info btn-sm" @click.prevent="addAluno(query)">Adicionar</button>
+        <button
+          type="button"
+          slot="append"
+          class="btn btn-info btn-sm"
+          @click.prevent="addAluno(query)"
+        >Adicionar</button>
       </vue-bootstrap-typeahead>
     </div>
     <hr>
     <div class="row">
       <div class="form-group col-4">
-        <select class="custom-select" v-model="form.sala" required>
+        <select class="custom-select" v-model="liderDia" required>
           <option value="Fabio e Erica">Fabio e Érica</option>
           <option value="Fernando e Bete">Fernando e Bete</option>
           <option value="Janilson e Fabi">Janilson e Fabi</option>
@@ -48,11 +54,11 @@
 
       <tbody>
         <tr v-for="item in this.listaPresenca">
-          <td v-if="item.fotoL">
-            <img v-bind:src="item.fotoL" class="rounded-circle">
+          <td v-if="item.foto">
+            <img v-bind:src="item.foto" class="rounded-circle">
           </td>
-          <td>{{item.nomeL}}</td>
-          <td>{{item.responsavelL}}</td>
+          <td>{{item.nome}}</td>
+          <td>{{item.resp}}</td>
           <td class="form-group">
             <input type="text" placeholder="cartão" v-model="form.cartao" required>
           </td>
@@ -109,41 +115,48 @@ export default {
       const values = snapshot.val();
       this.alunoss = Object.keys(values).map(i => values[i]);
       //Adiciona a lista para o autocomplete
-      for (var a in values) {
+ /*      for (var a in values) {
         this.aluno.push(values[a].nome);
+      } */
+
+      for (var s in this.alunoss) {
+        console.log(this.alunoss[s]);
+        this.aluno.push(this.alunoss[s].nome);
       }
     });
   },
 
   methods: {
     addAluno(q) {
-      console.log("oi");
-
       for (var b in this.alunoss) {
         if (q == this.alunoss[b].nome) {
-          this.form.fotoL = this.alunoss[b].foto;
-          this.form.nomeL = this.alunoss[b].nome;
-          this.form.responsavelL = this.alunoss[b].resp;
-          this.form.idL = this.alunoss[b].id;
-          this.form.cartaoL = "";
+          this.listaPresenca.push(this.alunoss[b]);
+          this.form.push(this.alunoss[b],
+          this.form.liderDia = this.liderDia,
+          this.form.nomeL = this.alunoss[b].nome,
+          this.form.responsavelL = this.alunoss[b].resp,
+          this.form.idL = this.alunoss[b].id,
+          this.form.cartaoL = this.cartaoL,
+          this.form.fotoL =  this.alunoss[b].foto,
+
+          );
+          console.log(this.listaPresenca)
         } else {
           console.log("não tem");
         }
       }
-      this.listaPresenca.push(this.form);
-
-      const ref = this.$firebase.database().ref("ListaPresenca");
+      /* const ref = this.$firebase.database().ref("ListaPresenca");
       for (var i in listaPresenca) {
         ref.child(this.form.idL).set({
-          /*  dataLista: this.data,
-        liderDia: this.lider, */
+         dataLista: this.data,
+        liderDia: this.lider,
           foto: this.listaPresenca[i].foto,
           nome: this.listaPresenca[i].nome,
           resp: this.listaPresenca[i].resp,
           id: this.listaPresenca[i].id
-          /* cartao: this.form.cartaoL */
+          cartao: this.form.cartaoL
         });
-      }
+      } */
     }
   }
 };
