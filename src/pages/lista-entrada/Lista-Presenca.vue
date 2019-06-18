@@ -1,7 +1,7 @@
 <template >
   <div class="container-fluid">
     <h1>Lista de Presença</h1>
-    <form>
+    <form @submit.prevent="addAluno(query)">
       <div class="row">
         <div class="form-group col-4">
           <small id="emailHelp" class="form-text text-muted">Líder do dia</small>
@@ -13,26 +13,24 @@
             <option value="Vagner e Rita">Vagner e Rita</option>
           </select>
         </div>
-        <div class="form-group col-6">
-          <small id="emailHelp" class="form-text text-muted">Digite alguma observação</small>
-          <input class="form-control" v-model="form.obs" type="textbox" placeholder="Observação">
-        </div>
         <div class="form-group col-2">
           <small id="emailHelp" class="form-text text-muted">Data da Lista</small>
           <input class="form-control" type="text" v-model="this.dataLista" disabled>
         </div>
       </div>
       <hr>
+      <h2>Líderes do dia: {{this.form.liderDia}}</h2>
       <div class="row">
-        <div class="form-group col-6">
+        <div class="form-group col-6" required>
           <vue-bootstrap-typeahead
             prepend="Aluno:"
             v-model="query"
             :data="this.aluno"
-            style="max-width:500px"
             placeholder="Nome do Aluno"
+
           ></vue-bootstrap-typeahead>
         </div>
+
         <div class="form-group col-4">
           <input
             class="form-control"
@@ -42,33 +40,42 @@
             required
           >
         </div>
+
+        <div class="form-group col-6">
+          <input class="form-control" v-model="form.obs" type="textbox" placeholder="Observação">
+        </div>
         <div class="form-group col-2">
-          <button type="button" class="btn btn-info" @click.prevent="addAluno(query)">Adicionar</button>
+          <button class="btn btn-info">Adicionar</button>
         </div>
       </div>
     </form>
+
     <table class="table table-hover">
       <thead>
         <tr>
           <th scope="col">Foto</th>
+          <th scope="col">Matricula</th>
           <th scope="col">Nome</th>
           <th scope="col">Responsável</th>
           <th scope="col">Sala</th>
           <th scope="col">Cartão</th>
+          <th scope="col">Observação</th>
           <th scope="col">Ação</th>
           <th scope></th>
         </tr>
       </thead>
 
-      <tbody>
-        <tr v-for="item in this.listaPresenca">
-          <td v-if="item.foto">
-            <img v-bind:src="item.foto" class="rounded-circle">
+      <tbody v-if="visible">
+        <tr v-for="item in this.refListaPresenca">
+          <td v-if="item.fotoL">
+            <img v-bind:src="item.fotoL" class="rounded-circle">
           </td>
+          <td>{{item.idL}}</td>
           <td>{{item.nome}}</td>
-          <td>{{item.resp}}</td>
-          <td>{{item.sala}}</td>
-          <td>{{form.cartaoL}}</td>
+          <td>{{item.responsavel}}</td>
+          <td>{{item.salaL}}</td>
+          <td>{{item.cartao}}</td>
+          <td>{{item.obs}}</td>
           <td>
             <button class="btn btn-danger">Remover</button>
           </td>
@@ -93,18 +100,21 @@ export default {
   },
   data: () => {
     return {
+      visible: true,
       query: "",
       selectedUser: null,
       alunoss: [],
       aluno: [],
       form: {
+        fotoL: "",
         nome: "",
         responsavel: "",
         idL: "",
         cartao: "",
         obs: "",
         liderDia: "",
-        dataListaL: ""
+        dataListaL: "",
+        salaL: ""
       },
       listaPresenca: [],
       refListaPresenca: [],
@@ -132,19 +142,21 @@ export default {
       const values = snapshot.val();
       this.refListaPresenca = Object.keys(values).map(i => values[i]);
     });
-    console.log(this.refListaPresenca);
+    //console.log(this.refListaPresenca);
   },
 
   methods: {
+    mostraLista() {},
     addAluno(q) {
       for (var b in this.alunoss) {
         if (q == this.alunoss[b].nome) {
           this.listaPresenca.push(this.alunoss[b]);
-
+          this.form.fotoL = this.alunoss[b].foto;
           this.form.idL = this.alunoss[b].id;
           this.form.nome = this.alunoss[b].nome;
           this.form.responsavel = this.alunoss[b].resp;
           this.form.dataListaL = this.dataLista;
+          this.form.salaL = this.alunoss[b].sala;
 
           //console.log(this.form);
           //console.log(this.listaPresenca);
@@ -164,15 +176,14 @@ export default {
           this.$root.$emit("Alerta::show", {
             type: "success",
             message:
-              "Dados do Aluno " +
+              "Aluno " +
               this.form.nome +
-              " registrado com o código: " +
-              this.form.id +
-              " foi atualizado com sucesso"
+              " matricula: " +
+              this.form.idL +
+              " está presente!"
           });
         }
         this.$root.$emit("Spinner::hide");
-        this.closeModal();
       });
 
       /* for (var a in this.form) {
