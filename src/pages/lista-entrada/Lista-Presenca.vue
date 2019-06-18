@@ -27,7 +27,6 @@
             v-model="query"
             :data="this.aluno"
             placeholder="Nome do Aluno"
-
           ></vue-bootstrap-typeahead>
         </div>
 
@@ -42,46 +41,44 @@
         </div>
 
         <div class="form-group col-6">
-          <input class="form-control" v-model="form.obs" type="textbox" placeholder="Observação">
+          <input
+            class="form-control"
+            v-model="form.obs"
+            type="textbox"
+            placeholder="Observação sobre o aluno"
+          >
         </div>
         <div class="form-group col-2">
           <button class="btn btn-info">Adicionar</button>
         </div>
       </div>
     </form>
+    <hr>
+    <div class="row" id="lista-alunos-header">
+      <div class="col-1">Foto</div>
+      <div class="col-1">Matricula</div>
+      <div class="col-2">Nome</div>
+      <div class="col-2">Responsável</div>
+      <div class="col-1">Sala</div>
+      <div class="col-1">Cartão</div>
+      <div class="col-4">Observação</div>
+    </div>
 
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">Foto</th>
-          <th scope="col">Matricula</th>
-          <th scope="col">Nome</th>
-          <th scope="col">Responsável</th>
-          <th scope="col">Sala</th>
-          <th scope="col">Cartão</th>
-          <th scope="col">Observação</th>
-          <th scope="col">Ação</th>
-          <th scope></th>
-        </tr>
-      </thead>
-
-      <tbody v-if="visible">
-        <tr v-for="item in this.refListaPresenca">
-          <td v-if="item.fotoL">
-            <img v-bind:src="item.fotoL" class="rounded-circle">
-          </td>
-          <td>{{item.idL}}</td>
-          <td>{{item.nome}}</td>
-          <td>{{item.responsavel}}</td>
-          <td>{{item.salaL}}</td>
-          <td>{{item.cartao}}</td>
-          <td>{{item.obs}}</td>
-          <td>
-            <button class="btn btn-danger">Remover</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <hr>
+    <div>
+      <div  v-for="item in this.refListaPresenca" class="lista-alunos-item row" id="lista-alunos">
+        <div v-if="item.fotoL" class="col-1 foto">
+          <img v-bind:src="item.fotoL" class="rounded-circle">
+        </div>
+        <div class="col-1">{{item.idL}}</div>
+        <div class="col-2">{{item.nome}}</div>
+        <div class="col-2">{{item.responsavel}}</div>
+        <div class="col-1">{{item.salaL}}</div>
+        <div class="col-1">{{item.cartao}}</div>
+        <div class="col-4">{{item.obs}}</div>
+      </div>
+    </div>
+    <!--/table-->
   </div>
 </template>
 
@@ -196,7 +193,45 @@ export default {
 
 <style scoped lang="scss">
 img {
-  max-width: 20% !important;
+  max-width: 70% !important;
   padding: 0 !important;
+}
+#lista-alunos-header {
+  max-width: 100%;
+  font-weight: bolder;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 12pt;
+  background-color: #faac58;
+  color: var(--gray);
+}
+
+#foto-header {
+  max-width: 45% !important;
+  padding: 0;
+}
+#lista-alunos {
+  padding: 5px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  max-width: 100%;
+  align-items: center;
+  font-size: 12pt;
+  color: var(--gray);
+  transition: 0.45s;
+  background-color: white;
+  &.active {
+    color: var(--gray);
+    background-color: transparent;
+  }
+  &:hover {
+   padding: 5px !important;
+    border-radius: 5px;
+    color: var(--gray);
+    background-color: var(--gray-light);
+  }
+  .lista-alunos-item {
+    padding: 12px !important;
+  }
 }
 </style>
