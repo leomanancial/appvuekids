@@ -104,7 +104,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="closeModal">Fechar</button>
-            <button class="btn btn-primary" >Salvar</button>
+            <button class="btn btn-primary">Salvar</button>
           </div>
         </div>
       </div>
@@ -228,20 +228,17 @@ img {
 }
 
 #btn-novo-aluno {
-  margin-left: -58px;
-  width: calc(100% + 30px);
+
   height: calc(100vh-49px);
-  display: block;
   color: var(--white);
 }
 #btn-novo-aluno:hover {
+  border-radius: 0;
+  width: 100%;
   color: var(--white);
   background-color: var(--gray);
-  width: calc(100% + 58px);
-  border-radius: 0 !important;
   height: calc(100vh-49px);
-  margin-right: 10px;
-  padding-right: 20px;
+  text-align: -webkit-auto;
 }
 </style>
 

@@ -5,8 +5,10 @@
     <div class="container-fluid" v-if="isLogged">
       <div class="row">
         <div class="col-2 navigation-sidebar">
-          <h1 class="app-title">Kids App</h1>
           <layout-navigation/>
+          <div class="logout">
+            <layout-logout/>
+          </div>
         </div>
         <div class="col">
           <router-view/>
@@ -25,8 +27,7 @@ import BuscaAluno from "./components/layout/BuscaAluno";
 import NovoAluno from "./components/layout/NovoAluno";
 import ListaPresenca from "./pages/lista-entrada/Lista-Presenca";
 import LayoutAlerta from "./components/global/LayoutAlerta";
-
-
+import LayoutLogout from "./components/layout/LayoutLogout";
 
 export default {
   name: "App",
@@ -36,7 +37,8 @@ export default {
     BuscaAluno,
     NovoAluno,
     ListaPresenca,
-    LayoutAlerta
+    LayoutAlerta,
+    LayoutLogout,
   },
   data: () => ({ isLogged: false }),
   mounted() {
@@ -57,12 +59,15 @@ export default {
 
 <style lang="scss">
 #app {
-  min-height: 100vh;
+  min-height: 10vh;
   background-color: white;
   .navigation-sidebar {
     background-color: var(--blue-light-plus);
     height: 100vh;
     max-width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     .app-title {
       font-size: 35pt;
       margin-top: 10px;
