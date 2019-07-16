@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>SejaBem vindo</h1>
+    <h1>Seja bem vindo</h1>
     <img v-bind:src="this.foto" class="rounded-circle" id="foto-home">
     <h2 class="nome-logado">{{this.email}}</h2>
   </div>

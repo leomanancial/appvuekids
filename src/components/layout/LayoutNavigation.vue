@@ -1,6 +1,8 @@
 <template>
-  <nav class="nav flex-colums justify-content-between">
+  <nav class="nav">
     <div>
+      <h1 class="app-title">Kids App</h1>
+
       <router-link
         exact
         :key="i"
@@ -12,23 +14,16 @@
         <i class="fa" :class=" `fa-${router.meta.icon}`"></i>
         {{ router.meta.title}}
       </router-link>
-    </div>
-
-    <novo-aluno/>
-
-    <div>
-      <layout-logout/>
+      <novo-aluno />
     </div>
   </nav>
 </template>
 
 <script>
-import LayoutLogout from "./LayoutLogout";
 import NovoAluno from "./NovoAluno";
 
 export default {
   components: {
-    LayoutLogout,
     NovoAluno
   },
 
@@ -45,7 +40,9 @@ export default {
   margin-left: -15px;
   width: calc(100% + 30px);
   height: calc(100vh-49px);
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   .nav-link {
     color: var(--white);
     transition: 0.45s;

@@ -1,0 +1,261 @@
+<template >
+  <div class="container-fluid">
+    <h1>Lista de Presença</h1>
+    <form @submit.prevent="addAluno(query)">
+      <div class="row">
+        <div class="form-group col-4">
+          <small id="emailHelp" class="form-text text-muted">Líder do dia</small>
+          <select
+            class="custom-select"
+            v-model="form.liderDia"
+            :disabled="this.bloqueioLider != false "
+            required
+          >
+            <option value="Fabio e Erica">Fabio e Érica</option>
+            <option value="Fernando e Bete">Fernando e Bete</option>
+            <option value="Janilson e Fabi">Janilson e Fabi</option>
+            <option value="Samuel e Jéssica">Samuel e Jéssica</option>
+            <option value="Vagner e Rita">Vagner e Rita</option>
+          </select>
+        </div>
+        <div class="form-group col-2">
+          <small id="emailHelp" class="form-text text-muted">Data da Lista</small>
+          <input class="form-control" type="text" v-model="this.dataLista" disabled />
+        </div>
+        <div class="form-group col-2">
+          <small id="emailHelp" class="form-text text-muted">Bloquear Líder</small>
+          <button class="btn btn-info btn-sm" @click.prevent="bloquear()">Gravar</button>
+        </div>
+      </div>
+      <hr />
+      <h2>Líderes do dia: {{this.form.liderDia}}</h2>
+      <div class="row">
+        <div class="form-group col-6" required>
+          <vue-bootstrap-typeahead
+            prepend="Aluno:"
+            v-model="query"
+            :data="this.aluno"
+            placeholder="Nome do Aluno"
+          ></vue-bootstrap-typeahead>
+        </div>
+
+        <div class="form-group col-4">
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Digite o número do cartão"
+            v-model="form.cartao"
+            required
+          />
+        </div>
+
+        <div class="form-group col-6">
+          <input
+            class="form-control"
+            v-model="form.obs"
+            type="textbox"
+            placeholder="Observação sobre o aluno"
+          />
+        </div>
+        <div class="form-group col-2">
+          <button class="btn btn-info">Adicionar</button>
+        </div>
+      </div>
+    </form>
+    <hr />
+    <div class="row" id="lista-alunos-header">
+      <div class="col-1">Foto</div>
+      <div class="col-1">Matricula</div>
+      <div class="col-2">Nome</div>
+      <div class="col-2">Responsável</div>
+      <div class="col-1">Sala</div>
+      <div class="col-1">Cartão</div>
+      <div class="col-4">Observação</div>
+    </div>
+
+    <hr />
+    <div id="teste">
+      <div v-for="item in this.refListaPresenca" class="lista-alunos-item row" id="lista-alunos">
+        <div v-if="item.fotoL" class="col-1 foto">
+          <img v-bind:src="item.fotoL" class="rounded-circle" />
+        </div>
+        <div class="col-1">{{item.idL}}</div>
+        <div class="col-2">{{item.nome}}</div>
+        <div class="col-2">{{item.responsavel}}</div>
+        <div class="col-1">{{item.salaL}}</div>
+        <div class="col-1">{{item.cartao}}</div>
+        <div class="col-4">{{item.obs}}</div>
+      </div>
+    </div>
+    <!--/table-->
+  </div>
+</template>
+
+<script>
+import BuscaAluno from "./../../components/layout/BuscaAluno";
+import axios from "axios";
+import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
+import Stringify from "vue-stringify";
+
+export default {
+  name: "Lista-presenca",
+  components: {
+    BuscaAluno,
+    VueBootstrapTypeahead,
+    Stringify
+  },
+  data: () => {
+    return {
+      visible: true,
+      query: "",
+      selectedUser: null,
+      alunoss: [],
+      aluno: [],
+      form: {
+        fotoL: "",
+        nome: "",
+        responsavel: "",
+        idL: "",
+        cartao: "",
+        obs: "",
+        liderDia: "",
+        dataListaL: "",
+        salaL: "",
+        listaID: ""
+      },
+      listaPresenca: [],
+      refListaPresenca: [],
+      dataLista: "",
+      bloqueioLider: false
+    };
+  },
+  created() {
+    const data = new Date();
+    const dataHoje = new Intl.DateTimeFormat("pt-BR").format(data);
+    this.dataLista = dataHoje;
+
+    const ref = this.$firebase.database().ref("ListaAlunos");
+
+    ref.on("value", snapshot => {
+      const values = snapshot.val();
+      this.alunoss = Object.keys(values).map(i => values[i]);
+
+      for (var s in this.alunoss) {
+        //console.log(this.alunoss[s]);
+        this.aluno.push(this.alunoss[s].nome);
+      }
+    });
+    const ref2 = this.$firebase.database().ref("ListaPresenca");
+    ref2.on("value", snapshot => {
+      const values = snapshot.val();
+      if (this.dataLista == dataHoje) {
+        this.refListaPresenca = Object.keys(values).map(i => values[i]);
+      }
+    });
+    //console.log(this.refListaPresenca);
+  },
+
+  methods: {
+    bloquear() {
+      this.bloqueioLider = true;
+    },
+    closeModal() {
+      this.bloqueioLider = true;
+      console.log("oi");
+    },
+    addAluno(q) {
+      //Gerador ID
+      var strDT = this.form.nascimento;
+      const ListaID =
+        "cod-" + this.form.liderDia.substring(0, 4) + "-" + this.dataLista;
+      /////////
+      for (var b in this.alunoss) {
+        if (q == this.alunoss[b].nome) {
+          this.listaPresenca.push(this.alunoss[b]);
+          this.form.fotoL = this.alunoss[b].foto;
+          this.form.idL = this.alunoss[b].id;
+          this.form.nome = this.alunoss[b].nome;
+          this.form.responsavel = this.alunoss[b].resp;
+          this.form.dataListaL = this.dataLista;
+          this.form.salaL = this.alunoss[b].sala;
+          this.form.listaID = ListaID;
+          //console.log(this.form);
+          //console.log(this.listaPresenca);
+        } else {
+          console.log("não tem");
+        }
+      }
+      const ref = this.$firebase.database().ref("ListaPresenca");
+
+      ref.child(this.form.idL).update(this.form, err => {
+        if (err) {
+          this.$root.$emit("Alerta::show", {
+            type: "danger",
+            message: "Não foi possível realizar o cadastro, tente novamente"
+          });
+        } else {
+          this.$root.$emit("Alerta::show", {
+            type: "success",
+            message:
+              "Aluno " +
+              this.form.nome +
+              " matricula: " +
+              this.form.idL +
+              " está presente!"
+          });
+        }
+        this.$root.$emit("Spinner::hide");
+      });
+
+      /* for (var a in this.form) {
+        console.log(this.form[a]);
+      } */
+    }
+  }
+};
+</script>
+
+<style scoped lang="scss">
+img {
+  max-width: 70% !important;
+  padding: 0 !important;
+}
+#lista-alunos-header {
+  max-width: 100%;
+  font-weight: bolder;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 12pt;
+  background-color: #faac58;
+  color: var(--gray);
+}
+
+#foto-header {
+  max-width: 45% !important;
+  padding: 0;
+}
+#lista-alunos {
+  padding: 5px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  max-width: 100%;
+  align-items: center;
+  font-size: 12pt;
+  color: var(--gray);
+  transition: 0.45s;
+  background-color: white;
+  &.active {
+    color: var(--gray);
+    background-color: transparent;
+  }
+  &:hover {
+    padding: 5px !important;
+    border-radius: 5px;
+    color: var(--gray);
+    background-color: var(--gray-light);
+  }
+  .lista-alunos-item {
+    padding: 12px !important;
+  }
+}
+</style>
