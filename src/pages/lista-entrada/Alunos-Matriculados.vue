@@ -14,7 +14,7 @@
 
       <div class="lista-alunos-item row" v-for="item in alunoss" id="lista-alunos">
         <div class="col-md-1 foto">
-          <img v-bind:srmd-c="item.foto" class="rounded-circle">
+          <img v-bind:src="item.foto" class="rounded-circle">
         </div>
         <div class="col-md-2">{{item.id}}</div>
 

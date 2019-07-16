@@ -9,8 +9,7 @@
             class="custom-select"
             v-model="form.liderDia"
             :disabled="this.form.liderDia != ''"
-            :required = "true"
-
+            :required="true"
           >
             <option value="Fabio e Erica">Fabio e Érica</option>
             <option value="Fernando e Bete">Fernando e Bete</option>
@@ -90,17 +89,12 @@
 </template>
 
 <script>
-import BuscaAluno from "./../../components/layout/BuscaAluno";
-import axios from "axios";
 import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
-import Stringify from "vue-stringify";
 
 export default {
   name: "Lista-presenca",
   components: {
-    BuscaAluno,
-    VueBootstrapTypeahead,
-    Stringify
+    VueBootstrapTypeahead
   },
   data: () => {
     return {
@@ -123,13 +117,13 @@ export default {
       },
       listaPresenca: [],
       refListaPresenca: [],
-      dataLista: "",
+      dataLista: ""
     };
   },
   created() {
     const data = new Date();
     const dataHoje = new Intl.DateTimeFormat("pt-BR").format(data);
-    this.dataLista =dataHoje;
+    this.dataLista = dataHoje;
     //Teste não excluir
     /* var teste = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
     this.dataLista = this.dataLista = new Intl.DateTimeFormat("pt-BR").format(teste); */
@@ -158,7 +152,6 @@ export default {
   methods: {
     closeModal() {
       this.bloqueioLider = true;
-      console.log("oi");
     },
     addAluno(q) {
       //Gerador ID
@@ -176,8 +169,6 @@ export default {
           this.form.dataListaL = this.dataLista;
           this.form.salaL = this.alunoss[b].sala;
           this.form.listaID = ListaID;
-          //console.log(this.form);
-          //console.log(this.listaPresenca);
         } else {
           console.log("não tem");
         }
