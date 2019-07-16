@@ -8,8 +8,9 @@
           <select
             class="custom-select"
             v-model="form.liderDia"
-            :disabled="this.bloqueioLider != false "
-            required
+            :disabled="this.form.liderDia != ''"
+            :required = "true"
+
           >
             <option value="Fabio e Erica">Fabio e Érica</option>
             <option value="Fernando e Bete">Fernando e Bete</option>
@@ -21,10 +22,6 @@
         <div class="form-group col-2">
           <small id="emailHelp" class="form-text text-muted">Data da Lista</small>
           <input class="form-control" type="text" v-model="this.dataLista" disabled />
-        </div>
-        <div class="form-group col-2">
-          <small id="emailHelp" class="form-text text-muted">Bloquear Líder</small>
-          <button class="btn btn-info btn-sm" @click.prevent="bloquear()">Gravar</button>
         </div>
       </div>
       <hr />
@@ -57,6 +54,7 @@
             placeholder="Observação sobre o aluno"
           />
         </div>
+
         <div class="form-group col-2">
           <button class="btn btn-info">Adicionar</button>
         </div>
@@ -126,13 +124,15 @@ export default {
       listaPresenca: [],
       refListaPresenca: [],
       dataLista: "",
-      bloqueioLider: false
     };
   },
   created() {
     const data = new Date();
     const dataHoje = new Intl.DateTimeFormat("pt-BR").format(data);
-    this.dataLista = dataHoje;
+    this.dataLista =dataHoje;
+    //Teste não excluir
+    /* var teste = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
+    this.dataLista = this.dataLista = new Intl.DateTimeFormat("pt-BR").format(teste); */
 
     const ref = this.$firebase.database().ref("ListaAlunos");
 
@@ -156,9 +156,6 @@ export default {
   },
 
   methods: {
-    bloquear() {
-      this.bloqueioLider = true;
-    },
     closeModal() {
       this.bloqueioLider = true;
       console.log("oi");
