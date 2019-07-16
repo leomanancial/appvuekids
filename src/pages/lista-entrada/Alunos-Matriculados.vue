@@ -2,25 +2,25 @@
   <form @submit.prevent="submit()">
     <div class="container-fluid" id="lista-aluno-tab">
       <h1>Alunos Matriculados</h1>
-      <hr>
+
       <div class="row" id="lista-alunos-header">
-        <div class="col-1">Foto</div>
-        <div class="col-2">Matricula</div>
-        <div class="col-3">Nome</div>
-        <div class="col-3">Responsável</div>
-        <div class="col-2">Nascimento</div>
-        <div class="col-1">Ação</div>
+        <div class="col-md-1">Foto</div>
+        <div class="col-md-2">Matricula</div>
+        <div class="col-md-3">Nome</div>
+        <div class="col-md-3">Responsável</div>
+        <div class="col-md-2">Nascimento</div>
+        <div class="col-md-1">Ação</div>
       </div>
 
       <div class="lista-alunos-item row" v-for="item in alunoss" id="lista-alunos">
-        <div class="col-1 foto">
-          <img v-bind:src="item.foto" class="rounded-circle">
+        <div class="col-md-1 foto">
+          <img v-bind:srmd-c="item.foto" class="rounded-circle">
         </div>
-        <div class="col-2">{{item.id}}</div>
+        <div class="col-md-2">{{item.id}}</div>
 
-        <div class="col-3">{{item.nome}}</div>
-        <div class="col-3">{{item.resp}}</div>
-        <div class="col-2">{{item.nascimento}}</div>
+        <div class="col-md-3">{{item.nome}}</div>
+        <div class="col-md-3">{{item.resp}}</div>
+        <div class="col-md-2">{{item.nascimento}}</div>
         <div>
           <button class="btn btn-warning btn-sm" @click.prevent="mostraModal(item)">Editar</button>
         </div>

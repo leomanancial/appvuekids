@@ -5,7 +5,7 @@
       <div class="row">
         <div class="form-group col-4">
           <small id="emailHelp" class="form-text text-muted">Líder do dia</small>
-          <select class="custom-select" v-model="form.liderDia" required>
+          <select class="custom-select" v-model="form.liderDia" :disabled="this.bloqueioLider != false " required>
             <option value="Fabio e Erica">Fabio e Érica</option>
             <option value="Fernando e Bete">Fernando e Bete</option>
             <option value="Janilson e Fabi">Janilson e Fabi</option>
@@ -16,6 +16,10 @@
         <div class="form-group col-2">
           <small id="emailHelp" class="form-text text-muted">Data da Lista</small>
           <input class="form-control" type="text" v-model="this.dataLista" disabled />
+        </div>
+         <div class="form-group col-2">
+          <small id="emailHelp" class="form-text text-muted">Bloquear Líder</small>
+          <button class="btn btn-info btn-sm" @click.prevent="bloquear()">Gravar</button>
         </div>
       </div>
       <hr />
@@ -65,7 +69,7 @@
     </div>
 
     <hr />
-    <div id="teste">
+    <div id="teste" v-if="this.dataLista == this.data">
       <div v-for="item in this.refListaPresenca" class="lista-alunos-item row" id="lista-alunos">
         <div v-if="item.fotoL" class="col-1 foto">
           <img v-bind:src="item.fotoL" class="rounded-circle" />
@@ -116,10 +120,14 @@ export default {
       },
       listaPresenca: [],
       refListaPresenca: [],
-      dataLista: ""
+      dataLista: "",
+      bloqueioLider : false
     };
   },
   created() {
+
+
+
     const data = new Date();
     this.dataLista =
       data.getDate() + "/" + data.getMonth() + "/" + data.getFullYear();
@@ -144,7 +152,14 @@ export default {
   },
 
   methods: {
-    mostraLista() {},
+
+    bloquear(){
+      this.bloqueioLider = true;
+    },
+    closeModal() {
+      this.bloqueioLider = true;
+      console.log('oi');
+    },
     addAluno(q) {
       //Gerador ID
       var strDT = this.form.nascimento;

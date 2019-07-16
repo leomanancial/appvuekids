@@ -2,6 +2,7 @@
   <nav class="nav">
     <div>
       <h1 class="app-title">Kids App</h1>
+
       <router-link
         exact
         :key="i"
@@ -13,7 +14,7 @@
         <i class="fa" :class=" `fa-${router.meta.icon}`"></i>
         {{ router.meta.title}}
       </router-link>
-      <novo-aluno/>
+      <novo-aluno />
     </div>
   </nav>
 </template>
@@ -23,7 +24,6 @@ import NovoAluno from "./NovoAluno";
 
 export default {
   components: {
-
     NovoAluno
   },
 
