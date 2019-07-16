@@ -145,7 +145,7 @@ export default {
     mostraModal(item) {
       this.showModal = true;
       this.form = item;
-      console.log(this.form);
+      /* console.log(this.form); */
     },
 
     closeModal() {
@@ -156,7 +156,7 @@ export default {
       ref.on("value", snapshot => {
         const values = snapshot.val();
         this.alunoss = Object.keys(values).map(i => values[i]);
-        console.log(this.alunoss);
+        /* console.log(this.alunoss); */
       });
     },
 

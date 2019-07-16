@@ -26,6 +26,16 @@ const router = new Router({
 
     },
     {
+      path: '/listas-salvas',
+      name: 'listas-salvas',
+      meta: {
+        icon: 'fas fa-list',
+        title: 'Listas Salvas'
+      },
+      component: () => import( /* webpackChunkName: "lista-entrada" */ './pages/lista-entrada/Listas-Salvas.vue')
+
+    },
+    {
       path: '/login',
       name: 'login',
       meta: {
