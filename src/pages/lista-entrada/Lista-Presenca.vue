@@ -5,7 +5,12 @@
       <div class="row">
         <div class="form-group col-4">
           <small id="emailHelp" class="form-text text-muted">Líder do dia</small>
-          <select class="custom-select" v-model="form.liderDia" :disabled="this.bloqueioLider != false " required>
+          <select
+            class="custom-select"
+            v-model="form.liderDia"
+            :disabled="this.bloqueioLider != false "
+            required
+          >
             <option value="Fabio e Erica">Fabio e Érica</option>
             <option value="Fernando e Bete">Fernando e Bete</option>
             <option value="Janilson e Fabi">Janilson e Fabi</option>
@@ -17,7 +22,7 @@
           <small id="emailHelp" class="form-text text-muted">Data da Lista</small>
           <input class="form-control" type="text" v-model="this.dataLista" disabled />
         </div>
-         <div class="form-group col-2">
+        <div class="form-group col-2">
           <small id="emailHelp" class="form-text text-muted">Bloquear Líder</small>
           <button class="btn btn-info btn-sm" @click.prevent="bloquear()">Gravar</button>
         </div>
@@ -69,7 +74,7 @@
     </div>
 
     <hr />
-    <div id="teste" v-if="this.dataLista == this.data">
+    <div id="teste">
       <div v-for="item in this.refListaPresenca" class="lista-alunos-item row" id="lista-alunos">
         <div v-if="item.fotoL" class="col-1 foto">
           <img v-bind:src="item.fotoL" class="rounded-circle" />
@@ -121,16 +126,13 @@ export default {
       listaPresenca: [],
       refListaPresenca: [],
       dataLista: "",
-      bloqueioLider : false
+      bloqueioLider: false
     };
   },
   created() {
-
-
-
     const data = new Date();
-    this.dataLista =
-      data.getDate() + "/" + data.getMonth() + "/" + data.getFullYear();
+    const dataHoje = new Intl.DateTimeFormat("pt-BR").format(data);
+    this.dataLista = dataHoje;
 
     const ref = this.$firebase.database().ref("ListaAlunos");
 
@@ -146,19 +148,20 @@ export default {
     const ref2 = this.$firebase.database().ref("ListaPresenca");
     ref2.on("value", snapshot => {
       const values = snapshot.val();
-      this.refListaPresenca = Object.keys(values).map(i => values[i]);
+      if (this.dataLista == dataHoje) {
+        this.refListaPresenca = Object.keys(values).map(i => values[i]);
+      }
     });
     //console.log(this.refListaPresenca);
   },
 
   methods: {
-
-    bloquear(){
+    bloquear() {
       this.bloqueioLider = true;
     },
     closeModal() {
       this.bloqueioLider = true;
-      console.log('oi');
+      console.log("oi");
     },
     addAluno(q) {
       //Gerador ID
@@ -254,8 +257,5 @@ img {
   .lista-alunos-item {
     padding: 12px !important;
   }
-
-
-
 }
 </style>
