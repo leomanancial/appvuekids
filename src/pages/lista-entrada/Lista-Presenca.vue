@@ -15,10 +15,10 @@
         </div>
         <div class="form-group col-2">
           <small id="emailHelp" class="form-text text-muted">Data da Lista</small>
-          <input class="form-control" type="text" v-model="this.dataLista" disabled>
+          <input class="form-control" type="text" v-model="this.dataLista" disabled />
         </div>
       </div>
-      <hr>
+      <hr />
       <h2>Líderes do dia: {{this.form.liderDia}}</h2>
       <div class="row">
         <div class="form-group col-6" required>
@@ -37,7 +37,7 @@
             placeholder="Digite o número do cartão"
             v-model="form.cartao"
             required
-          >
+          />
         </div>
 
         <div class="form-group col-6">
@@ -46,14 +46,14 @@
             v-model="form.obs"
             type="textbox"
             placeholder="Observação sobre o aluno"
-          >
+          />
         </div>
         <div class="form-group col-2">
           <button class="btn btn-info">Adicionar</button>
         </div>
       </div>
     </form>
-    <hr>
+    <hr />
     <div class="row" id="lista-alunos-header">
       <div class="col-1">Foto</div>
       <div class="col-1">Matricula</div>
@@ -64,11 +64,11 @@
       <div class="col-4">Observação</div>
     </div>
 
-    <hr>
+    <hr />
     <div>
-      <div  v-for="item in this.refListaPresenca" class="lista-alunos-item row" id="lista-alunos">
+      <div v-for="item in this.refListaPresenca" class="lista-alunos-item row" id="lista-alunos">
         <div v-if="item.fotoL" class="col-1 foto">
-          <img v-bind:src="item.fotoL" class="rounded-circle">
+          <img v-bind:src="item.fotoL" class="rounded-circle" />
         </div>
         <div class="col-1">{{item.idL}}</div>
         <div class="col-2">{{item.nome}}</div>
@@ -145,6 +145,12 @@ export default {
   methods: {
     mostraLista() {},
     addAluno(q) {
+      //Gerador ID
+      var strDT = this.form.nascimento;
+      const ListaID = 'cod-'+ this.form.liderDia.substring(0, 4) +'-'+this.dataLista;
+      /////////
+      console.log(ListaID);
+
       for (var b in this.alunoss) {
         if (q == this.alunoss[b].nome) {
           this.listaPresenca.push(this.alunoss[b]);
@@ -225,7 +231,7 @@ img {
     background-color: transparent;
   }
   &:hover {
-   padding: 5px !important;
+    padding: 5px !important;
     border-radius: 5px;
     color: var(--gray);
     background-color: var(--gray-light);
