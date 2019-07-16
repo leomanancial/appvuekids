@@ -65,7 +65,7 @@
     </div>
 
     <hr />
-    <div>
+    <div id="teste">
       <div v-for="item in this.refListaPresenca" class="lista-alunos-item row" id="lista-alunos">
         <div v-if="item.fotoL" class="col-1 foto">
           <img v-bind:src="item.fotoL" class="rounded-circle" />
@@ -111,7 +111,8 @@ export default {
         obs: "",
         liderDia: "",
         dataListaL: "",
-        salaL: ""
+        salaL: "",
+        listaID: ""
       },
       listaPresenca: [],
       refListaPresenca: [],
@@ -147,10 +148,9 @@ export default {
     addAluno(q) {
       //Gerador ID
       var strDT = this.form.nascimento;
-      const ListaID = 'cod-'+ this.form.liderDia.substring(0, 4) +'-'+this.dataLista;
+      const ListaID =
+        "cod-" + this.form.liderDia.substring(0, 4) + "-" + this.dataLista;
       /////////
-      console.log(ListaID);
-
       for (var b in this.alunoss) {
         if (q == this.alunoss[b].nome) {
           this.listaPresenca.push(this.alunoss[b]);
@@ -160,7 +160,7 @@ export default {
           this.form.responsavel = this.alunoss[b].resp;
           this.form.dataListaL = this.dataLista;
           this.form.salaL = this.alunoss[b].sala;
-
+          this.form.listaID = ListaID;
           //console.log(this.form);
           //console.log(this.listaPresenca);
         } else {
@@ -239,5 +239,8 @@ img {
   .lista-alunos-item {
     padding: 12px !important;
   }
+
+
+
 }
 </style>
