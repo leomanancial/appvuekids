@@ -80,6 +80,7 @@ export default {
 
   methods: {
     busca() {
+      this.refListaData = []
       const dataInicioFormat = moment(this.dataInicio).format("DD/MM/YYYY");
       const dataFinalFormat = moment(this.dataFinal).format("DD/MM/YYYY");
       const ref = this.$firebase.database().ref("ListaPresenca");
@@ -91,7 +92,6 @@ export default {
 
       for (let i in this.dataL) {
         for (let x in this.dataL[i]) {
-          /* console.log(this.dataL[i][x].dataListaL); */
           if (this.dataL[i][x].dataListaL == dataInicioFormat) {
             console.log(this.dataL);
             this.refListaData.push(this.dataL[i][x]);
