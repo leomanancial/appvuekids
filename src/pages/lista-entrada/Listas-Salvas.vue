@@ -61,7 +61,8 @@ export default {
       dataHoje: "",
       mostraLista: false,
       compara: "",
-      liderDoDia: ""
+      liderDoDia: "",
+      dataL: []
     };
   },
 
@@ -85,8 +86,18 @@ export default {
 
       ref.on("value", snapshot => {
         const values = snapshot.val();
-        console.log(values['dataListaL']);
+        this.dataL = groupby(values, "dataListaL");
       });
+
+      for (let i in this.dataL) {
+        for (let x in this.dataL[i]) {
+          /* console.log(this.dataL[i][x].dataListaL); */
+          if (this.dataL[i][x].dataListaL == dataInicioFormat) {
+            console.log(this.dataL);
+            this.refListaData.push(this.dataL[i][x]);
+          }
+        }
+      }
     }
   }
 };
