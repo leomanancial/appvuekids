@@ -11,7 +11,7 @@
             :disabled="this.form.liderDia != ''"
             :required="true"
           >
-            <option value="Fabio e Erica">Fabio e Érica</option>
+            <option value="Fabio e Erica">Fabio e OUTRO Érica</option>
             <option value="Fernando e Bete">Fernando e Bete</option>
             <option value="Janilson e Fabi">Janilson e Fabi</option>
             <option value="Samuel e Jéssica">Samuel e Jéssica</option>
@@ -90,6 +90,8 @@
 
 <script>
 import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
+import moment from "moment";
+import groupby from "lodash.groupby";
 
 export default {
   name: "Lista-presenca",
@@ -117,7 +119,8 @@ export default {
       },
       listaPresenca: [],
       refListaPresenca: [],
-      dataLista: ""
+      dataLista: "",
+      dataL: []
     };
   },
   created() {
@@ -125,6 +128,7 @@ export default {
     const dataHoje = new Intl.DateTimeFormat("pt-BR").format(data);
     this.dataLista = dataHoje;
     //Teste não excluir
+
     /* var teste = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
     this.dataLista = this.dataLista = new Intl.DateTimeFormat("pt-BR").format(teste); */
 
@@ -139,13 +143,24 @@ export default {
         this.aluno.push(this.alunoss[s].nome);
       }
     });
-    const ref2 = this.$firebase.database().ref("ListaPresenca");
+    const ref2 = this.$firebase.database().ref("ListaPresenca/");
     ref2.on("value", snapshot => {
       const values = snapshot.val();
-      if (this.dataLista == dataHoje) {
+      this.dataL = groupby(values, "dataListaL");
+      console.log(this.dataL);
+
+      /* if (this.dataLista == dataHoje) {
         this.refListaPresenca = Object.keys(values).map(i => values[i]);
-      }
+      } */
     });
+
+    for (let i in this.dataL) {
+      for (let x in this.dataL[i]) {
+        if (this.dataL[i][x].dataListaL == dataHoje) {
+          this.refListaPresenca.push(this.dataL[i][x]);
+        }
+      }
+    }
     //console.log(this.refListaPresenca);
   },
 
@@ -175,7 +190,7 @@ export default {
       }
       const ref = this.$firebase.database().ref("ListaPresenca");
 
-      ref.child(this.form.idL).update(this.form, err => {
+      ref.child(this.dataListaL).update(this.form, err => {
         if (err) {
           this.$root.$emit("Alerta::show", {
             type: "danger",

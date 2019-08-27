@@ -6,17 +6,17 @@
         <small id="emailHelp" class="form-text text-muted">Data início</small>
         <input class="form-control" type="date" v-model="dataInicio" />
       </div>
-      <div class="form-group col-3">
+    <!--   <div class="form-group col-3">
         <small id="emailHelp" class="form-text text-muted">Data final</small>
         <input class="form-control" type="date" v-model="dataFinal" />
-      </div>
+      </div> -->
       <div class="form-group col-2">
         <small id="emailHelp" class="form-text text-muted">Pesquisa Lista</small>
         <button class="btn btn-info" @click.prevent="busca">Pesquisar</button>
       </div>
     </div>
     <div>
-      <h2>Líderes do dia : {{this.liderDoDia}}</h2>
+      <h2>Lider do Dia: {{this.liderOne}}</h2>
     </div>
     <div class="row" id="lista-alunos-header">
       <div class="col-1">Foto</div>
@@ -62,7 +62,9 @@ export default {
       mostraLista: false,
       compara: "",
       liderDoDia: "",
-      dataL: []
+      dataL: [],
+      vazia: "",
+      liderOne: ""
     };
   },
 
@@ -80,7 +82,8 @@ export default {
 
   methods: {
     busca() {
-      this.refListaData = []
+      this.refListaData = [];
+      this.liderOne = "";
       const dataInicioFormat = moment(this.dataInicio).format("DD/MM/YYYY");
       const dataFinalFormat = moment(this.dataFinal).format("DD/MM/YYYY");
       const ref = this.$firebase.database().ref("ListaPresenca");
@@ -93,11 +96,12 @@ export default {
       for (let i in this.dataL) {
         for (let x in this.dataL[i]) {
           if (this.dataL[i][x].dataListaL == dataInicioFormat) {
-            console.log(this.dataL);
             this.refListaData.push(this.dataL[i][x]);
+            this.liderOne = this.dataL[i][x].liderDia;
           }
         }
       }
+      console.log(this.liderOne);
     }
   }
 };
