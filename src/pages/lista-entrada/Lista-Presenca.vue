@@ -77,8 +77,8 @@
           <img v-bind:src="item.fotoL" class="rounded-circle" />
         </div>
         <div class="col-1">{{item.idL}}</div>
-        <div class="col-2">{{item.nome}}</div>
-        <div class="col-2">{{item.responsavel}}</div>
+        <div class="col-2">{{item.nomeL}}</div>
+        <div class="col-2">{{item.responsavelL}}</div>
         <div class="col-1">{{item.salaL}}</div>
         <div class="col-1">{{item.cartao}}</div>
         <div class="col-4">{{item.obs}}</div>
