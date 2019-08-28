@@ -34,7 +34,7 @@
           <img v-bind:src="item.fotoL" class="rounded-circle" />
         </div>
         <div class="col-1">{{item.idL}}</div>
-        <div class="col-2">{{item.nome}}</div>
+        <div class="col-2">{{item.nomeL}}</div>
         <div class="col-2">{{item.dataListaL}}</div>
         <div class="col-1">{{item.salaL}}</div>
         <div class="col-1">{{item.cartao}}</div>
