@@ -107,8 +107,8 @@ export default {
       aluno: [],
       form: {
         fotoL: "",
-        nome: "",
-        responsavel: "",
+        nomeL: "",
+        responsavelL: "",
         idL: "",
         cartao: "",
         obs: "",
@@ -119,6 +119,7 @@ export default {
       },
       listaPresenca: [],
       refListaPresenca: [],
+      listasalva: [],
       dataLista: "",
       dataL: []
     };
@@ -161,7 +162,6 @@ export default {
         }
       }
     }
-    //console.log(this.refListaPresenca);
   },
 
   methods: {
@@ -170,45 +170,57 @@ export default {
     },
     addAluno(q) {
       //Gerador ID
+      console.log(this.form.carta)
       var strDT = this.form.nascimento;
       const ListaID =
         "cod-" + this.form.liderDia.substring(0, 4) + "-" + this.dataLista;
       /////////
+      const dataInicioFormat = moment(this.dataInicio).format("DD/MM/YYYY");
+
       for (var b in this.alunoss) {
         if (q == this.alunoss[b].nome) {
-          this.listaPresenca.push(this.alunoss[b]);
-          this.form.fotoL = this.alunoss[b].foto;
-          this.form.idL = this.alunoss[b].id;
-          this.form.nome = this.alunoss[b].nome;
-          this.form.responsavel = this.alunoss[b].resp;
-          this.form.dataListaL = this.dataLista;
-          this.form.salaL = this.alunoss[b].sala;
-          this.form.listaID = ListaID;
+          //this.listaPresenca.push(this.alunoss[b]);
+          this.listaPresenca = {
+            fotoL: this.alunoss[b].foto,
+            idL: this.alunoss[b].id,
+            nomeL: this.alunoss[b].nome,
+            responsavelL: this.alunoss[b].resp,
+            dataListaL: this.dataLista,
+            salaL: this.alunoss[b].sala,
+            listaID: ListaID,
+            dataInicioFormat: dataInicioFormat,
+            cartao: this.form.cartao,
+            observacao: this.form.obs,
+            liderDia: this.form.liderDia,
+          };
         } else {
           console.log("não tem");
         }
       }
-      const ref = this.$firebase.database().ref("ListaPresenca");
-
-      ref.child(this.dataListaL).update(this.form, err => {
-        if (err) {
-          this.$root.$emit("Alerta::show", {
-            type: "danger",
-            message: "Não foi possível realizar o cadastro, tente novamente"
-          });
-        } else {
-          this.$root.$emit("Alerta::show", {
-            type: "success",
-            message:
-              "Aluno " +
-              this.form.nome +
-              " matricula: " +
-              this.form.idL +
-              " está presente!"
-          });
-        }
-        this.$root.$emit("Spinner::hide");
-      });
+      this.listasalva.push(this.listaPresenca);
+      console.log(this.listasalva);
+      const ref = this.$firebase
+        .database()
+        .ref("ListaPresenca/")
+        .set(this.listasalva, err => {
+          if (err) {
+            this.$root.$emit("Alerta::show", {
+              type: "danger",
+              message: "Não foi possível realizar o cadastro, tente novamente"
+            });
+          } else {
+            this.$root.$emit("Alerta::show", {
+              type: "success",
+              message:
+                "Aluno " +
+                this.form.nome +
+                " matricula: " +
+                this.form.idL +
+                " está presente!"
+            });
+          }
+          this.$root.$emit("Spinner::hide");
+        });
 
       /* for (var a in this.form) {
         console.log(this.form[a]);

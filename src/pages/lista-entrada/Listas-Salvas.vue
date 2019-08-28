@@ -77,6 +77,7 @@ export default {
     ref.on("value", snapshot => {
       const values = snapshot.val();
       this.refListaPresenca = Object.keys(values).map(i => values[i]);
+
     });
   },
 
@@ -88,10 +89,15 @@ export default {
       const dataFinalFormat = moment(this.dataFinal).format("DD/MM/YYYY");
       const ref = this.$firebase.database().ref("ListaPresenca");
 
+   
       ref.on("value", snapshot => {
         const values = snapshot.val();
+        console.log(this.values);
         this.dataL = groupby(values, "dataListaL");
+  
       });
+
+     
 
       for (let i in this.dataL) {
         for (let x in this.dataL[i]) {
@@ -101,7 +107,7 @@ export default {
           }
         }
       }
-      console.log(this.liderOne);
+      
     }
   }
 };
