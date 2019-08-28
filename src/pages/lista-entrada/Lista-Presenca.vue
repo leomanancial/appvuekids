@@ -170,7 +170,6 @@ export default {
     },
     addAluno(q) {
       //Gerador ID
-      console.log(this.form.carta)
       var strDT = this.form.nascimento;
       const ListaID =
         "cod-" + this.form.liderDia.substring(0, 4) + "-" + this.dataLista;
@@ -201,8 +200,7 @@ export default {
       console.log(this.listasalva);
       const ref = this.$firebase
         .database()
-        .ref("ListaPresenca/")
-        .set(this.listasalva, err => {
+        .ref("ListaPresenca/"+this.listaPresenca.idL).set(this.listaPresenca, err => {
           if (err) {
             this.$root.$emit("Alerta::show", {
               type: "danger",
@@ -221,10 +219,6 @@ export default {
           }
           this.$root.$emit("Spinner::hide");
         });
-
-      /* for (var a in this.form) {
-        console.log(this.form[a]);
-      } */
     }
   }
 };
