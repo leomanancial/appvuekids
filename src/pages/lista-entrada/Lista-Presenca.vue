@@ -196,11 +196,12 @@ export default {
           console.log("não tem");
         }
       }
+      const timestamp = moment(this.dataInicio).format("DD-MM-YYYY");
       this.listasalva.push(this.listaPresenca);
       console.log(this.listasalva);
       const ref = this.$firebase
         .database()
-        .ref("ListaPresenca/"+this.listaPresenca.idL).set(this.listaPresenca, err => {
+        .ref("ListaPresenca/"+timestamp+"/"+this.listaPresenca.idL).set(this.listaPresenca, err => {
           if (err) {
             this.$root.$emit("Alerta::show", {
               type: "danger",
