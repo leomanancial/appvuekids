@@ -96,12 +96,19 @@ export default {
           if (i == dataInicioFormat) {
             let c = values[i];
             this.vazia = c;
+            this.$root.$emit("Alerta::show", {
+              type: "success",
+              message:
+                "Lista de alunos presentes no dia: " +
+                dataInicioFormat
+            });
           } else {
             this.$root.$emit("Alerta::show", {
               type: "danger",
               message: "Não existe registros para essa data. Insira uma data válida e tente novamente!"
             });
           }
+           this.$root.$emit("Spinner::hide");
         }
         this.dataL = groupby(this.vazia, "dataListaL");
       });
