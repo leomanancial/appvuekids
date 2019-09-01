@@ -6,13 +6,19 @@
         <small id="emailHelp" class="form-text text-muted">Data início</small>
         <input class="form-control" type="date" v-model="dataInicio" />
       </div>
-      <!--   <div class="form-group col-3">
-        <small id="emailHelp" class="form-text text-muted">Data final</small>
-        <input class="form-control" type="date" v-model="dataFinal" />
-      </div>-->
+
       <div class="form-group col-2">
-        <small id="emailHelp" class="form-text text-muted">Pesquisa Lista</small>
+        <small id="emailHelp" class="form-text text-muted">Pesquisa por data</small>
         <button class="btn btn-info" @click.prevent="busca">Pesquisar</button>
+      </div>
+    
+      <div class="form-group col-3">
+        <small id="emailHelp" class="form-text text-muted">Nome do Aluno</small>
+        <input class="form-control" placeholder="Nome do aluno" prepend="Aluno" type="text" v-model="pesquisaNome" />
+      </div>
+       <div class="form-group col-2">
+        <small id="emailHelp" class="form-text text-muted">Pesquisa por nome</small>
+        <button class="btn btn-info" @click.prevent="buscaAluno">Pesquisar</button>
       </div>
     </div>
     <div>
@@ -56,6 +62,7 @@ export default {
     return {
       a: [],
       b: [],
+      pesquisaNome: "",
       refListaData: [],
       refListaPresenca: [],
       dataInicio: "",
@@ -89,6 +96,7 @@ export default {
       const dataInicioFormat = moment(this.dataInicio).format("DD-MM-YYYY");
       const dataFinalFormat = moment(this.dataFinal).format("DD/MM/YYYY");
       const ref = this.$firebase.database().ref("ListaPresenca");
+      console.log(ref);
 
       ref.on("value", snapshot => {
         const values = snapshot.val();
@@ -98,17 +106,16 @@ export default {
             this.vazia = c;
             this.$root.$emit("Alerta::show", {
               type: "success",
-              message:
-                "Lista de alunos presentes no dia: " +
-                dataInicioFormat
+              message: "Lista de alunos presentes no dia: " + dataInicioFormat
             });
           } else {
             this.$root.$emit("Alerta::show", {
               type: "danger",
-              message: "Não existe registros para essa data. Insira uma data válida e tente novamente!"
+              message:
+                "Não existe registros para essa data. Insira uma data válida e tente novamente!"
             });
           }
-           this.$root.$emit("Spinner::hide");
+          this.$root.$emit("Spinner::hide");
         }
         this.dataL = groupby(this.vazia, "dataListaL");
       });
@@ -122,6 +129,10 @@ export default {
           }
         }
       }
+    },
+
+    buscaAluno() {
+      console.log("oi")
     }
   }
 };
