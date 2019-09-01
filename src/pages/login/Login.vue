@@ -12,7 +12,7 @@
             class="form-control"
             placeholder="Digite seu Email"
             required
-          >
+          />
         </div>
         <div class="form-group">
           <input
@@ -21,7 +21,7 @@
             class="form-control"
             placeholder="Digite sua Senha"
             required
-          >
+          />
         </div>
         <button class="btn btn-primary btn-block">
           Entrar
@@ -54,9 +54,20 @@ export default {
         //Se usuario esta logado Rediciona após para a home
         window.uid = res.user.uid;
         this.$router.push({ name: "home" });
+        this.$root.$emit("Alerta::show", {
+              type: "success",
+              message:
+                "Seja bem vindo!"
+            });
       } catch (err) {
-        console.log(err);
+        this.$root.$emit("Alerta::show", {
+          type: "danger",
+          message:
+            "Conta inválida! Verifique seu email ou senha, caso o erro persista procure o Administrador. " + "   Informe esse erro:  "+
+            err
+        });
       }
+      this.$root.$emit("Spinner::hide");
     }
   },
 
