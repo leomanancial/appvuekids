@@ -1,6 +1,7 @@
 <template >
   <div class="container-fluid">
     <h1>Lista de Presença</h1>
+
     <form @submit.prevent="addAluno(query)">
       <div class="row">
         <div class="form-group col-4">
@@ -10,8 +11,9 @@
             v-model="form.liderDia"
             :disabled="this.form.liderDia != ''"
             :required="true"
+            :selected="oi"
           >
-            <option value="Fabio e Erica">Fabio e OUTRO Érica</option>
+            <option value="Fabio e Erica">Fabio e Erica</option>
             <option value="Fernando e Bete">Fernando e Bete</option>
             <option value="Janilson e Fabi">Janilson e Fabi</option>
             <option value="Samuel e Jéssica">Samuel e Jéssica</option>
@@ -22,9 +24,14 @@
           <small id="emailHelp" class="form-text text-muted">Data da Lista</small>
           <input class="form-control" type="text" v-model="this.dataLista" disabled />
         </div>
+        <div class="form-group col-2">
+          <small id="emailHelp" class="form-text text-muted">Matrícula</small>
+          <novo-aluno />
+        </div>
       </div>
       <hr />
-      <h2>Líderes do dia: {{this.form.liderDia}}</h2>
+
+      <h2>Líderes do dia: {{ this.mostraLider ? this.mostraLider[0] :'Nenhum registro'}}</h2>
       <div class="row">
         <div class="form-group col-6" required>
           <vue-bootstrap-typeahead
@@ -81,7 +88,7 @@
         <div class="col-2">{{item.responsavelL}}</div>
         <div class="col-1">{{item.salaL}}</div>
         <div class="col-1">{{item.cartao}}</div>
-        <div class="col-4">{{item.obs}}</div>
+        <div class="col-4">{{item.observacao}}</div>
       </div>
     </div>
     <!--/table-->
@@ -92,10 +99,12 @@
 import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
 import moment from "moment";
 import groupby from "lodash.groupby";
+import NovoAluno from "../../components/layout/NovoAluno";
 
 export default {
   name: "Lista-presenca",
   components: {
+    NovoAluno,
     VueBootstrapTypeahead
   },
   data: () => {
@@ -121,7 +130,8 @@ export default {
       refListaPresenca: [],
       listasalva: [],
       dataLista: "",
-      dataL: []
+      dataL: [],
+      mostraLider: []
     };
   },
   created() {
@@ -140,21 +150,26 @@ export default {
       this.alunoss = Object.keys(values).map(i => values[i]);
 
       for (var s in this.alunoss) {
-        //console.log(this.alunoss[s]);
         this.aluno.push(this.alunoss[s].nome);
       }
     });
+
+    //Lista exibida embaixo da busca
     const ref2 = this.$firebase.database().ref("ListaPresenca/");
     ref2.on("value", snapshot => {
       const values = snapshot.val();
       this.dataL = groupby(values, "dataListaL");
-      console.log(this.dataL);
 
-      /* if (this.dataLista == dataHoje) {
-        this.refListaPresenca = Object.keys(values).map(i => values[i]);
-      } */
+      for (let i in values) {
+        let o = values[i];
+        this.refListaPresenca = o;
+
+        for (let z in o) {
+          this.mostraLider.push(o[z].liderDia);
+          //console.log(this.mostraLider[0]);
+        }
+      }
     });
-
     for (let i in this.dataL) {
       for (let x in this.dataL[i]) {
         if (this.dataL[i][x].dataListaL == dataHoje) {
@@ -174,11 +189,10 @@ export default {
       const ListaID =
         "cod-" + this.form.liderDia.substring(0, 4) + "-" + this.dataLista;
       /////////
-      const dataInicioFormat = moment(this.dataInicio).format("DD/MM/YYYY");
+      const dataInicioFormat = moment(this.dataInicio).format("DD-MM-YYYY");
 
       for (var b in this.alunoss) {
         if (q == this.alunoss[b].nome) {
-          //this.listaPresenca.push(this.alunoss[b]);
           this.listaPresenca = {
             fotoL: this.alunoss[b].foto,
             idL: this.alunoss[b].id,
@@ -187,21 +201,21 @@ export default {
             dataListaL: this.dataLista,
             salaL: this.alunoss[b].sala,
             listaID: ListaID,
-            dataInicioFormat: dataInicioFormat,
+            dataInicioFormatL: dataInicioFormat,
             cartao: this.form.cartao,
             observacao: this.form.obs,
-            liderDia: this.form.liderDia,
+            liderDia: this.form.liderDia
           };
         } else {
-          console.log("não tem");
+          //console.log("não tem");
         }
       }
       const timestamp = moment(this.dataInicio).format("DD-MM-YYYY");
       this.listasalva.push(this.listaPresenca);
-      console.log(this.listasalva);
       const ref = this.$firebase
         .database()
-        .ref("ListaPresenca/"+timestamp+"/"+this.listaPresenca.idL).set(this.listaPresenca, err => {
+        .ref("ListaPresenca/" + dataInicioFormat + "/" + this.listaPresenca.idL)
+        .set(this.listaPresenca, err => {
           if (err) {
             this.$root.$emit("Alerta::show", {
               type: "danger",
@@ -212,9 +226,9 @@ export default {
               type: "success",
               message:
                 "Aluno " +
-                this.form.nome +
+                this.listaPresenca.nomeL +
                 " matricula: " +
-                this.form.idL +
+                this.listaPresenca.idL +
                 " está presente!"
             });
           }

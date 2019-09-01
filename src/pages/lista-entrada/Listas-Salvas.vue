@@ -38,7 +38,7 @@
         <div class="col-2">{{item.dataListaL}}</div>
         <div class="col-1">{{item.salaL}}</div>
         <div class="col-1">{{item.cartao}}</div>
-        <div class="col-4">{{item.obs}}</div>
+        <div class="col-4">{{item.observacao}}</div>
       </div>
     </div>
   </div>
@@ -63,7 +63,7 @@ export default {
       compara: "",
       liderDoDia: "",
       dataL: [],
-      vazia: "",
+      vazia: [],
       liderOne: ""
     };
   },
@@ -84,19 +84,26 @@ export default {
     busca() {
       this.refListaData = [];
       this.liderOne = "";
-      const dataInicioFormat = moment(this.dataInicio).format("DD/MM/YYYY");
+      const dataInicioFormat = moment(this.dataInicio).format("DD-MM-YYYY");
       const dataFinalFormat = moment(this.dataFinal).format("DD/MM/YYYY");
       const ref = this.$firebase.database().ref("ListaPresenca");
 
       ref.on("value", snapshot => {
         const values = snapshot.val();
-        console.log(this.values);
-        this.dataL = groupby(values, "dataListaL");
+        for (let i in values) {
+          if (i == dataInicioFormat) {
+            let c = values[i];
+            console.log(c);
+            this.vazia = c;
+          }
+        }
+        this.dataL = groupby(this.vazia, "dataListaL");
       });
 
       for (let i in this.dataL) {
         for (let x in this.dataL[i]) {
-          if (this.dataL[i][x].dataListaL == dataInicioFormat) {
+          //console.log(this.dataL[i][x].dataInicioFormatL);
+          if (this.dataL[i][x].dataInicioFormatL == dataInicioFormat) {
             this.refListaData.push(this.dataL[i][x]);
             this.liderOne = this.dataL[i][x].liderDia;
           }

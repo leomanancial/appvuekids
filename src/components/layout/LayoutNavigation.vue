@@ -14,7 +14,7 @@
         <i class="fa" :class=" `fa-${router.meta.icon}`"></i>
         {{ router.meta.title}}
       </router-link>
-      <novo-aluno />
+      <!-- novo-aluno / -->
     </div>
   </nav>
 </template>

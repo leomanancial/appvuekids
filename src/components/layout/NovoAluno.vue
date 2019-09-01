@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="submit()">
-    <button class="btn btn-md bt-outline-primary" @click="mostraModal" id="btn-novo-aluno">
+    <button class="btn btn-info" @click="mostraModal" id="btn-novo-aluno">
       <i class="fas fa-user-plus"></i>
       Novo Aluno
     </button>
@@ -233,18 +233,6 @@ img {
   font-size: 12px !important;
 }
 
-#btn-novo-aluno {
 
-  height: calc(100vh-49px);
-  color: var(--white);
-}
-#btn-novo-aluno:hover {
-  border-radius: 0;
-  width: 100%;
-  color: var(--white);
-  background-color: var(--gray);
-  height: calc(100vh-49px);
-  text-align: -webkit-auto;
-}
 </style>
 
