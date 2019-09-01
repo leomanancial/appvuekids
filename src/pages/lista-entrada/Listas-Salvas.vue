@@ -20,12 +20,13 @@
     </div>
     <div class="row" id="lista-alunos-header">
       <div class="col-1">Foto</div>
-      <div class="col-1">Matricula</div>
       <div class="col-2">Nome</div>
-      <div class="col-2">Data</div>
-      <div class="col-1">Sala</div>
+      <div class="col-2">Responsável</div>
       <div class="col-1">Cartão</div>
-      <div class="col-4">Observação</div>
+      <div class="col-1">Data</div>
+      <div class="col-1">Sala</div>
+      <div class="col-1">Matricula</div>
+      <div class="col-2">Observação</div>
     </div>
     <hr />
     <div id="teste">
@@ -33,12 +34,13 @@
         <div v-if="item.fotoL" class="col-1 foto">
           <img v-bind:src="item.fotoL" class="rounded-circle" />
         </div>
-        <div class="col-1">{{item.idL}}</div>
         <div class="col-2">{{item.nomeL}}</div>
-        <div class="col-2">{{item.dataListaL}}</div>
-        <div class="col-1">{{item.salaL}}</div>
+        <div class="col-2">{{item.respDiaL}}</div>
         <div class="col-1">{{item.cartao}}</div>
-        <div class="col-4">{{item.observacao}}</div>
+        <div class="col-1">{{item.dataListaL}}</div>
+        <div class="col-1">{{item.salaL}}</div>
+        <div class="col-1">{{item.idL}}</div>
+        <div class="col-2">{{item.observacao}}</div>
       </div>
     </div>
   </div>
@@ -93,8 +95,12 @@ export default {
         for (let i in values) {
           if (i == dataInicioFormat) {
             let c = values[i];
-            console.log(c);
             this.vazia = c;
+          } else {
+            this.$root.$emit("Alerta::show", {
+              type: "danger",
+              message: "Não existe registros para essa data. Insira uma data válida e tente novamente!"
+            });
           }
         }
         this.dataL = groupby(this.vazia, "dataListaL");

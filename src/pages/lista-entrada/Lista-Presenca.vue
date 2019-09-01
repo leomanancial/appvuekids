@@ -11,7 +11,6 @@
             v-model="form.liderDia"
             :disabled="this.form.liderDia != ''"
             :required="true"
-            :selected="oi"
           >
             <option value="Fabio e Erica">Fabio e Erica</option>
             <option value="Fernando e Bete">Fernando e Bete</option>
@@ -52,7 +51,16 @@
           />
         </div>
 
-        <div class="form-group col-6">
+        <div class="form-group col-4">
+          <input
+            class="form-control"
+            v-model="form.respDiaL"
+            type="textbox"
+            placeholder="Responsável pelo aluno no dia"
+          />
+        </div>
+
+           <div class="form-group col-6">
           <input
             class="form-control"
             v-model="form.obs"
@@ -69,9 +77,9 @@
     <hr />
     <div class="row" id="lista-alunos-header">
       <div class="col-1">Foto</div>
-      <div class="col-1">Matricula</div>
       <div class="col-2">Nome</div>
       <div class="col-2">Responsável</div>
+      <div class="col-1">Matricula</div>
       <div class="col-1">Sala</div>
       <div class="col-1">Cartão</div>
       <div class="col-4">Observação</div>
@@ -83,9 +91,9 @@
         <div v-if="item.fotoL" class="col-1 foto">
           <img v-bind:src="item.fotoL" class="rounded-circle" />
         </div>
-        <div class="col-1">{{item.idL}}</div>
         <div class="col-2">{{item.nomeL}}</div>
-        <div class="col-2">{{item.responsavelL}}</div>
+        <div class="col-2">{{item.respDiaL}}</div>
+        <div class="col-1">{{item.idL}}</div>
         <div class="col-1">{{item.salaL}}</div>
         <div class="col-1">{{item.cartao}}</div>
         <div class="col-4">{{item.observacao}}</div>
@@ -117,7 +125,7 @@ export default {
       form: {
         fotoL: "",
         nomeL: "",
-        responsavelL: "",
+        respDiaL: "",
         idL: "",
         cartao: "",
         obs: "",
@@ -197,7 +205,7 @@ export default {
             fotoL: this.alunoss[b].foto,
             idL: this.alunoss[b].id,
             nomeL: this.alunoss[b].nome,
-            responsavelL: this.alunoss[b].resp,
+            respDiaL: this.form.respDiaL,
             dataListaL: this.dataLista,
             salaL: this.alunoss[b].sala,
             listaID: ListaID,
