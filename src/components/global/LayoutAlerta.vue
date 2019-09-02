@@ -21,7 +21,7 @@ export default {
       this.type = cadastro.type;
       this.message = cadastro.message;
 
-      setTimeout(() => { this.close() }, cadastro.timeout || 4000)
+      setTimeout(() => { this.close() }, cadastro.timeout || 10000)
     })
   },
   methods: {
@@ -38,7 +38,7 @@ export default {
 .alert {
   top: 20px;
   right: 20px;
-  max-width: 400px;
+  max-width: 900px;
   z-index: 100;
   position: absolute;
 }

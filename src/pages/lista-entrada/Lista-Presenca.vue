@@ -146,21 +146,57 @@ export default {
   },
   created() {
     var user = this.$firebase.auth().currentUser;
-    //this.form.liderDia = "Leonardo";
     if (user.email != null) {
       console.log(user.email);
 
       switch (user.email) {
-        case "leomanancial12@gmail.com":
-          this.form.liderDia = "Leonardo Oliveira";
+        ///////////////////////// Fabio e Erica 
+        case "fabio@kids.com.br": //faberi2019
+          this.form.liderDia = "Fabio e Erica";
           break;
-        
+
+        case "erica@kids.com.br": //erifab2019
+          this.form.liderDia = "Fabio e Erica";
+          break;
+        //////////////////////// Fernando e Bete
+        case "fernando@kids.com.br": // ferbet2019
+          this.form.liderDia = "Fernando e Bete";
+          break;
+
+        case "bete@kids.com.br": // betfer2019
+          this.form.liderDia = "Fernando e Bete";
+          break;
+        /////////////////////// Janilson e Fabi  
+        case "janilson@kids.com.br": // janfab2019
+          this.form.liderDia = "Janilson e Fabi";
+          break;
+
+        case "fabi@kids.com.br": // fabjan2019
+          this.form.liderDia = "Janilson e Fabi";
+          break;
+        /////////////////////// Samuel e Jessica
+        case "jessica@kids.com.br": // jessam2019
+          this.form.liderDia = "Samuel e Jessica";
+          break;
+
+        case "samuel@kids.com.br": // 123Mudar
+          this.form.liderDia = "Samuel e Jessica";
+          break;
+        /////////////////////// Vagner e Rita
+        case "vagner@kids.com.br": // vagrit2019
+          this.form.liderDia = "Vagner e Rita";
+          break;
+
+        case "rita@kids.com.br": // ritvag2019
+          this.form.liderDia = "Vagner e Rita";
+          break;        
+        /////////////////////// Admin  
         case "admin@admin.com.br":
           this.form.liderDia = "Admin";
           break;
 
         default:
-          this.form.liderDia = "Vazio";
+          this.form.liderDia = "Adminstrador";
           break;
       }
 

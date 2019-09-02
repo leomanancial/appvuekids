@@ -1,24 +1,29 @@
 <template>
   <div class="home">
-    <h1>Seja bem vindo</h1>
-    <img v-bind:src="this.foto" class="rounded-circle" id="foto-home">
-    <h2 class="nome-logado">{{this.email}}</h2>
+    <h1>Olá <span class="nome-logado">{{this.email}}</span> , graça e paz !</h1>
+    <p><span style="font-weight:bold">IMPORTANTE: </span></p><p>O <span style="font-weight:bold">LÍDER DO DIA</span> está vinculada a esta conta, e a <span style="font-weight:bold">Lista de Presença</span> será salva com esta informação.
+    Então caso não seja o  <span style="font-weight:bold">Líder do dia</span>, clique em sair e se logue com a conta correta.</p>.
+    
   </div>
 </template>
 
 <script>
+import groupby from "lodash.groupby";
+
 export default {
   data: () => ({
     email: "",
-    foto: ""
+    foto: "",
+    mostraLider: []
   }),
 
-/*   created() {
+  created() {
     var user = this.$firebase.auth().currentUser;
-    this.email = user.displayName;
+    let nomeInicio = user.email.split("@");
+    console.log(nomeInicio);
+    this.email = nomeInicio[0];
     this.foto = user.photoURL;
-    //console.log(this.email)
-  } */
+  }
 };
 </script>
 <style scoped lang="scss">
@@ -29,7 +34,7 @@ export default {
   color: cadetblue;
 }
 
-#foto-home{
+#foto-home {
   max-width: 5% !important;
   padding: 0;
 }

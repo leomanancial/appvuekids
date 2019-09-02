@@ -176,6 +176,7 @@ img {
   font-size: 12pt;
   background-color: #faac58;
   color: var(--gray);
+  margin: 0;
 }
 
 .lista-alunos-item {

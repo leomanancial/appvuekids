@@ -57,7 +57,7 @@ export default {
         this.$root.$emit("Alerta::show", {
               type: "success",
               message:
-                "Seja bem vindo!"
+                "Login efetuado com sucesso, você está na página inicial."
             });
       } catch (err) {
         this.$root.$emit("Alerta::show", {
