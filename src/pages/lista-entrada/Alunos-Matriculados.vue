@@ -15,7 +15,7 @@
       <div id="lista-alunos-full">
         <div class="lista-alunos-item row" v-for="item in alunoss" id="lista-alunos">
           <div class="col-md-1 foto">
-            <img v-bind:src="item.foto" class="rounded-circle" />
+            <img v-bind:src='item.foto?item.foto:myAvatar' class="rounded-circle" />
           </div>
           <div class="col-md-2">{{item.id}}</div>
 
@@ -150,6 +150,7 @@
 </template>
 <script>
 import LogoKids from "../../static/avatar.png";
+import Avatar from "../../static/kids3.png";
 export default {
   name: "ListaAlunos",
   created: function() {
@@ -158,6 +159,7 @@ export default {
 
   data: () => ({
     showModal: false,
+    myAvatar : Avatar,
     myPic: LogoKids,
     value: "",
     url: "",

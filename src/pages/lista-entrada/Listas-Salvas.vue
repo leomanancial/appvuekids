@@ -3,27 +3,27 @@
     <h1>Listas Salvas</h1>
     <div class="row">
       <div class="form-group col-3">
-        <small id="emailHelp" class="form-text text-muted">Data início</small>
         <input class="form-control" type="date" v-model="dataInicio" />
+        <small id="emailHelp" class="form-text text-muted">Data para pesquisa</small>
       </div>
 
       <div class="form-group col-2">
-        <small id="emailHelp" class="form-text text-muted">Pesquisa por data</small>
+        <!--small id="emailHelp" class="form-text text-muted">Pesquisa por data</small-->
         <button class="btn btn-info" @click.prevent="busca">Pesquisar</button>
       </div>
 
       <div class="form-group col-3">
-        <small id="emailHelp" class="form-text text-muted">Nome do Aluno</small>
         <input
           class="form-control"
-          placeholder="Nome do aluno"
+          placeholder="Pesquisar por nome do aluno"
           prepend="Aluno"
           type="text"
           v-model="pesquisaNome"
         />
+        <small id="emailHelp" class="form-text text-muted">Nome do Aluno</small>
       </div>
       <div class="form-group col-2">
-        <small id="emailHelp" class="form-text text-muted">Pesquisa por nome</small>
+        <!--small id="emailHelp" class="form-text text-muted">Pesquisa por nome</small-->
         <button class="btn btn-info" @click.prevent="buscaAluno">Pesquisar</button>
       </div>
     </div>
@@ -43,8 +43,8 @@
     <hr />
     <div id="teste">
       <div v-for="item in this.refListaData" class="lista-alunos-item row" id="lista-alunos">
-        <div v-if="item.fotoL" class="col-1 foto">
-          <img v-bind:src="item.fotoL" class="rounded-circle" />
+        <div class="col-1 foto">
+          <img v-bind:src='item.fotoL?item.fotoL:myPic' class="rounded-circle" />
         </div>
         <div class="col-2">{{item.nomeL}}</div>
         <div class="col-2">{{item.respDiaL}}</div>
@@ -86,6 +86,7 @@ export default {
   },
 
   created() {
+    console.log(this.myPic);
     const data = new Date();
     /*  new Intl.DateTimeFormat("en-US").format(this.dataBusca); */
     this.dataHoje = new Intl.DateTimeFormat("en-US").format(data);
@@ -131,7 +132,6 @@ export default {
         for (let x in this.dataL[i]) {
           if (this.dataL[i][x].dataInicioFormatL == dataInicioFormat) {
             this.refListaData.push(this.dataL[i][x]);
-            console.log(this.dataL[i][x].fotoL);
             this.liderOne = this.dataL[i][x].liderDia;
           }
         }
