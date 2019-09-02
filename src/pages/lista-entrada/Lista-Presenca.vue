@@ -143,6 +143,7 @@ export default {
     };
   },
   created() {
+    console.log(this.$firebase.auth());
     const data = new Date();
     const dataHoje = new Intl.DateTimeFormat("pt-BR").format(data);
     this.dataLista = dataHoje;

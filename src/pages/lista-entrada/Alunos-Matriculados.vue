@@ -14,7 +14,7 @@
 
       <div class="lista-alunos-item row" v-for="item in alunoss" id="lista-alunos">
         <div class="col-md-1 foto">
-          <img v-bind:src="item.foto" class="rounded-circle">
+          <img v-bind:src="item.foto" class="rounded-circle" />
         </div>
         <div class="col-md-2">{{item.id}}</div>
 
@@ -37,7 +37,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <div v-if="form.foto">
-                <img v-bind:src="form.foto" class="rounded-circle" id="foto-header">
+                <img v-bind:src="form.foto" class="rounded-circle" id="foto-header" />
               </div>
               <h1 class="modal-title">{{this.form.nome}}</h1>
               <button
@@ -53,8 +53,31 @@
             <div class="modal-body">
               <div class="row">
                 <div class="form-group col-4">
-                  <input class="form-control" type="text" v-model="form.id" disabled>
+                  <input class="form-control" type="text" v-model="form.id" disabled />
                   <small id="emailHelp" class="form-text text-muted">Matrícula</small>
+                </div>
+
+                <div class="form-group col-3">
+                  <input
+                    ref="input"
+                    type="file"
+                    class="d-none"
+                    accept="image/*"
+                    @change="handleFile($event)"
+                  />
+                  <button
+                    @click="openFileDialog"
+                    type="button"
+                    class="btn btn-outline-secondary"
+                  >Enviar Foto</button>
+                </div>
+                <div class="form-group col-9">
+                  <div v-if="form.foto">
+                    {{form.foto.name}}
+                    <button @click="form.foto = ''" class="btn badge badge-light">
+                      <i class="fa fa-trash text-danger"></i>
+                    </button>
+                  </div>
                 </div>
 
                 <div class="form-group col-8">
@@ -64,11 +87,11 @@
                     placeholder="Nome"
                     v-model="form.nome"
                     required
-                  >
+                  />
                   <small id="emailHelp" class="form-text text-muted">Nome da criança completo</small>
                 </div>
                 <div class="form-group col-4">
-                  <input class="form-control" type="dateTome" v-model="form.nascimento" required>
+                  <input class="form-control" type="dateTome" v-model="form.nascimento" required />
                   <small id="emailHelp" class="form-text text-muted">Data de nascimento</small>
                 </div>
                 <div class="form-group col-8">
@@ -78,7 +101,7 @@
                     placeholder="Responsável"
                     v-model="form.resp"
                     required
-                  >
+                  />
                   <small
                     id="emailHelp"
                     class="form-text text-muted"
@@ -91,15 +114,18 @@
                     placeholder="Tel de contato"
                     v-model="form.tel"
                     required
-                  >
+                  />
                   <small id="emailHelp" class="form-text text-muted">Telefone para contato</small>
                 </div>
                 <div class="form-group col-8">
                   <select class="custom-select" v-model="form.sala" required>
                     <option selected>Sala</option>
-                    <option value="Amarela">Amarela</option>
-                    <option value="Verde">Verde</option>
-                    <option value="Azul">Azul</option>
+                    <option value="2 e 3">2 e 3 anos</option>
+                    <option value="4">4 anos</option>
+                    <option value="5 e 6">5 e 6 anos</option>
+                    <option value="7 e 8">7 e 8 anos</option>
+                    <option value="9 e 10">9 e 10 anos</option>
+                    <option value="11 e 12">11 e 12 anos</option>
                   </select>
                   <small id="emailHelp" class="form-text text-muted">Sala que a criança está</small>
                 </div>
@@ -121,6 +147,7 @@
   </form>
 </template>
 <script>
+import LogoKids from "../../static/avatar.png";
 export default {
   name: "ListaAlunos",
   created: function() {
@@ -129,6 +156,9 @@ export default {
 
   data: () => ({
     showModal: false,
+    myPic: LogoKids,
+    value: "",
+    url: "",
     alunoss: [],
     form: {
       id: "",
@@ -148,6 +178,14 @@ export default {
       /* console.log(this.form); */
     },
 
+    openFileDialog() {
+      this.$refs.input.value = null;
+      this.$refs.input.click();
+    },
+    handleFile({ target }) {
+      this.form.foto = target.files[0];
+    },
+
     closeModal() {
       this.showModal = false;
     },
@@ -160,11 +198,23 @@ export default {
       });
     },
 
-    submit() {
+    async submit() {
       this.$root.$emit("Spinner::show");
       const ref = this.$firebase.database().ref("ListaAlunos");
 
-      const foto = this.form.foto;
+      if (this.form.foto) {
+        const snapshot = await this.$firebase
+          .storage()
+          .ref("FotoAlunos")
+          .child(this.form.id)
+          .put(this.form.foto);
+
+        const url = await snapshot.ref.getDownloadURL();
+
+        this.form.foto = url;
+      }
+
+      //const foto = this.form.foto;
 
       ref.child(this.form.id).update(this.form, err => {
         if (err) {

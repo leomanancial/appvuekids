@@ -93,9 +93,13 @@
               <div class="form-group col-8">
                 <select class="custom-select" v-model="form.sala" required>
                   <option selected>Sala</option>
-                  <option value="Amarela">Amarela</option>
-                  <option value="Verde">Verde</option>
-                  <option value="Azul">Azul</option>
+                  <option value="2 e 3">2 e 3 anos</option>
+                  <option value="4">4 anos</option>
+                  <option value="5 e 6">5 e 6 anos</option>
+                  <option value="7 e 8">7 e 8 anos</option>
+                  <option value="9 e 10">9 e 10 anos</option>
+                  <option value="11 e 12">11 e 12 anos</option>
+
                 </select>
                 <small id="emailHelp" class="form-text text-muted">Sala que a criança está</small>
               </div>
