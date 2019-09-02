@@ -3,7 +3,7 @@
     <h1>Lista de Presença</h1>
 
     <form @submit.prevent="addAluno(query)">
-      <div class="row">
+      <!--div class="row">
         <div class="form-group col-4">
           <small id="emailHelp" class="form-text text-muted">Líder do dia</small>
           <select
@@ -23,16 +23,12 @@
           <small id="emailHelp" class="form-text text-muted">Data da Lista</small>
           <input class="form-control" type="text" v-model="this.dataLista" disabled />
         </div>
-        <div class="form-group col-2">
-          <small id="emailHelp" class="form-text text-muted">Matrícula</small>
-          <novo-aluno />
-        </div>
       </div>
-      <hr />
+      <hr /-->
 
-      <h2>Líderes do dia: {{ this.mostraLider ? this.mostraLider[0] :'Nenhum registro'}}</h2>
+      <h2>Líderes do dia: {{ this.form.liderDia ? this.form.liderDia : "Nenhum registro" }}</h2>
       <div class="row">
-        <div class="form-group col-6" required>
+        <div class="form-group col-5" required>
           <vue-bootstrap-typeahead
             prepend="Aluno:"
             v-model="query"
@@ -41,7 +37,7 @@
           ></vue-bootstrap-typeahead>
         </div>
 
-        <div class="form-group col-4">
+        <div class="form-group col-5">
           <input
             class="form-control"
             type="text"
@@ -49,6 +45,10 @@
             v-model="form.cartao"
             required
           />
+        </div>
+
+        <div class="form-group col-2">
+          <novo-aluno />
         </div>
 
         <div class="form-group col-4">
@@ -60,7 +60,7 @@
           />
         </div>
 
-           <div class="form-group col-6">
+        <div class="form-group col-6">
           <input
             class="form-control"
             v-model="form.obs"
@@ -70,7 +70,9 @@
         </div>
 
         <div class="form-group col-2">
-          <button class="btn btn-info">Adicionar</button>
+          <button class="btn btn-success">
+            <i class="fas fa-plus"></i> Adicionar
+          </button>
         </div>
       </div>
     </form>
@@ -127,9 +129,9 @@ export default {
         nomeL: "",
         respDiaL: "",
         idL: "",
+        liderDia: "",
         cartao: "",
         obs: "",
-        liderDia: "",
         dataListaL: "",
         salaL: "",
         listaID: ""
@@ -143,7 +145,34 @@ export default {
     };
   },
   created() {
-    console.log(this.$firebase.auth());
+    var user = this.$firebase.auth().currentUser;
+    //this.form.liderDia = "Leonardo";
+    if (user.email != null) {
+      console.log(user.email);
+
+      switch (user.email) {
+        case "leomanancial12@gmail.com":
+          this.form.liderDia = "Leonardo Oliveira";
+          break;
+        
+        case "admin@admin.com.br":
+          this.form.liderDia = "Admin";
+          break;
+
+        default:
+          this.form.liderDia = "Vazio";
+          break;
+      }
+
+      //user.providerData.forEach(function(profile) {
+      //console.log("Sign-in provider: " + profile.providerId);
+      //console.log("  Provider-specific UID: " + profile.uid);
+      //console.log("  Name: " + profile.displayName);
+      //console.log("  Email: " + profile.email);
+      //console.log("  Photo URL: " + profile.photoURL);
+      //this.form.liderDia = profile.email;
+      //});
+    }
     const data = new Date();
     const dataHoje = new Intl.DateTimeFormat("pt-BR").format(data);
     this.dataLista = dataHoje;
