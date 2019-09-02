@@ -1,31 +1,7 @@
 <template >
   <div class="container-fluid">
     <h1>Lista de Presença</h1>
-
     <form @submit.prevent="addAluno(query)">
-      <!--div class="row">
-        <div class="form-group col-4">
-          <small id="emailHelp" class="form-text text-muted">Líder do dia</small>
-          <select
-            class="custom-select"
-            v-model="form.liderDia"
-            :disabled="this.form.liderDia != ''"
-            :required="true"
-          >
-            <option value="Fabio e Erica">Fabio e Erica</option>
-            <option value="Fernando e Bete">Fernando e Bete</option>
-            <option value="Janilson e Fabi">Janilson e Fabi</option>
-            <option value="Samuel e Jéssica">Samuel e Jéssica</option>
-            <option value="Vagner e Rita">Vagner e Rita</option>
-          </select>
-        </div>
-        <div class="form-group col-2">
-          <small id="emailHelp" class="form-text text-muted">Data da Lista</small>
-          <input class="form-control" type="text" v-model="this.dataLista" disabled />
-        </div>
-      </div>
-      <hr /-->
-
       <h2>Líderes do dia: {{ this.form.liderDia ? this.form.liderDia : "Nenhum registro" }}</h2>
       <div class="row">
         <div class="form-group col-5" required>
@@ -78,27 +54,15 @@
     </form>
     <hr />
     <div class="row" id="lista-alunos-header">
-      <div class="col-1">Foto</div>
-      <div class="col-2">Nome</div>
-      <div class="col-2">Responsável</div>
-      <div class="col-1">Matricula</div>
-      <div class="col-1">Sala</div>
-      <div class="col-1">Cartão</div>
-      <div class="col-4">Observação</div>
+      <div class="col-6">Sala</div>
+      <div class="col-3">Quantidade de Alunos</div>
     </div>
 
     <hr />
     <div id="teste">
       <div v-for="item in this.refListaPresenca" class="lista-alunos-item row" id="lista-alunos">
-        <div v-if="item.fotoL" class="col-1 foto">
-          <img v-bind:src="item.fotoL" class="rounded-circle" />
-        </div>
-        <div class="col-2">{{item.nomeL}}</div>
-        <div class="col-2">{{item.respDiaL}}</div>
-        <div class="col-1">{{item.idL}}</div>
-        <div class="col-1">{{item.salaL}}</div>
-        <div class="col-1">{{item.cartao}}</div>
-        <div class="col-4">{{item.observacao}}</div>
+        <div class="col-6">{{item.salaL}}</div>
+        <div class="col-3"></div>
       </div>
     </div>
     <!--/table-->
@@ -147,10 +111,10 @@ export default {
   created() {
     var user = this.$firebase.auth().currentUser;
     if (user.email != null) {
-      console.log(user.email);
+      //console.log(user.email);
 
       switch (user.email) {
-        ///////////////////////// Fabio e Erica 
+        ///////////////////////// Fabio e Erica
         case "fabio@kids.com.br": //faberi2019
           this.form.liderDia = "Fabio e Erica";
           break;
@@ -166,7 +130,7 @@ export default {
         case "bete@kids.com.br": // betfer2019
           this.form.liderDia = "Fernando e Bete";
           break;
-        /////////////////////// Janilson e Fabi  
+        /////////////////////// Janilson e Fabi
         case "janilson@kids.com.br": // janfab2019
           this.form.liderDia = "Janilson e Fabi";
           break;
@@ -189,8 +153,8 @@ export default {
 
         case "rita@kids.com.br": // ritvag2019
           this.form.liderDia = "Vagner e Rita";
-          break;        
-        /////////////////////// Admin  
+          break;
+        /////////////////////// Admin
         case "admin@admin.com.br":
           this.form.liderDia = "Admin";
           break;
@@ -232,15 +196,14 @@ export default {
     const ref2 = this.$firebase.database().ref("ListaPresenca/");
     ref2.on("value", snapshot => {
       const values = snapshot.val();
-      this.dataL = groupby(values, "dataListaL");
-
+      this.dataL = groupby(values, "sala");
       for (let i in values) {
         let o = values[i];
         this.refListaPresenca = o;
 
         for (let z in o) {
-          this.mostraLider.push(o[z].liderDia);
-          //console.log(this.mostraLider[0]);
+          this.mostraLider.push(o[z].salaL);
+          console.log(this.mostraLider.length);
         }
       }
     });
@@ -326,6 +289,7 @@ img {
   font-size: 12pt;
   background-color: #faac58;
   color: var(--gray);
+  margin: 0;
 }
 
 #foto-header {
@@ -342,6 +306,7 @@ img {
   color: var(--gray);
   transition: 0.45s;
   background-color: white;
+
   &.active {
     color: var(--gray);
     background-color: transparent;
@@ -354,6 +319,9 @@ img {
   }
   .lista-alunos-item {
     padding: 12px !important;
+  }
+
+  .container {
   }
 }
 </style>

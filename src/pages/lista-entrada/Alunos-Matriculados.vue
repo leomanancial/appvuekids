@@ -12,17 +12,19 @@
         <div class="col-md-1">Ação</div>
       </div>
 
-      <div class="lista-alunos-item row" v-for="item in alunoss" id="lista-alunos">
-        <div class="col-md-1 foto">
-          <img v-bind:src="item.foto" class="rounded-circle" />
-        </div>
-        <div class="col-md-2">{{item.id}}</div>
+      <div id="lista-alunos-full">
+        <div class="lista-alunos-item row" v-for="item in alunoss" id="lista-alunos">
+          <div class="col-md-1 foto">
+            <img v-bind:src="item.foto" class="rounded-circle" />
+          </div>
+          <div class="col-md-2">{{item.id}}</div>
 
-        <div class="col-md-3">{{item.nome}}</div>
-        <div class="col-md-3">{{item.resp}}</div>
-        <div class="col-md-2">{{item.nascimento}}</div>
-        <div>
-          <button class="btn btn-warning btn-sm" @click.prevent="mostraModal(item)">Editar</button>
+          <div class="col-md-3">{{item.nome}}</div>
+          <div class="col-md-3">{{item.resp}}</div>
+          <div class="col-md-2">{{item.nascimento}}</div>
+          <div>
+            <button class="btn btn-warning btn-sm" @click.prevent="mostraModal(item)">Editar</button>
+          </div>
         </div>
       </div>
 
@@ -241,6 +243,12 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+#lista-alunos-full {
+  margin: 0;
+  height: calc(100vh - 100px);
+  overflow: hidden auto;
+}
+
 img {
   max-width: 70% !important;
   padding: 0;

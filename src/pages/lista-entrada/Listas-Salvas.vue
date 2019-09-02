@@ -11,12 +11,18 @@
         <small id="emailHelp" class="form-text text-muted">Pesquisa por data</small>
         <button class="btn btn-info" @click.prevent="busca">Pesquisar</button>
       </div>
-    
+
       <div class="form-group col-3">
         <small id="emailHelp" class="form-text text-muted">Nome do Aluno</small>
-        <input class="form-control" placeholder="Nome do aluno" prepend="Aluno" type="text" v-model="pesquisaNome" />
+        <input
+          class="form-control"
+          placeholder="Nome do aluno"
+          prepend="Aluno"
+          type="text"
+          v-model="pesquisaNome"
+        />
       </div>
-       <div class="form-group col-2">
+      <div class="form-group col-2">
         <small id="emailHelp" class="form-text text-muted">Pesquisa por nome</small>
         <button class="btn btn-info" @click.prevent="buscaAluno">Pesquisar</button>
       </div>
@@ -55,11 +61,13 @@
 <script>
 import moment from "moment";
 import groupby from "lodash.groupby";
+import Avatar from "../../static/kids3.png";
 
 export default {
   name: "Listas-Salvas",
   data: () => {
     return {
+      myPic: Avatar,
       a: [],
       b: [],
       pesquisaNome: "",
@@ -96,7 +104,6 @@ export default {
       const dataInicioFormat = moment(this.dataInicio).format("DD-MM-YYYY");
       const dataFinalFormat = moment(this.dataFinal).format("DD/MM/YYYY");
       const ref = this.$firebase.database().ref("ListaPresenca");
-      console.log(ref);
 
       ref.on("value", snapshot => {
         const values = snapshot.val();
@@ -122,9 +129,9 @@ export default {
 
       for (let i in this.dataL) {
         for (let x in this.dataL[i]) {
-          //console.log(this.dataL[i][x].dataInicioFormatL);
           if (this.dataL[i][x].dataInicioFormatL == dataInicioFormat) {
             this.refListaData.push(this.dataL[i][x]);
+            console.log(this.dataL[i][x].fotoL);
             this.liderOne = this.dataL[i][x].liderDia;
           }
         }
@@ -132,13 +139,17 @@ export default {
     },
 
     buscaAluno() {
-      console.log("oi")
+      console.log("oi");
     }
   }
 };
 </script>
 
 <style scoped lang="scss">
+#teste {
+  height: calc(100vh - 260px);
+  overflow: hidden auto;
+}
 img {
   max-width: 70% !important;
   padding: 0;
