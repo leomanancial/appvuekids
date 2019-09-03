@@ -13,13 +13,12 @@
       </div>
 
       <div class="form-group col-3">
-        <input
-          class="form-control"
-          placeholder="Pesquisar por nome do aluno"
-          prepend="Aluno"
-          type="text"
+        <vue-bootstrap-typeahead
+          prepend="Aluno:"
           v-model="pesquisaNome"
-        />
+          :data="this.query"
+          placeholder="Nome do Aluno"
+        ></vue-bootstrap-typeahead>
         <small id="emailHelp" class="form-text text-muted">Nome do Aluno</small>
       </div>
       <div class="form-group col-2">
@@ -44,7 +43,7 @@
     <div id="teste">
       <div v-for="item in this.refListaData" class="lista-alunos-item row" id="lista-alunos">
         <div class="col-1 foto">
-          <img v-bind:src='item.fotoL?item.fotoL:myPic' class="rounded-circle" />
+          <img v-bind:src="item.fotoL?item.fotoL:myPic" class="rounded-circle" />
         </div>
         <div class="col-2">{{item.nomeL}}</div>
         <div class="col-2">{{item.respDiaL}}</div>
@@ -62,6 +61,7 @@
 import moment from "moment";
 import groupby from "lodash.groupby";
 import Avatar from "../../static/kids3.png";
+import VueBootstrapTypeahead from "vue-bootstrap-typeahead";
 
 export default {
   name: "Listas-Salvas",
@@ -81,7 +81,8 @@ export default {
       liderDoDia: "",
       dataL: [],
       vazia: [],
-      liderOne: ""
+      liderOne: "",
+      query: []
     };
   },
 
@@ -95,6 +96,9 @@ export default {
     ref.on("value", snapshot => {
       const values = snapshot.val();
       this.refListaPresenca = Object.keys(values).map(i => values[i]);
+      for (let j in values) {
+        this.query.push(values[j].nome);
+      }
     });
   },
 
@@ -139,7 +143,43 @@ export default {
     },
 
     buscaAluno() {
-      console.log("oi");
+      this.refListaData = [];
+      this.liderOne = "";
+      const dataInicioFormat = moment(this.dataInicio).format("DD-MM-YYYY");
+      const dataFinalFormat = moment(this.dataFinal).format("DD/MM/YYYY");
+      const ref = this.$firebase.database().ref("ListaPresenca");
+
+      ref.on("value", snapshot => {
+        const values = snapshot.val();
+        for (let i in values) {
+          if (i == dataInicioFormat) {
+            let c = values[i];
+            this.vazia = c;
+          } else {
+            this.$root.$emit("Alerta::show", {
+              type: "danger",
+              message:
+                "Não existe registros para essa data. Insira uma data válida e tente novamente!"
+            });
+          }
+          this.$root.$emit("Spinner::hide");
+        }
+        this.dataL = groupby(this.vazia, "dataListaL");
+      });
+
+      for (let i in this.dataL) {
+        for (let x in this.dataL[i]) {
+          if (
+            this.dataL[i][x].nomeL == this.pesquisaNome &&
+            this.dataL[i][x].dataInicioFormatL == dataInicioFormat
+          ) {
+            this.refListaData.push(this.dataL[i][x]);
+            this.liderOne = this.dataL[i][x].liderDia;
+          } else {
+            console.log("nada");
+          }
+        }
+      }
     }
   }
 };
