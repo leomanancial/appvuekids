@@ -15,7 +15,7 @@
       <div id="lista-alunos-full">
         <div class="lista-alunos-item row" v-for="item in alunoss" id="lista-alunos">
           <div class="col-md-1 foto">
-            <img v-bind:src='item.foto?item.foto:myAvatar' class="rounded-circle" />
+            <img v-bind:src="item.foto?item.foto:myAvatar" class="rounded-circle" />
           </div>
           <div class="col-md-2">{{item.id}}</div>
 
@@ -151,15 +151,26 @@
 <script>
 import LogoKids from "../../static/avatar.png";
 import Avatar from "../../static/kids3.png";
+import moment from "moment";
 export default {
   name: "ListaAlunos",
   created: function() {
     this.gedivata();
+    const data = new Date();
+    const dataHoje = moment(data);
+    var start = moment(dataHoje);
+    for (let y in this.anos) {
+      let u = moment(this.anos[y]);
+      let w = [dataHoje.diff(u, "year")];
+      this.anos.push(w);
+      console.log(w);
+    }
   },
 
   data: () => ({
+    anos: [],
     showModal: false,
-    myAvatar : Avatar,
+    myAvatar: Avatar,
     myPic: LogoKids,
     value: "",
     url: "",
@@ -199,6 +210,10 @@ export default {
         const values = snapshot.val();
         this.alunoss = Object.keys(values).map(i => values[i]);
         /* console.log(this.alunoss); */
+
+        for (let x in this.alunoss) {
+          this.anos.push(this.alunoss[x].nascimento);
+        }
       });
     },
 

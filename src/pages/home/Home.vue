@@ -20,7 +20,7 @@ export default {
   created() {
     var user = this.$firebase.auth().currentUser;
     let nomeInicio = user.email.split("@");
-    console.log(nomeInicio);
+    //console.log(nomeInicio);
     this.email = nomeInicio[0];
     this.foto = user.photoURL;
   }

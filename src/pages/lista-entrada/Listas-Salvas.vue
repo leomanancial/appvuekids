@@ -87,11 +87,10 @@ export default {
   },
 
   created() {
-    console.log(this.myPic);
+    this.dataHoje = moment(data).format("DD-MM-YYYY");
     const data = new Date();
     /*  new Intl.DateTimeFormat("en-US").format(this.dataBusca); */
-    this.dataHoje = new Intl.DateTimeFormat("en-US").format(data);
-    /* this.dataHoje = moment(data).format("DD/MM/YYYY"); */
+    //this.dataHoje = new Intl.DateTimeFormat("en-US").format(data);
     const ref = this.$firebase.database().ref("ListaAlunos");
     ref.on("value", snapshot => {
       const values = snapshot.val();
@@ -155,14 +154,8 @@ export default {
           if (i == dataInicioFormat) {
             let c = values[i];
             this.vazia = c;
-          } else {
-            this.$root.$emit("Alerta::show", {
-              type: "danger",
-              message:
-                "Não existe registros para essa data. Insira uma data válida e tente novamente!"
-            });
+            console.log(this.vazia)
           }
-          this.$root.$emit("Spinner::hide");
         }
         this.dataL = groupby(this.vazia, "dataListaL");
       });
@@ -175,8 +168,16 @@ export default {
           ) {
             this.refListaData.push(this.dataL[i][x]);
             this.liderOne = this.dataL[i][x].liderDia;
+            this.$root.$emit("Alerta::show", {
+              type: "success",
+              message: "Aluno: " + this.dataL[i][x].nomeL + " - "+ "Cartão: "+ this.dataL[i][x].cartao 
+            });
           } else {
-            console.log("nada");
+            /*this.$root.$emit("Alerta::show", {
+              type: "danger",
+              message:
+                "Não localizado esse Aluno, verifique se o nome esta correto e tente novamente ou verifique a data"
+            });*/
           }
         }
       }

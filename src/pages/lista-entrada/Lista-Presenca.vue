@@ -60,9 +60,8 @@
 
     <hr />
     <div id="teste">
-      <div v-for="item in this.refListaPresenca" class="lista-alunos-item row" id="lista-alunos">
-        <div class="col-6">{{item.salaL}}</div>
-        <div class="col-3"></div>
+      <div class="lista-alunos-item" div v-for="item in this.nmSala" id="lista-alunos">
+        <div>{{item}}</div>
       </div>
     </div>
     <!--/table-->
@@ -105,7 +104,10 @@ export default {
       listasalva: [],
       dataLista: "",
       dataL: [],
-      mostraLider: []
+      mostraLider: [],
+      vazia: [],
+      countSala: [],
+      nmSala: []
     };
   },
   created() {
@@ -174,7 +176,9 @@ export default {
       //});
     }
     const data = new Date();
-    const dataHoje = new Intl.DateTimeFormat("pt-BR").format(data);
+    const dataInicioFormat = moment(this.dataInicio).format("DD-MM-YYYY");
+    const dataHoje = moment(this.data).format("DD-MM-YYYY");
+    //const dataHoje = new Intl.DateTimeFormat("pt-BR").format(data);
     this.dataLista = dataHoje;
     //Teste não excluir
 
@@ -193,27 +197,15 @@ export default {
     });
 
     //Lista exibida embaixo da busca
-    const ref2 = this.$firebase.database().ref("ListaPresenca/");
+    const ref2 = this.$firebase.database().ref("ListaPresenca");
     ref2.on("value", snapshot => {
       const values = snapshot.val();
-      this.dataL = groupby(values, "sala");
       for (let i in values) {
-        let o = values[i];
-        this.refListaPresenca = o;
-
-        for (let z in o) {
-          this.mostraLider.push(o[z].salaL);
-          console.log(this.mostraLider.length);
+        if (i == dataInicioFormat) {
+          console.log(values[i]);
         }
       }
     });
-    for (let i in this.dataL) {
-      for (let x in this.dataL[i]) {
-        if (this.dataL[i][x].dataListaL == dataHoje) {
-          this.refListaPresenca.push(this.dataL[i][x]);
-        }
-      }
-    }
   },
 
   methods: {
