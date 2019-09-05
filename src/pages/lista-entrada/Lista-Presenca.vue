@@ -202,7 +202,7 @@ export default {
       const values = snapshot.val();
       for (let i in values) {
         if (i == dataInicioFormat) {
-          console.log(values[i]);
+          console.log(values[i].salaL);
         }
       }
     });
