@@ -91,6 +91,7 @@ export default {
       selectedUser: null,
       alunoss: [],
       aluno: [],
+      email: "",
       form: {
         fotoL: "",
         nomeL: "",
@@ -115,7 +116,10 @@ export default {
     };
   },
   created() {
-    var user = this.$firebase.auth().currentUser;
+    //console.log(nomeInicio);
+    let user = this.$firebase.auth().currentUser;
+    let nomeInicio = user.email.split("@");
+    this.email = nomeInicio[0];
     if (user.email != null) {
       //console.log(user.email);
 
@@ -215,21 +219,27 @@ export default {
     },
 
     addDiario() {
-      console.log("ta chegando");
+      console.log(this.email);
       const dataInicioFormat = moment(this.dataInicio).format("DD-MM-YYYY");
+      const diarioLog = moment().format("HH:mm:ss");
       const ref = this.$firebase
         .database()
-        .ref("ListaPresenca/" + dataInicioFormat + " - Diario Escolar")
+        .ref(
+          "ListaPresenca/" +
+            dataInicioFormat +
+            " - Diario Escolar - " +
+            diarioLog + " - registrado por: "+ this.email
+        )
         .set(this.diario, err => {
           if (err) {
             this.$root.$emit("Alerta::show", {
               type: "danger",
-              message: "tente novamente"
+              message: "Diário não foi atualizado, tente novamente"
             });
           } else {
             this.$root.$emit("Alerta::show", {
               type: "success",
-              message: "Foi "
+              message: "Diário escolar atualizado. "
             });
           }
           this.$root.$emit("Spinner::hide");

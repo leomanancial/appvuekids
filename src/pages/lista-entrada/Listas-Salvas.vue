@@ -33,11 +33,10 @@
       <div class="col-1">Foto</div>
       <div class="col-2">Nome</div>
       <div class="col-2">Responsável</div>
-      <div class="col-1">Cartão</div>
-      <div class="col-1">Data</div>
-      <div class="col-1">Sala</div>
-      <div class="col-1">Matricula</div>
+      <div class="col-2">Data</div>
+      <div class="col-2">Sala</div>
       <div class="col-2">Observação</div>
+      <div class="col-1">Cartão</div>
     </div>
     <hr />
     <div id="teste">
@@ -47,11 +46,10 @@
         </div>
         <div class="col-2">{{item.nomeL}}</div>
         <div class="col-2">{{item.respDiaL}}</div>
-        <div class="col-1">{{item.cartao}}</div>
-        <div class="col-1">{{item.dataListaL}}</div>
-        <div class="col-1">{{item.salaL}}</div>
-        <div class="col-1">{{item.idL}}</div>
+        <div class="col-2">{{item.dataListaL}}</div>
+        <div class="col-2">{{item.salaL}}</div>
         <div class="col-2">{{item.observacao}}</div>
+        <div class="col-1" id="cartao">{{item.cartao}}</div>
       </div>
     </div>
   </div>
@@ -154,7 +152,7 @@ export default {
           if (i == dataInicioFormat) {
             let c = values[i];
             this.vazia = c;
-            console.log(this.vazia)
+            console.log(this.vazia);
           }
         }
         this.dataL = groupby(this.vazia, "dataListaL");
@@ -170,7 +168,12 @@ export default {
             this.liderOne = this.dataL[i][x].liderDia;
             this.$root.$emit("Alerta::show", {
               type: "success",
-              message: "Aluno: " + this.dataL[i][x].nomeL + " - "+ "Cartão: "+ this.dataL[i][x].cartao 
+              message:
+                "Aluno: " +
+                this.dataL[i][x].nomeL +
+                " - " +
+                "Cartão: " +
+                this.dataL[i][x].cartao
             });
           } else {
             /*this.$root.$emit("Alerta::show", {
@@ -243,16 +246,27 @@ img {
   background-color: aliceblue;
 }
 
-.row.vdivide [class*='col-']:not(:last-child):after {
+.row.vdivide [class*="col-"]:not(:last-child):after {
   background: #e0e0e0;
   width: 1px;
   content: "";
-  display:block;
+  display: block;
   position: absolute;
-  top:0;
+  top: 0;
   bottom: 0;
   right: 0;
   min-height: 70px;
+}
+#cartao {
+  background-color: #faac58;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  max-height: 100%;
+  text-align: center;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 15px;
+  
 }
 </style>
 
