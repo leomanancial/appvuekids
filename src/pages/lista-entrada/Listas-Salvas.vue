@@ -27,7 +27,7 @@
       </div>
     </div>
     <div>
-      <h2>Lider do Dia: {{this.liderOne+" - "}} Data: {{this.dataDaLista}}</h2>
+      <h2 v-if="this.liderOne?this.liderOne:'' ">Lider do Dia: {{this.liderOne+" - "}} Data: {{this.dataDaLista}}</h2>
     </div>
     <div class="row" id="lista-alunos-header">
       <div class="col-1">Foto</div>

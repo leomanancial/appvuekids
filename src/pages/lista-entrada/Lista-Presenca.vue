@@ -23,7 +23,7 @@
           />
         </div>
 
-        <div class="form-group col-2">
+        <div class="form-group">
           <novo-aluno />
         </div>
 
@@ -45,9 +45,9 @@
           />
         </div>
 
-        <div class="form-group col-2">
-          <button class="btn btn-success">
-            <i class="fas fa-plus"></i> Adicionar
+        <div class="form-group">
+          <button class="btn btn-success" style="text-align: -webkit-left; width: 135px">
+            <i class="fas fa-plus"></i>  Salvar
           </button>
         </div>
       </div>
@@ -56,14 +56,14 @@
     <h2>Diário Escolar {{this.dataLista}}</h2>
     <div class="form-group">
       <textarea
-        class="form-group"
+        class="form-control"
         v-model="diario"
         rows="10"
         placeholder="Registre informações importantes sobre o dia de hoje"
         style="width:100%"
       ></textarea>
     </div>
-    <div class="form-group col-2">
+    <div class="form-group">
       <button @click="addDiario" class="btn btn-success">
         <i class="fas fa-plus"></i> Salvar
       </button>
@@ -228,7 +228,9 @@ export default {
           "ListaPresenca/" +
             dataInicioFormat +
             " - Diario Escolar - " +
-            diarioLog + " - registrado por: "+ this.email
+            diarioLog +
+            " - registrado por: " +
+            this.email
         )
         .set(this.diario, err => {
           if (err) {

@@ -68,12 +68,15 @@
 
 <script>
 import groupby from "lodash.groupby";
+import moment from "moment";
 
 export default {
   data: () => ({
     email: "",
     foto: "",
-    mostraLider: []
+    mostraLider: [],
+    refListaPresenca: [],
+    diario: ""
   }),
 
   created() {
@@ -82,6 +85,20 @@ export default {
     //console.log(nomeInicio);
     this.email = nomeInicio[0];
     this.foto = user.photoURL;
+
+    this.dataHoje = moment(data).format("DD-MM-YYYY");
+    const data = new Date();
+    /*  new Intl.DateTimeFormat("en-US").format(this.dataBusca); */
+    //this.dataHoje = new Intl.DateTimeFormat("en-US").format(data);
+    const ref = this.$firebase.database().ref("ListaPresenca");
+    ref.on("value", snapshot => {
+      const values = snapshot.val();
+      this.refListaPresenca = Object.keys(values).map(i => values[i]);
+      for (let j in values) {
+        this.diario = values[j];
+        console.log(this.diario);
+      }
+    });
   }
 };
 </script>
