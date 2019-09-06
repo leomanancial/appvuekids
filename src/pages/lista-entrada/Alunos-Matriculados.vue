@@ -21,7 +21,7 @@
           <div class="col-md-3">{{item.nome}}</div>
           <div class="col-md-3">{{item.resp}}</div>
           <div class="col-md-2">{{item.idade?item.idade:"0"}}</div>
-          <div class="col-md-2">{{item.id}}</div>
+          <div class="col-md-2">{{item.sala}}</div>
           <div>
             <button class="btn btn-warning btn-sm" @click.prevent="mostraModal(item)">Editar</button>
           </div>
@@ -133,7 +133,7 @@
                     <option value="7 e 8">7 e 8 anos</option>
                     <option value="9 e 10">9 e 10 anos</option>
                     <option value="11 e 12">11 e 12 anos</option>
-                  </select> -->
+                  </select>-->
                   <small id="emailHelp" class="form-text text-muted">Sala que a criança está</small>
                 </div>
               </div>
@@ -182,7 +182,7 @@ export default {
       sala: "",
       foto: "",
       idade: ""
-    },
+    }
   }),
 
   methods: {
@@ -207,7 +207,6 @@ export default {
       ref.on("value", snapshot => {
         const values = snapshot.val();
         this.alunoss = Object.keys(values).map(i => values[i]);
-     
       });
     },
 
@@ -217,10 +216,10 @@ export default {
 
       if (this.form.nascimento) {
         const data = new Date();
-        const dataHoje = moment(data).format("YYYY");
-        //this.form.idade = dataHoje;
-        const x = moment(this.form.nascimento).format("YYYY");
+        const dataHoje = moment(data).format("MM/DD/YYYY");
+        const x = moment(this.form.nascimento).format("MM/DD/YYYY");
         this.form.idade = moment(dataHoje).diff(x, "year");
+        console.log(this.form.idade);
       }
       switch (this.form.idade) {
         case 2 || 3:
@@ -245,6 +244,7 @@ export default {
 
         case 11 || 12:
           this.form.sala = "11 e 12 anos";
+          console.log("5 e 6 anos");
           break;
       }
 
