@@ -53,18 +53,21 @@
       </div>
     </form>
     <hr />
-    <div class="row" id="lista-alunos-header">
-      <div class="col-6">Sala</div>
-      <div class="col-3">Quantidade de Alunos</div>
+    <h2>Diário Escolar {{this.dataLista}}</h2>
+    <div class="form-group">
+      <textarea
+        class="form-group"
+        v-model="diario"
+        rows="10"
+        placeholder="Registre informações importantes sobre o dia de hoje"
+        style="width:100%"
+      ></textarea>
     </div>
-
-    <hr />
-    <div id="teste">
-      <div class="lista-alunos-item" v-for="item in this.countSala" id="lista-alunos">
-        <div >{{item}}</div>
-      </div>
+    <div class="form-group col-2">
+      <button @click="addDiario" class="btn btn-success">
+        <i class="fas fa-plus"></i> Salvar
+      </button>
     </div>
-    <!--/table-->
   </div>
 </template>
 
@@ -84,6 +87,7 @@ export default {
     return {
       visible: true,
       query: "",
+      diario: "",
       selectedUser: null,
       alunoss: [],
       aluno: [],
@@ -165,15 +169,6 @@ export default {
           this.form.liderDia = "Adminstrador";
           break;
       }
-
-      //user.providerData.forEach(function(profile) {
-      //console.log("Sign-in provider: " + profile.providerId);
-      //console.log("  Provider-specific UID: " + profile.uid);
-      //console.log("  Name: " + profile.displayName);
-      //console.log("  Email: " + profile.email);
-      //console.log("  Photo URL: " + profile.photoURL);
-      //this.form.liderDia = profile.email;
-      //});
     }
     const data = new Date();
     const dataInicioFormat = moment(this.dataInicio).format("DD-MM-YYYY");
@@ -218,6 +213,29 @@ export default {
     closeModal() {
       this.bloqueioLider = true;
     },
+
+    addDiario() {
+      console.log("ta chegando");
+      const dataInicioFormat = moment(this.dataInicio).format("DD-MM-YYYY");
+      const ref = this.$firebase
+        .database()
+        .ref("ListaPresenca/" + dataInicioFormat + " - Diario Escolar")
+        .set(this.diario, err => {
+          if (err) {
+            this.$root.$emit("Alerta::show", {
+              type: "danger",
+              message: "tente novamente"
+            });
+          } else {
+            this.$root.$emit("Alerta::show", {
+              type: "success",
+              message: "Foi "
+            });
+          }
+          this.$root.$emit("Spinner::hide");
+        });
+    },
+
     addAluno(q) {
       //Gerador ID
       var strDT = this.form.nascimento;
@@ -318,9 +336,5 @@ img {
   .lista-alunos-item {
     padding: 12px !important;
   }
-
-
 }
-
-
 </style>

@@ -12,7 +12,7 @@
         <button class="btn btn-info" @click.prevent="busca">Pesquisar</button>
       </div>
 
-      <div class="form-group col-3">
+      <div class="form-group col-5">
         <vue-bootstrap-typeahead
           prepend="Aluno:"
           v-model="pesquisaNome"
@@ -42,18 +42,16 @@
     <hr />
     <div id="teste">
       <div v-for="item in this.refListaData" class="lista-alunos-item row" id="lista-alunos">
-        <div class="row divide">
-          <div class="col-1 foto">
-            <img v-bind:src="item.fotoL?item.fotoL:myPic" class="rounded-circle" />
-          </div>|
-          <div class="col-2">{{item.nomeL}}</div>|
-          <div class="col-2">{{item.respDiaL}}</div>|
-          <div class="col-1">{{item.cartao}}</div>|
-          <div class="col-1">{{item.dataListaL}}</div>|
-          <div class="col-1">{{item.salaL}}</div>|
-          <div class="col-1">{{item.idL}}</div>|
-          <div class="col-2">{{item.observacao}}</div>
+        <div class="col-1 foto">
+          <img v-bind:src="item.fotoL?item.fotoL:myPic" class="rounded-circle" />
         </div>
+        <div class="col-2">{{item.nomeL}}</div>
+        <div class="col-2">{{item.respDiaL}}</div>
+        <div class="col-1">{{item.cartao}}</div>
+        <div class="col-1">{{item.dataListaL}}</div>
+        <div class="col-1">{{item.salaL}}</div>
+        <div class="col-1">{{item.idL}}</div>
+        <div class="col-2">{{item.observacao}}</div>
       </div>
     </div>
   </div>
@@ -156,7 +154,7 @@ export default {
           if (i == dataInicioFormat) {
             let c = values[i];
             this.vazia = c;
-            console.log(this.vazia);
+            console.log(this.vazia)
           }
         }
         this.dataL = groupby(this.vazia, "dataListaL");
@@ -172,12 +170,7 @@ export default {
             this.liderOne = this.dataL[i][x].liderDia;
             this.$root.$emit("Alerta::show", {
               type: "success",
-              message:
-                "Aluno: " +
-                this.dataL[i][x].nomeL +
-                " - " +
-                "Cartão: " +
-                this.dataL[i][x].cartao
+              message: "Aluno: " + this.dataL[i][x].nomeL + " - "+ "Cartão: "+ this.dataL[i][x].cartao 
             });
           } else {
             /*this.$root.$emit("Alerta::show", {
@@ -250,13 +243,13 @@ img {
   background-color: aliceblue;
 }
 
-.row.vdivide [class*="col-"]:not(:last-child):after {
+.row.vdivide [class*='col-']:not(:last-child):after {
   background: #e0e0e0;
   width: 1px;
   content: "";
-  display: block;
+  display:block;
   position: absolute;
-  top: 0;
+  top:0;
   bottom: 0;
   right: 0;
   min-height: 70px;
