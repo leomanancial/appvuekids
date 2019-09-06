@@ -8,14 +8,14 @@
         <div class="col-md-3">Nome</div>
         <div class="col-md-3">Responsável</div>
         <div class="col-md-2">Idade</div>
-        <div class="col-md-2">Matricula</div>
+        <div class="col-md-2">Sala</div>
         <div class="col-md-1">Ação</div>
       </div>
 
       <div id="lista-alunos-full">
         <div class="lista-alunos-item row" v-for="item in this.alunoss" id="lista-alunos">
           <div class="col-md-1 foto">
-            <img v-bind:src="item.foto?item.foto:myAvatar" class="rounded-circle" />
+            <img v-bind:src="item.foto?item.foto:myAvatar" id="imaModal"class="rounded-circle" />
           </div>
 
           <div class="col-md-3">{{item.nome}}</div>
@@ -38,8 +38,8 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <div v-if="form.foto">
-                <img v-bind:src="form.foto" class="rounded-circle" id="foto-header" />
+              <div>
+                <img v-bind:src="form.foto?form.foto:myPic" class="rounded-circle" id="foto-header" />
               </div>
               <h1 class="modal-title">{{this.form.nome}}</h1>
               <button
@@ -244,7 +244,10 @@ export default {
 
         case 11 || 12:
           this.form.sala = "11 e 12 anos";
-          console.log("5 e 6 anos");
+          break;
+
+        default:
+          this.form.sala = "Idade não permitida";
           break;
       }
 
@@ -298,13 +301,13 @@ img {
 }
 
 #foto-header {
-  max-width: 45% !important;
+  max-width: 50% !important;
   padding: 0;
 }
 
 #lista-alunos {
   max-width: 100%;
-  align-items: center;
+  align-items: left;
   font-size: 12pt;
   color: var(--gray);
   transition: 0.45s;
@@ -322,6 +325,7 @@ img {
 }
 
 #lista-alunos-header {
+  align-items: center;
   max-width: 100%;
   font-weight: bolder;
   padding: 10px;

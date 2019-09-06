@@ -319,7 +319,8 @@ img {
     padding: 12px !important;
   }
 
-  .container {
-  }
+
 }
+
+
 </style>
