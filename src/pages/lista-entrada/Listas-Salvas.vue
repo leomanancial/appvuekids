@@ -27,16 +27,15 @@
       </div>
     </div>
     <div>
-      <h2>Lider do Dia: {{this.liderOne}}</h2>
+      <h2>Lider do Dia: {{this.liderOne+" - "}} Data: {{this.dataDaLista}}</h2>
     </div>
     <div class="row" id="lista-alunos-header">
       <div class="col-1">Foto</div>
       <div class="col-2">Nome</div>
       <div class="col-2">Responsável</div>
-      <div class="col-2">Data</div>
       <div class="col-2">Sala</div>
-      <div class="col-2">Observação</div>
-      <div class="col-1">Cartão</div>
+      <div class="col-3">Observação</div>
+      <div class="col-2">Cartão</div>
     </div>
     <hr />
     <div id="teste">
@@ -46,10 +45,9 @@
         </div>
         <div class="col-2">{{item.nomeL}}</div>
         <div class="col-2">{{item.respDiaL}}</div>
-        <div class="col-2">{{item.dataListaL}}</div>
         <div class="col-2">{{item.salaL}}</div>
-        <div class="col-2">{{item.observacao}}</div>
-        <div class="col-1" id="cartao">{{item.cartao}}</div>
+        <div class="col-3">{{item.observacao}}</div>
+        <div class="col-2" id="cartao">{{item.cartao}}</div>
       </div>
     </div>
   </div>
@@ -80,7 +78,8 @@ export default {
       dataL: [],
       vazia: [],
       liderOne: "",
-      query: []
+      query: [],
+      dataDaLista: ""
     };
   },
 
@@ -134,6 +133,7 @@ export default {
           if (this.dataL[i][x].dataInicioFormatL == dataInicioFormat) {
             this.refListaData.push(this.dataL[i][x]);
             this.liderOne = this.dataL[i][x].liderDia;
+            this.dataDaLista = this.dataL[i][x].dataInicioFormatL;
           }
         }
       }
@@ -193,6 +193,7 @@ export default {
 #teste {
   height: calc(100vh - 260px);
   overflow: hidden auto;
+  width: calc(100% + 15px);
 }
 img {
   max-width: 70% !important;
@@ -205,7 +206,10 @@ img {
 }
 
 #lista-alunos {
-  max-width: 100%;
+  //max-width: 100%;
+  -webkit-box-align: center;
+  padding: 0;
+  margin-bottom: 5px;
   align-items: center;
   font-size: 10pt;
   color: var(--gray);
@@ -216,8 +220,8 @@ img {
     background-color: transparent;
   }
   &:hover {
-    padding: 12px;
-    border-radius: 5px;
+    //padding: 12px;
+    //border-radius: 5px;
     color: var(--gray);
     background-color: var(--gray-light);
   }
@@ -246,27 +250,16 @@ img {
   background-color: aliceblue;
 }
 
-.row.vdivide [class*="col-"]:not(:last-child):after {
-  background: #e0e0e0;
-  width: 1px;
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  min-height: 70px;
-}
 #cartao {
-  background-color: #faac58;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  max-height: 100%;
+  background-color: var(--blue-light-plus);
+  padding-top: 15px;
+  padding-bottom: 15px;
+  max-width: 100px;
   text-align: center;
   border-radius: 25px;
   font-weight: bold;
   font-size: 15px;
-  
+  color: white;
 }
 </style>
 
