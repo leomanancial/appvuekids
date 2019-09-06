@@ -5,23 +5,23 @@
 
       <div class="row" id="lista-alunos-header">
         <div class="col-md-1">Foto</div>
-        <div class="col-md-2">Matricula</div>
         <div class="col-md-3">Nome</div>
         <div class="col-md-3">Responsável</div>
-        <div class="col-md-2">Nascimento</div>
+        <div class="col-md-2">Idade</div>
+        <div class="col-md-2">Matricula</div>
         <div class="col-md-1">Ação</div>
       </div>
 
       <div id="lista-alunos-full">
-        <div class="lista-alunos-item row" v-for="item in alunoss" id="lista-alunos">
+        <div class="lista-alunos-item row" v-for="item in this.alunoss" id="lista-alunos">
           <div class="col-md-1 foto">
             <img v-bind:src="item.foto?item.foto:myAvatar" class="rounded-circle" />
           </div>
-          <div class="col-md-2">{{item.id}}</div>
 
           <div class="col-md-3">{{item.nome}}</div>
           <div class="col-md-3">{{item.resp}}</div>
-          <div class="col-md-2">{{item.nascimento}}</div>
+          <div class="col-md-2">{{item.idade?item.idade:"0"}}</div>
+          <div class="col-md-2">{{item.id}}</div>
           <div>
             <button class="btn btn-warning btn-sm" @click.prevent="mostraModal(item)">Editar</button>
           </div>
@@ -119,8 +119,13 @@
                   />
                   <small id="emailHelp" class="form-text text-muted">Telefone para contato</small>
                 </div>
+                <div class="form-group col-4">
+                  <input class="form-control" type="text" v-model="form.idade" disabled />
+                  <small id="emailHelp" class="form-text text-muted">Idade</small>
+                </div>
                 <div class="form-group col-8">
-                  <select class="custom-select" v-model="form.sala" required>
+                  <input class="form-control" type="text" v-model="form.sala" disabled />
+                  <!-- <select class="custom-select" v-model="form.sala">
                     <option selected>Sala</option>
                     <option value="2 e 3">2 e 3 anos</option>
                     <option value="4">4 anos</option>
@@ -128,7 +133,7 @@
                     <option value="7 e 8">7 e 8 anos</option>
                     <option value="9 e 10">9 e 10 anos</option>
                     <option value="11 e 12">11 e 12 anos</option>
-                  </select>
+                  </select> -->
                   <small id="emailHelp" class="form-text text-muted">Sala que a criança está</small>
                 </div>
               </div>
@@ -158,13 +163,6 @@ export default {
     this.gedivata();
     const data = new Date();
     const dataHoje = moment(data);
-    var start = moment(dataHoje);
-    for (let y in this.anos) {
-      let u = moment(this.anos[y]);
-      let w = [dataHoje.diff(u, "year")];
-      this.anos.push(w);
-      console.log(w);
-    }
   },
 
   data: () => ({
@@ -182,15 +180,15 @@ export default {
       resp: "",
       tel: "",
       sala: "",
-      foto: ""
-    }
+      foto: "",
+      idade: ""
+    },
   }),
 
   methods: {
     mostraModal(item) {
       this.showModal = true;
       this.form = item;
-      /* console.log(this.form); */
     },
 
     openFileDialog() {
@@ -209,17 +207,46 @@ export default {
       ref.on("value", snapshot => {
         const values = snapshot.val();
         this.alunoss = Object.keys(values).map(i => values[i]);
-        /* console.log(this.alunoss); */
-
-        for (let x in this.alunoss) {
-          this.anos.push(this.alunoss[x].nascimento);
-        }
+     
       });
     },
 
     async submit() {
       this.$root.$emit("Spinner::show");
       const ref = this.$firebase.database().ref("ListaAlunos");
+
+      if (this.form.nascimento) {
+        const data = new Date();
+        const dataHoje = moment(data).format("YYYY");
+        //this.form.idade = dataHoje;
+        const x = moment(this.form.nascimento).format("YYYY");
+        this.form.idade = moment(dataHoje).diff(x, "year");
+      }
+      switch (this.form.idade) {
+        case 2 || 3:
+          this.form.sala = "2 e 3 anos";
+          break;
+
+        case 4:
+          this.form.sala = "4 anos";
+          break;
+
+        case 5 || 6:
+          this.form.sala = "5 e 6 anos";
+          break;
+
+        case 7 || 8:
+          this.form.sala = "7 e 8 anos";
+          break;
+
+        case 9 || 10:
+          this.form.sala = "9 e 10 anos";
+          break;
+
+        case 11 || 12:
+          this.form.sala = "11 e 12 anos";
+          break;
+      }
 
       if (this.form.foto) {
         const snapshot = await this.$firebase
@@ -232,7 +259,6 @@ export default {
 
         this.form.foto = url;
       }
-
       //const foto = this.form.foto;
 
       ref.child(this.form.id).update(this.form, err => {

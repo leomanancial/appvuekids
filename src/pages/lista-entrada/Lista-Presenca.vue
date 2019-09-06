@@ -60,8 +60,8 @@
 
     <hr />
     <div id="teste">
-      <div class="lista-alunos-item" div v-for="item in this.nmSala" id="lista-alunos">
-        <div>{{item}}</div>
+      <div class="lista-alunos-item" v-for="item in this.countSala" id="lista-alunos">
+        <div >{{item}}</div>
       </div>
     </div>
     <!--/table-->
@@ -202,7 +202,13 @@ export default {
       const values = snapshot.val();
       for (let i in values) {
         if (i == dataInicioFormat) {
-          console.log(values[i].salaL);
+          for (let j in values[i]) {
+            this.nmSala.push(values[i][j].salaL);
+            let novaArr = this.nmSala.filter(
+              (este, i) => this.nmSala.indexOf(este) === i
+            );
+            this.countSala = novaArr;
+          }
         }
       }
     });

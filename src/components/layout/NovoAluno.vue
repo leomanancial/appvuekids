@@ -14,7 +14,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <div class="form-group">
-              <img v-bind:src="myPic" style="border:none">
+              <img v-bind:src="myPic" style="border:none" />
             </div>
             <h1 class="modal-title">Novo Aluno</h1>
             <button
@@ -37,7 +37,7 @@
                   class="d-none"
                   accept="image/*"
                   @change="handleFile($event)"
-                >
+                />
                 <button
                   @click="openFileDialog"
                   type="button"
@@ -60,11 +60,11 @@
                   placeholder="Nome"
                   v-model="form.nome"
                   required
-                >
+                />
                 <small id="emailHelp" class="form-text text-muted">Nome da criança completo</small>
               </div>
               <div class="form-group col-4">
-                <input class="form-control" type="date" v-model="form.nascimento" required>
+                <input class="form-control" type="date" v-model="form.nascimento" required />
                 <small id="emailHelp" class="form-text text-muted">Data de nascimento</small>
               </div>
               <div class="form-group col-8">
@@ -74,7 +74,7 @@
                   placeholder="Responsável"
                   v-model="form.resp"
                   required
-                >
+                />
                 <small
                   id="emailHelp"
                   class="form-text text-muted"
@@ -87,22 +87,21 @@
                   placeholder="Tel de contato"
                   v-model="form.tel"
                   required
-                >
+                />
                 <small id="emailHelp" class="form-text text-muted">Telefone para contato</small>
               </div>
-              <div class="form-group col-8">
-                <select class="custom-select" v-model="form.sala" required>
-                  <option selected>Sala</option>
+              <!--  <div class="form-group col-8">
+                <input type="text" class="form-control" v-bind="this.salaShow" disabled />
+                <!--select class="custom-select" v-model="form.sala" required>
                   <option value="2 e 3">2 e 3 anos</option>
                   <option value="4">4 anos</option>
                   <option value="5 e 6">5 e 6 anos</option>
                   <option value="7 e 8">7 e 8 anos</option>
                   <option value="9 e 10">9 e 10 anos</option>
                   <option value="11 e 12">11 e 12 anos</option>
-
-                </select>
+                </select
                 <small id="emailHelp" class="form-text text-muted">Sala que a criança está</small>
-              </div>
+              </div>-->
             </div>
           </div>
 
@@ -123,6 +122,7 @@
 
 <script>
 import LogoKids from "../../static/avatar.png";
+import moment from "moment";
 
 export default {
   data: () => ({
@@ -130,6 +130,7 @@ export default {
     myPic: LogoKids,
     value: "",
     url: "",
+    salaShow: "",
     form: {
       id: "",
       foto: "",
@@ -137,7 +138,8 @@ export default {
       nascimento: "",
       resp: "",
       tel: "",
-      sala: ""
+      sala: "",
+      idade: ""
     }
   }),
   methods: {
@@ -148,7 +150,7 @@ export default {
       this.form.nascimento = null;
       this.form.tel = null;
       this.form.sala = null;
-      console.log("Limpou");
+      //console.log("Limpou");
     },
 
     openFileDialog() {
@@ -176,6 +178,39 @@ export default {
       } else {
         this.form.id;
       }
+      if (this.form.nascimento) {
+        const data = new Date();
+        const dataHoje = moment(data).format("YYYY");
+        //this.form.idade = dataHoje;
+        const x = moment(this.form.nascimento).format("YYYY");
+        this.form.idade = moment(dataHoje).diff(x, "year");
+      }
+
+      switch (this.form.idade) {
+        case 2 || 3:
+          this.form.sala = "2 e 3 anos";
+          break;
+
+        case 4:
+          this.form.sala = "4 anos";
+          break;
+
+        case 5 || 6:
+          this.form.sala = "5 e 6 anos";
+          break;
+
+        case 7 || 8:
+          this.form.sala = "7 e 8 anos";
+          break;
+
+        case 9 || 10:
+          this.form.sala = "9 e 10 anos";
+          break;
+
+        case 11 || 12:
+          this.form.sala = "11 e 12 anos";
+          break;
+      }
 
       if (this.form.foto) {
         const snapshot = await this.$firebase
@@ -188,6 +223,12 @@ export default {
 
         this.form.foto = url;
       }
+      /* for (let y in this.anos) {
+        let u = moment(this.anos[y]);
+        let w = [dataHoje.diff(u, "year")];
+        this.anos.push(w);
+        console.log(w);
+      } */
 
       ref.child(this.form.id).update(this.form, err => {
         //Mostra Spinner
@@ -199,7 +240,11 @@ export default {
         } else {
           this.$root.$emit("Alerta::show", {
             type: "success",
-            message: "Cadastro realizado com sucesso!"
+            message:
+              "Cadastro realizado com sucesso! -  A criança: " +
+              this.form.nome +
+              " está na sala: " +
+              this.form.sala
           });
           this.closeModal();
           this.$root.$emit("Spinner::hide");
@@ -236,7 +281,5 @@ img {
 #icon-trash {
   font-size: 12px !important;
 }
-
-
 </style>
 
