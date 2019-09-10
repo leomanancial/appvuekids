@@ -82,7 +82,7 @@
                   </div>
                 </div>
 
-                <div class="form-group col-8">
+                <div class="form-group col-7">
                   <input
                     class="form-control"
                     type="text"
@@ -92,8 +92,8 @@
                   />
                   <small id="emailHelp" class="form-text text-muted">Nome da criança completo</small>
                 </div>
-                <div class="form-group col-4">
-                  <input class="form-control" type="dateTome" v-model="form.nascimento" required />
+                <div class="form-group col-5">
+                  <input class="form-control" type="date" v-model="form.nascimento" required />
                   <small id="emailHelp" class="form-text text-muted">Data de nascimento</small>
                 </div>
                 <div class="form-group col-8">
@@ -246,9 +246,11 @@ export default {
           this.form.sala = "11 e 12 anos";
           break;
 
-        default:
-          this.form.sala = "Idade não permitida";
+
+        case (this.form.idade > 12):
+          this.form.sala = "Verificar idade";
           break;
+
       }
 
       if (this.form.foto) {
