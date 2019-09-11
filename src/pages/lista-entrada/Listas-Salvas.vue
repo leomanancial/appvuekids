@@ -3,7 +3,7 @@
     <h1>Listas Salvas</h1>
     <div class="row">
       <div class="form-group col-3">
-        <input class="form-control" type="date" v-model="dataInicio" />
+        <input class="form-control" type="date" v-model="dataInicio?dataInicio:hoje " />
         <small id="emailHelp" class="form-text text-muted">Data para pesquisa</small>
       </div>
 
@@ -79,13 +79,15 @@ export default {
       vazia: [],
       liderOne: "",
       query: [],
-      dataDaLista: ""
+      dataDaLista: "",
+      hoje:""
     };
   },
 
   created() {
     this.dataHoje = moment(data).format("DD-MM-YYYY");
     const data = new Date();
+    this.hoje = moment().format("YYYY-MM-DD");
     /*  new Intl.DateTimeFormat("en-US").format(this.dataBusca); */
     //this.dataHoje = new Intl.DateTimeFormat("en-US").format(data);
     const ref = this.$firebase.database().ref("ListaAlunos");
@@ -102,8 +104,8 @@ export default {
     busca() {
       this.refListaData = [];
       this.liderOne = "";
-      const dataInicioFormat = moment(this.dataInicio).format("DD-MM-YYYY");
-      const dataFinalFormat = moment(this.dataFinal).format("DD/MM/YYYY");
+      const dataInicioFormat = moment(this.hoje).format("DD-MM-YYYY");
+      const dataFinalFormat = moment().format("DD/MM/YYYY");
       const ref = this.$firebase.database().ref("ListaPresenca");
 
       ref.on("value", snapshot => {
@@ -142,7 +144,7 @@ export default {
     buscaAluno() {
       this.refListaData = [];
       this.liderOne = "";
-      const dataInicioFormat = moment(this.dataInicio).format("DD-MM-YYYY");
+      const dataInicioFormat = moment(this.hoje).format("DD-MM-YYYY");
       const dataFinalFormat = moment(this.dataFinal).format("DD/MM/YYYY");
       const ref = this.$firebase.database().ref("ListaPresenca");
 
