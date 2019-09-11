@@ -223,14 +223,9 @@ export default {
 
         this.form.foto = url;
       }
-      /* for (let y in this.anos) {
-        let u = moment(this.anos[y]);
-        let w = [dataHoje.diff(u, "year")];
-        this.anos.push(w);
-        console.log(w);
-      } */
 
       ref.child(this.form.id).update(this.form, err => {
+
         //Mostra Spinner
         if (err) {
           this.$root.$emit("Alerta::show", {
