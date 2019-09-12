@@ -11,7 +11,7 @@
         - Azul 7 e 8
         - Laranja 5 e 6
     - Vermelho 4-->
-    <div id="dash-header">DASHBOARD DIÁRIO</div>
+    <div id="dash-header">DASHBOARD DO DIA {{this.dataHoje}}</div>
     <div class="dash">
       <div class="card text-white bg-secondary" style="max-width: 18rem; margin:20px ">
         <div class="card-header">2 e 3 anos</div>
@@ -50,7 +50,7 @@
           <h3 class="card-text">{{this.qtSala.green?this.qtSala.green:"0"}}</h3>
         </div>
       </div>
-      <div class="card text-white bg-yellow" style="max-width: 18rem; margin:20px">
+      <div class="card text-white bg-orange" style="max-width: 18rem; margin:20px">
         <div class="card-header">11 e 12 anos</div>
         <div class="card-body">
           <h5 class="card-title">Alunos Presentes</h5>
@@ -122,16 +122,19 @@ export default {
   max-width: 5% !important;
   padding: 0;
 }
-
+.card {
+  width: 70%;
+  max-width: 100%!important;
+}
 .dash {
   display: flex;
   margin-right: 10px;
   margin: 0;
-  /* padding: 3px; */
+  padding: 3px; 
   flex-flow: row;
 }
 .item-dash {
-  max-width: 100%;
+  width: 100%;
   background-color: yellow;
   margin: 5px;
   padding-top: 50px;
@@ -146,9 +149,22 @@ export default {
   color: var(--gray);
   margin: 0;
 }
+.card-text {
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+}
 
-.bg-yellow {
-  background-color: yellowgreen;
+.card-title{
+  text-align: center
+}
+.card-header{
+  text-align: center;
+  font-size: 30px;
+}
+
+.bg-orange {
+  background-color: orangered;
 }
 </style>
 

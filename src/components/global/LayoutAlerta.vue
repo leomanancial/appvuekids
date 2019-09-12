@@ -36,10 +36,14 @@ export default {
 
 <style scoped >
 .alert {
-  top: 20px;
+/*   top: 20px;
   right: 20px;
-  max-width: 900px;
+  max-width: 900px; */
+  width: 100%;
   z-index: 100;
   position: absolute;
+  text-align: center;
+  font-size: 17px;
+  font-weight: bold;
 }
 </style>

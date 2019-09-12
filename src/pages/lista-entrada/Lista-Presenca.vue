@@ -47,7 +47,7 @@
 
         <div class="form-group">
           <button class="btn btn-success" style="text-align: -webkit-left; width: 135px">
-            <i class="fas fa-plus"></i>  Salvar
+            <i class="fas fa-plus"></i> Salvar
           </button>
         </div>
       </div>
@@ -281,7 +281,7 @@ export default {
         .database()
         .ref("ListaPresenca/" + dataInicioFormat + "/" + this.listaPresenca.idL)
         .set(this.listaPresenca, err => {
-          if (err) {
+          if (err !== null) {
             this.$root.$emit("Alerta::show", {
               type: "danger",
               message: "Não foi possível realizar o cadastro, tente novamente"
@@ -290,11 +290,9 @@ export default {
             this.$root.$emit("Alerta::show", {
               type: "success",
               message:
-                "Aluno " +
                 this.listaPresenca.nomeL +
-                " matricula: " +
-                this.listaPresenca.idL +
-                " está presente!"
+                " - Sala: " +
+                this.listaPresenca.salaL
             });
           }
           this.$root.$emit("Spinner::hide");

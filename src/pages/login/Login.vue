@@ -98,4 +98,5 @@ export default {
     font-size: 20pt;
   }
 }
+
 </style>

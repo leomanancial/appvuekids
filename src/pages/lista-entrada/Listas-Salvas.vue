@@ -27,7 +27,9 @@
       </div>
     </div>
     <div>
-      <h2 v-if="this.liderOne?this.liderOne:'' ">Lider do Dia: {{this.liderOne+" - "}} Data: {{this.dataDaLista}}</h2>
+      <h2
+        v-if="this.liderOne?this.liderOne:'' "
+      >Lider do Dia: {{this.liderOne+" - "}} Data: {{this.dataDaLista}}</h2>
     </div>
     <div class="row" id="lista-alunos-header">
       <div class="col-1">Foto</div>
@@ -80,7 +82,7 @@ export default {
       liderOne: "",
       query: [],
       dataDaLista: "",
-      hoje:""
+      hoje: ""
     };
   },
 
@@ -112,13 +114,13 @@ export default {
         const values = snapshot.val();
         for (let i in values) {
           if (i == dataInicioFormat) {
-            let c = values[i];
-            this.vazia = c;
             this.$root.$emit("Alerta::show", {
               type: "success",
               message: "Lista de alunos presentes no dia: " + dataInicioFormat
             });
-          } else {
+            let c = values[i];
+            this.vazia = c;
+          } else if (i == "") {
             this.$root.$emit("Alerta::show", {
               type: "danger",
               message:
@@ -154,7 +156,7 @@ export default {
           if (i == dataInicioFormat) {
             let c = values[i];
             this.vazia = c;
-            console.log(this.vazia);
+            //console.log(this.vazia);
           }
         }
         this.dataL = groupby(this.vazia, "dataListaL");
@@ -177,12 +179,12 @@ export default {
                 "Cartão: " +
                 this.dataL[i][x].cartao
             });
-          } else {
-            /*this.$root.$emit("Alerta::show", {
+          } else if (this.pesquisaNome == "") {
+            this.$root.$emit("Alerta::show", {
               type: "danger",
               message:
-                "Não localizado esse Aluno, verifique se o nome esta correto e tente novamente ou verifique a data"
-            });*/
+                "Você deve preencher o campo Aluno! Tente novamente!"
+            });
           }
         }
       }
