@@ -183,7 +183,7 @@ export default {
             this.$root.$emit("Alerta::show", {
               type: "danger",
               message:
-                "Você deve preencher o campo Aluno! Tente novamente!"
+                "O campo ALUNO deve ser preenchido, ou não há ALUNO para a data selecionda. Tente novamente!"
             });
           }
         }

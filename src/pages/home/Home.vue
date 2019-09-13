@@ -65,6 +65,7 @@
 import groupby from "lodash.groupby";
 import countby from "lodash.countby";
 import moment from "moment";
+import bg from "../../static/bg_1.jpg";
 import { Promise, reject } from "q";
 
 export default {
@@ -124,13 +125,13 @@ export default {
 }
 .card {
   width: 70%;
-  max-width: 100%!important;
+  max-width: 100% !important;
 }
 .dash {
   display: flex;
   margin-right: 10px;
   margin: 0;
-  padding: 3px; 
+  padding: 3px;
   flex-flow: row;
 }
 .item-dash {
@@ -155,10 +156,10 @@ export default {
   font-size: 30px;
 }
 
-.card-title{
-  text-align: center
+.card-title {
+  text-align: center;
 }
-.card-header{
+.card-header {
   text-align: center;
   font-size: 30px;
 }
@@ -166,6 +167,8 @@ export default {
 .bg-orange {
   background-color: orangered;
 }
+
+
 </style>
 
 
