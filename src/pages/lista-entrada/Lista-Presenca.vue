@@ -12,7 +12,6 @@
             placeholder="Nome do Aluno"
           ></vue-bootstrap-typeahead>
         </div>
-
         <div class="form-group col-5">
           <input
             class="form-control"
@@ -91,6 +90,7 @@ export default {
       selectedUser: null,
       alunoss: [],
       aluno: [],
+      idade: [],
       email: "",
       form: {
         fotoL: "",

@@ -58,7 +58,7 @@ export default {
         this.$router.push({ name: "home" });
         this.$root.$emit("Alerta::show", {
           type: "success",
-          message: "Login efetuado com sucesso, você está na página inicial."
+          message: "Login efetuado com sucesso!"
         });
       } catch (err) {
         this.$root.$emit("Alerta::show", {
@@ -92,6 +92,7 @@ export default {
   .card {
     width: 30%;
     color: var(--white);
+    box-shadow: 9px 7px 5px rgba(52, 58, 64, 0.5);
   }
   .card-header {
     background: var(--blue-light-plus);
@@ -99,18 +100,13 @@ export default {
   h1 {
     font-size: 20pt;
   }
-  filter: blur(0px);
 }
 #btn {
   background: var(--blue-light-plus);
 }
 .bg {
-  background-image: url("../../static/bg_1.jpg") ;
+  background-image: url("../../static/bg_1.jpg");
   background-repeat: no-repeat;
-  background-size: 100% 120%, contain, 3em;
- ;
-
-  /* background-size: contain;
-  width: 200px; */
+  background-size: 100% 100%;
 }
 </style>

@@ -1,22 +1,22 @@
 <template>
   <div id="app">
-    <layout-alerta/>
-    <base-spinner/>
+    <layout-alerta />
+    <base-spinner />
     <div class="container-fluid" v-if="isLogged">
       <div class="row">
         <div class="col-2 navigation-sidebar">
-          <layout-navigation/>
+          <layout-navigation />
           <div class="logout">
-            <layout-logout/>
+            <layout-logout />
           </div>
         </div>
         <div class="col">
-          <router-view/>
+          <router-view />
         </div>
       </div>
     </div>
     <!--Conteudo mostrado para quem esta logado -->
-    <router-view v-else/>
+    <router-view v-else />
   </div>
 </template>
 
@@ -38,7 +38,7 @@ export default {
     NovoAluno,
     ListaPresenca,
     LayoutAlerta,
-    LayoutLogout,
+    LayoutLogout
   },
   data: () => ({ isLogged: false }),
   mounted() {
@@ -52,6 +52,17 @@ export default {
       setTimeout(() => {
         this.$root.$emit("Spinner::hide");
       }, 2000);
+
+      /*  // Desloga por inatividade
+      if (window.uid != null) {
+        setTimeout(() => {
+          window.uid = null;
+          this.isLogged = false;
+          this.$router.push("login");
+        }, 5000);
+      } else {
+       
+      } */
     });
   }
 };
