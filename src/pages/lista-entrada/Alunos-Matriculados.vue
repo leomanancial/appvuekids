@@ -219,7 +219,7 @@ export default {
         const dataHoje = moment(data).format("MM/DD/YYYY");
         const x = moment(this.form.nascimento).format("MM/DD/YYYY");
         this.form.idade = moment(dataHoje).diff(x, "year");
-        console.log(this.form.idade);
+        //console.log(this.form.idade);
       }
       switch (this.form.idade) {
         case 2 || 3:
@@ -230,7 +230,11 @@ export default {
           this.form.sala = "4 anos";
           break;
 
-        case 5 || 6:
+        case 5:
+          this.form.sala = "5 e 6 anos";
+          break;
+        
+        case 6:
           this.form.sala = "5 e 6 anos";
           break;
 
@@ -247,8 +251,8 @@ export default {
           break;
 
 
-        case (this.form.idade > 12):
-          this.form.sala = "Verificar idade";
+        default:
+          this.form.sala = "Idade não permitida, informar os Pais";
           break;
 
       }

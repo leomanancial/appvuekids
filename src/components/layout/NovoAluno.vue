@@ -123,6 +123,7 @@
 <script>
 import LogoKids from "../../static/avatar.png";
 import moment from "moment";
+import { defaultCoreCipherList } from "constants";
 
 export default {
   data: () => ({
@@ -179,35 +180,56 @@ export default {
         this.form.id;
       }
       if (this.form.nascimento) {
-        const data = new Date();
-        const dataHoje = moment(data).format("YYYY");
-        //this.form.idade = dataHoje;
-        const x = moment(this.form.nascimento).format("YYYY");
+        //const data = new Date();
+        const dataHoje = moment().format("YYYY/MM/DD");
+        const x = moment(this.form.nascimento).format("YYYY/MM/DD");
         this.form.idade = moment(dataHoje).diff(x, "year");
+        console.log(this.form.idade);
       }
+      //this.form.idade = dataHoje;
 
+      console.log(this.form.idade);
       switch (this.form.idade) {
-        case 2 || 3:
+        case 2:
           this.form.sala = "2 e 3 anos";
           break;
-
+        
+        case 3:
+          this.form.sala = "2 e 3 anos";
+          break;
         case 4:
           this.form.sala = "4 anos";
           break;
 
-        case 5 || 6:
+        case 5:
           this.form.sala = "5 e 6 anos";
           break;
 
-        case 7 || 8:
+        case 6:
+          this.form.sala = "5 e 6 anos";
+          break;
+
+        case 7:
           this.form.sala = "7 e 8 anos";
           break;
 
-        case 9 || 10:
+        case 8:
+          this.form.sala = "7 e 8 anos";
+          break;
+
+        case 9:
           this.form.sala = "9 e 10 anos";
           break;
 
-        case 11 || 12:
+        case 10:
+          this.form.sala = "9 e 10 anos";
+          break;
+
+        case 11:
+          this.form.sala = "11 e 12 anos";
+          break;
+
+        case 12:
           this.form.sala = "11 e 12 anos";
           break;
       }
@@ -224,27 +246,38 @@ export default {
         this.form.foto = url;
       }
 
-      ref.child(this.form.id).update(this.form, err => {
-
-        //Mostra Spinner
-        if (err) {
-          this.$root.$emit("Alerta::show", {
-            type: "danger",
-            message: "Não foi possível realizar o cadastro, tente novamente"
-          });
-        } else {
-          this.$root.$emit("Alerta::show", {
-            type: "success",
-            message:
-              "Cadastro realizado com sucesso! -  A criança: " +
-              this.form.nome +
-              " está na sala: " +
-              this.form.sala
-          });
-          this.closeModal();
-          this.$root.$emit("Spinner::hide");
-        }
-      });
+      if (this.form.idade > 12) {
+        this.$root.$emit("Alerta::show", {
+          type: "danger",
+          message:
+            "Não foi possível realizar o cadastro, criança tem " +
+            this.form.idade +
+            " anos. Informe os Pais ou o Responsável."
+        });
+        this.closeModal();
+        this.$root.$emit("Spinner::hide");
+      } else {
+        ref.child(this.form.id).update(this.form, err => {
+          //Mostra Spinner
+          if (err) {
+            this.$root.$emit("Alerta::show", {
+              type: "danger",
+              message: "Não foi possível realizar o cadastro, tente novamente"
+            });
+          } else {
+            this.$root.$emit("Alerta::show", {
+              type: "success",
+              message:
+                "Cadastro realizado com sucesso! -  A criança: " +
+                this.form.nome +
+                " está na sala: " +
+                this.form.sala
+            });
+            this.closeModal();
+            this.$root.$emit("Spinner::hide");
+          }
+        });
+      }
     }
   }
 };
