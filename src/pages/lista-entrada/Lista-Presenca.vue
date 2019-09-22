@@ -4,7 +4,7 @@
     <form @submit.prevent="addAluno(query)">
       <h2>Líderes do dia: {{ this.form.liderDia ? this.form.liderDia : "Nenhum registro" }}</h2>
       <div class="row">
-        <div class="form-group col-5" required>
+        <div class="form-group col-md-5" required>
           <vue-bootstrap-typeahead
             prepend="Aluno:"
             v-model="query"
@@ -12,30 +12,27 @@
             placeholder="Nome do Aluno"
           ></vue-bootstrap-typeahead>
         </div>
-        <div class="form-group col-5">
+        <div class="form-group col-md-2">
           <input
             class="form-control"
             type="text"
-            placeholder="Digite o número do cartão"
+            placeholder="Cartão"
             v-model="form.cartao"
             required
           />
         </div>
 
-        <div class="form-group">
-          <novo-aluno />
-        </div>
-
-        <div class="form-group col-4">
+        <div class="form-group col-md-5">
           <input
             class="form-control"
             v-model="form.respDiaL"
             type="textbox"
-            placeholder="Responsável pelo aluno no dia"
+            placeholder="Pai, Mãe ou responsável"
+            required
           />
         </div>
 
-        <div class="form-group col-6">
+        <div class="form-group col-md-5">
           <input
             class="form-control"
             v-model="form.obs"
@@ -44,10 +41,14 @@
           />
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-md">
           <button class="btn btn-success" style="text-align: -webkit-left; width: 135px">
             <i class="fas fa-plus"></i> Salvar
           </button>
+        </div>
+
+        <div class="form-group col-md-5">
+          <novo-aluno />
         </div>
       </div>
     </form>
@@ -57,7 +58,7 @@
       <textarea
         class="form-control"
         v-model="diario"
-        rows="10"
+        rows="7"
         placeholder="Registre informações importantes sobre o dia de hoje"
         style="width:100%"
       ></textarea>
@@ -116,6 +117,7 @@ export default {
     };
   },
   created() {
+
     //console.log(nomeInicio);
     let user = this.$firebase.auth().currentUser;
     let nomeInicio = user.email.split("@");
@@ -294,6 +296,7 @@ export default {
                 " - Sala: " +
                 this.listaPresenca.salaL
             });
+           
           }
           this.$root.$emit("Spinner::hide");
         });
