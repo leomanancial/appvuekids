@@ -245,7 +245,7 @@ export default {
 
         this.form.foto = url;
       }
-
+      //Validação de Idade, se for maior que 12 não permite gravar
       if (this.form.idade > 12) {
         this.$root.$emit("Alerta::show", {
           type: "danger",

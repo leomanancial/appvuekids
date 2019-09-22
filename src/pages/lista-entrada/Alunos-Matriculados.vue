@@ -15,7 +15,7 @@
       <div id="lista-alunos-full">
         <div class="lista-alunos-item row" v-for="item in this.alunoss" id="lista-alunos">
           <div class="col-md-1 foto">
-            <img v-bind:src="item.foto?item.foto:myAvatar" id="imaModal"class="rounded-circle" />
+            <img v-bind:src="item.foto?item.foto:myAvatar" id="imaModal" class="rounded-circle" />
           </div>
 
           <div class="col-md-3">{{item.nome}}</div>
@@ -222,10 +222,13 @@ export default {
         //console.log(this.form.idade);
       }
       switch (this.form.idade) {
-        case 2 || 3:
+         case 2:
           this.form.sala = "2 e 3 anos";
           break;
-
+        
+        case 3:
+          this.form.sala = "2 e 3 anos";
+          break;
         case 4:
           this.form.sala = "4 anos";
           break;
@@ -233,28 +236,34 @@ export default {
         case 5:
           this.form.sala = "5 e 6 anos";
           break;
-        
+
         case 6:
           this.form.sala = "5 e 6 anos";
           break;
 
-        case 7 || 8:
+        case 7:
           this.form.sala = "7 e 8 anos";
           break;
 
-        case 9 || 10:
+        case 8:
+          this.form.sala = "7 e 8 anos";
+          break;
+
+        case 9:
           this.form.sala = "9 e 10 anos";
           break;
 
-        case 11 || 12:
+        case 10:
+          this.form.sala = "9 e 10 anos";
+          break;
+
+        case 11:
           this.form.sala = "11 e 12 anos";
           break;
 
-
-        default:
-          this.form.sala = "Idade não permitida, informar os Pais";
+        case 12:
+          this.form.sala = "11 e 12 anos";
           break;
-
       }
 
       if (this.form.foto) {
